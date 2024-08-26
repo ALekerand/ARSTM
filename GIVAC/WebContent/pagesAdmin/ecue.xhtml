@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form_gnl">
+
+			<h1 class="page-title">ENREGISTREMENT DES ECUES</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<!-- <h:form id="form"> -->
+				
+				<table>
+					<tr>
+						<td >
+						<h:panelGrid id="ecue_grid" columns="2">
+						
+			<p:outputLabel for="ecol" value="Ecole"/>
+			<p:selectOneMenu id="ecol" value="#{ecueBean.choosedEcole}" converter="#{entityConverter}" style="width:50px">
+			<p:ajax listener="#{ecueBean.activerChamps1}" event="change" update="fil" process="@this"></p:ajax>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{ecueBean.listEcole}" var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>
+		    
+		    <p:outputLabel for="fil" value="Filière"/>
+			<p:selectOneMenu id="fil" value="#{ecueBean.choosedFiliere}" converter="#{entityConverter}" style="width:50px">
+			<p:ajax listener="#{ecueBean.chargerMention}" event="change" update="ment" process="@this"></p:ajax>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{ecueBean.listFiliere}" var="tata" itemLabel="#{tata.abrevFiliere}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>		    
+		      
+		    <p:outputLabel for="ment" value="Mention"/>
+			<p:selectOneMenu id="ment" value="#{ecueBean.choosedMention}" converter="#{entityConverter}" style="width:50px">
+			<p:ajax listener="#{ecueBean.chargerSemestreLmd}" event="change" process="@this" update="table_semestre"></p:ajax>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{ecueBean.listMention}" var="tata" itemLabel="#{tata.abrevMention}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>		    
+			</h:panelGrid>
+						</td>
+						<td style="width:20%">
+					<p:dataTable id="table_semestre"  var="tata"
+					value="#{ecueBean.listSemestreLmd}" selection="#{ecueBean.selectedSemestreLmd}"
+					rowKey="#{tata.codeSemestreLmd}" emptyMessage="Aucun enregistrement" selectionMode="single">
+					<p:ajax event="rowSelect" listener="#{ecueBean.actualiserList}" update=":form_gnl" process="@this, :form_gnl:ment"/>
+					<f:facet name="header">SEMESTRE LMD</f:facet>
+					<p:column selectionMode="single" style="width:16px;text-align:center"/>
+					<p:column headerText="Libellé Semestre" style="width:100%">#{tata.libSemestreLmd}</p:column>
+					</p:dataTable>
+						</td>
+						<td>
+						
+						<p:dataTable id="table1" var="tata"
+					value="#{ecueBean.listeUe}" selection="#{ecueBean.selectedUe}"
+					rowKey="#{tata.codeEus}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="150" selectionMode="single">
+					<p:ajax event="rowSelect" listener="#{ecueBean.chargerEcue}" update=":form_gnl" process="@this, :form_gnl:table_semestre"/>
+					<f:facet name="header">LISTE DES UES</f:facet>
+					<p:column selectionMode="single" style="width:16px;text-align:center"/>
+					<p:column headerText="Code UE" style="width:30%">#{tata.codeUeLmd}</p:column>
+					<p:column headerText="Libellé UE" style="width:70%">#{tata.libUes}</p:column>
+						</p:dataTable>
+						
+						</td>
+						
+					</tr>
+				</table>	
+				
+			<table>
+					<tr>
+						<td>
+							<fieldset>
+			<legend class="legend">Information ECUE</legend>
+				
+			<h:panelGrid id="e_grid" columns="4" cellpadding="10"> 
+			<p:outputLabel for="lib_ecue" value="Libellé ECUE" />
+			<p:inputText id="lib_ecue" value="#{ecueBean.ecue.libEcue}" required="true"/>
+			
+			<p:outputLabel for="abrev_ecue" value="Abréviation" />
+			<p:inputText id="abrev_ecue" value="#{ecueBean.ecue.abrevEcue}" required="true"/>
+			
+			<p:outputLabel for="cours_ecue" value="COURS" />
+			<p:inputText id="cours_ecue" value="#{ecueBean.ecue.coursEcue}" required="true" style="width:50px" maxlength="3">
+			<f:convertNumber pattern=""></f:convertNumber>
+			</p:inputText>
+			
+			<p:outputLabel for="tp_ecue" value="TP" />
+			<p:inputText id="tp_ecue" value="#{ecueBean.ecue.tpEcue}" required="true" style="width:50px" maxlength="3">
+			<p:ajax listener="#{ecueBean.calculer}" event="blur"
+				update="e_grid" process="@this, cours_ecue">
+			</p:ajax>
+			<f:convertNumber pattern="##,###.###"></f:convertNumber>
+			</p:inputText>
+			
+			<p:outputLabel for="tpe_ecue" value="TPE" />
+			<p:inputText id="tpe_ecue" value="#{ecueBean.ecue.tpeEcue}" required="true" style="width:50px" maxlength="3">
+			</p:inputText>
+			
+			<p:outputLabel for="ctt_ecue" value="CTT" />
+			<p:inputText id="ctt_ecue" value="#{ecueBean.ecue.cttEcue}" required="true" style="width:50px" maxlength="3">
+			<f:convertNumber pattern="##,###.###"></f:convertNumber>
+			</p:inputText>
+			
+			<p:outputLabel for="credit_ecue" value="CREDIT" />
+			<p:inputText id="credit_ecue" value="#{ecueBean.ecue.creditEcue}" required="true" style="width:50px" maxlength="2">
+			<f:convertNumber pattern="##,###.###"></f:convertNumber>
+			</p:inputText>
+			
+			<p:outputLabel for="coef_ecue" value="COEF" />
+			<p:inputText id="coef_ecue" value="#{ecueBean.ecue.coefEcue}" required="true" style="width:50px" maxlength="2">
+			<f:convertNumber pattern="##,###.###"></f:convertNumber>
+			</p:inputText>
+			
+			<p:outputLabel for="etat" value="Etat:" />
+	        <p:selectOneRadio id="etat" value="#{ecueBean.etatEcue}">
+	            <f:selectItem itemLabel="Actif" itemValue="true" />
+	            <f:selectItem itemLabel="Inactif" itemValue="false" />
+	        </p:selectOneRadio>
+			</h:panelGrid>	
+			
+			</fieldset>
+						</td>
+						<td>
+						<fieldset>
+						<legend class="legend">Actions</legend>
+					<h:panelGrid id="grid_button" columns="1" cellpadding="4">
+					<p:commandButton value="Valider"
+						action="#{ecueBean.enregistrer}" update="form_gnl" binding="#{ecueBean.btnValider}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous l'enregistrement" icon="ui-icon-alert" />
+					</p:commandButton>
+					<p:commandButton value="Modifier"
+						action="#{ecueBean.modifier}" update="form_gnl" binding="#{ecueBean.btnModifier}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous modifier cet enregistrement" icon="ui-icon-alert" />
+					</p:commandButton>
+					<p:commandButton value="Annuler" process="@this"
+						action="#{ecueBean.annuler}" />
+					<p:commandButton value="Supprimer" action="#{ecueBean.supprimer}"
+						update="form_gnl" binding="#{ecueBean.btnSuprimer}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+					</p:commandButton>
+				</h:panelGrid> 
+				</fieldset>
+						</td>
+					</tr>
+				</table>
+						
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{ecueBean.listeEcue}"
+					selection="#{ecueBean.selectedEcue}"
+					rowKey="#{tata.codeEcue}"
+					emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="100">
+					<p:ajax event="rowSelect" listener="#{ecueBean.selectionner}" update=":form_gnl" />
+					<f:facet name="header">LISTE DES ELEMENTS CONSTITUTIFS DE L'UNITES D'ENSEIGNEMENT (ECUE)</f:facet>
+					<p:column headerText="LIBELLE ECUE" style="width:40%" sortBy="#{tata.libEcue}">#{tata.libEcue}</p:column>
+					<p:column headerText="ABREVIATION" style="width:20%" sortBy="#{tata.abrevEcue}">#{tata.abrevEcue}</p:column>
+					<p:column headerText="COURS" style="width:15%">#{tata.coursEcue}</p:column>
+					<p:column headerText="TP" style="width:20%">#{tata.tpEcue}</p:column>
+					<p:column headerText="CREDIT" style="width:10%">#{tata.creditEcue}</p:column>
+					<f:facet name="footer">
+					<h:panelGrid  columns="4" cellpadding="10">
+					<p:outputLabel value="TOTAL CREDITS ECUE:"/>
+					<p:outputLabel value="#{ecueBean.totalCreditEcue}"/>
+					</h:panelGrid>
+					</f:facet>
+				</p:dataTable>	
+
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

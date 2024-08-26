@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">MATIERE</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<!-- <h:form id="form"> -->
+				<p:panel header="Enregistrement">
+					<br />
+					<h:panelGrid id="matiere_grid" columns="4" cellpadding="10">
+					
+							
+						<p:outputLabel for="nom_matiere" value="Matière" />
+						<p:inputText id="nom_matiere"
+							value="#{matiereBean.matiere.libMatiere}" required="true"  style="width: 400px"/>
+						
+						<p:outputLabel for="abrev_matiere" value="Abréviation" />
+						<p:inputText id="abrev_matiere" styleClass="upercase"
+							value="#{matiereBean.matiere.abrevMatiere}" required="true" style="width: 80px"/>
+					</h:panelGrid>
+
+					<br></br>
+					<h:panelGrid columns="4">
+						<p:commandButton value="Enregistrer"
+							action="#{matiereBean.enregistrer}" update="table, matiere_grid"
+							binding="#{matiereBean.btnValider}">
+						</p:commandButton>
+
+						<p:commandButton value="Annuler" action="#{matiereBean.annuler}"
+							update="form">
+						</p:commandButton>
+						
+						<p:commandButton value="Modifier"
+							action="#{matiereBean.modifier}" update="table, matiere_grid"
+							binding="#{matiereBean.btnModifier}">
+						    <p:confirm header="Confirmation"
+							message="Confirmez-vous la modification?" icon="ui-icon-alert" />
+						</p:commandButton>
+
+						<p:commandButton value="Supprimer"
+							action="#{matiereBean.supprimer}" update="form"
+							binding="#{matiereBean.btnSuprimer}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{matiereBean.listMatiere}"
+					selection="#{matiereBean.selectedMatiere}"
+					rowKey="#{tata.codeMatiere}"
+					emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="150">
+					<p:ajax event="rowSelect" listener="#{matiereBean.selectionner}"
+						update=":form" />
+					<f:facet name="header">LISTE DES MATIERES</f:facet>
+					<p:column headerText="Nom filière" style="width:60%" sortBy="#{tata.libMatiere}">#{tata.libMatiere}</p:column>
+					<p:column headerText="Abréviation filière" style="width:40%">#{tata.abrevMatiere}</p:column>
+				</p:dataTable>
+				<!-- </h:form> -->
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

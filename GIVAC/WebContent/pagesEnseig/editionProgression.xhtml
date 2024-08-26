@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateEnseignant.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">EDITION PROGRESSION</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<p:panel header="Enregistrement">
+
+					<table>
+						<tr valign="top">
+							<!-- Partie Chapitre -->
+							<td style="width: 40%;"><h:panelGrid id="chapitre_grid"
+									columns="2" cellpadding="6">
+									
+								    
+								    
+									
+									<p:outputLabel for="num_Chap" value="N° Chapitre" />
+									<p:inputText id="num_Chap" value="#{chapitreSeanceBean.chapitre.numeroChapitre}" required="true" />
+									
+									<p:outputLabel for="lib_Chap" value="Intitulé" />
+									<p:inputTextarea id="lib_Chap" rows="3" cols="33" value="#{chapitreSeanceBean.chapitre.libelleChap}"/>
+									
+									
+									
+									<p:outputLabel for="VH_Chap" value="Volume horaire" />
+									<p:inputText id="VH_Chap" value="#{chapitreSeanceBean.chapitre.volumeHoraireChap}" required="true" />
+									
+									
+									<p:outputLabel />
+								</h:panelGrid></td>
+							<!-- ici tableau seances du chapitre -->
+							<td style="width: 60%;">
+	<p:dataTable id="editTable" var="toto" value="#{chapitreSeanceBean.listSeanceEdit}" binding="#{chapitreSeanceBean.dataTable}" 
+							 editable="true" editMode="cell" widgetVar="cellSeance">
+       <f:facet name="header"> EDITION DES SEANCES</f:facet>
+ 
+       <p:ajax event="cellEdit" listener="#{chapitreSeanceBean.onCellEdit}"/>
+         <p:column headerText="N°" style="width:25px">
+		<h:outputText value="#{toto.numSeance}" />
+          </p:column>
+           
+         <p:column headerText="Séance">
+		<p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{toto.libelleSeance}" /></f:facet>
+               <f:facet name="input">
+               <p:inputTextarea rows="4" cols="100" value="#{toto.libelleSeance}"/>
+               
+               </f:facet>
+           </p:cellEditor>
+          </p:column>
+ 
+       <p:column headerText="VH" style="width:25px">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{toto.volumeHoraireSeance}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{toto.volumeHoraireSeance}" label="volume Horaire"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+       
+        <p:column headerText="Date" style="width:55px">
+               <f:facet name="output"><h:outputText value="#{toto.datePrevue}" ><f:convertDateTime pattern="MM/dd/yyyy" /></h:outputText>
+               </f:facet>
+       		 <f:facet name="input"><p:calendar id="german" value="#{toto.datePrevue}" locale="de" navigator="true" pattern="dd/MM/yyyy" >
+       		 </p:calendar>
+       		 </f:facet>
+       </p:column>
+   </p:dataTable>
+  
+   <!-- Partie DES BOUTONS -->
+   <h:panelGrid columns="2" cellspacing="20" cellpadding="15">
+   						<p:commandButton value="+Séance" action="#{chapitreSeanceBean.ajouterSeance}"
+							update="form">
+						</p:commandButton>
+						<p:commandButton value="-Séance" action="#{chapitreSeanceBean.supprimerSeance}"
+							update="form">
+						</p:commandButton>
+					</h:panelGrid> 
+					
+					
+					<br /> 
+ 	<h:panelGrid columns="2" cellspacing="10">
+  	<p:outputLabel for="date_modul" value="Date début module" />
+    <p:calendar id="date_modul" value="#{chapitreSeanceBean.dateModule}" locale="de" navigator="true" pattern="dd/MM/yyyy" >		
+    </p:calendar>
+    </h:panelGrid>
+					
+					<h:panelGrid columns="3" cellpadding="10">
+						<p:commandButton value="Enregistrer"
+							action="#{chapitreSeanceBean.enregistrerSeance}" 
+							binding="#{chapitreSeanceBean.btnValider}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
+						</p:commandButton>
+
+						<p:commandButton value="Annuler" action="#{chapitreSeanceBean.annuler}"
+							update="form">
+						</p:commandButton>
+
+						<p:commandButton value="Supprimer"
+							action="#{chapitreSeanceBean.supprimer}" update="form"
+							binding="#{chapitreSeanceBean.btnSuprimer}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+						</p:commandButton>
+					</h:panelGrid>
+							</td>
+						</tr>
+					</table>
+					<h:panelGrid id="cycle_grid" columns="4" cellpadding="10">
+						
+					</h:panelGrid>
+
+					<br></br>
+					<h:panelGrid columns="3">
+						
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">CYCLE</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<p:panel header="Enregistrement">
+					<br />
+					<h:panelGrid id="cycle_grid" columns="4" cellpadding="6">
+						<p:outputLabel for="nom_cycle" value="Cycle" />
+						<p:inputText id="nom_cycle"
+							value="#{cycleBean.cycle.nomCycle}" required="true" />
+						
+						<p:outputLabel for="coutH_cycle" value="Coût horaire" styleClass="outputDecalage" />
+						<p:inputText id="coutH_cycle"
+							value="#{cycleBean.cycle.tauxHoraire}" required="true">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+					</h:panelGrid>
+
+					<br></br>
+					<h:panelGrid columns="4">
+						<p:commandButton value="Enregistrer"
+							action="#{cycleBean.enregistrer}" update="table, cycle_grid"
+							binding="#{cycleBean.btnValider}">
+						</p:commandButton>
+						
+						<p:commandButton value="Modifier"
+							action="#{cycleBean.modifier}" update="table, cycle_grid"
+							binding="#{cycleBean.btnModifier}">
+						    <p:confirm header="Confirmation"
+							message="Confirmez-vous la modification?" icon="ui-icon-alert" />
+						</p:commandButton>
+
+						<p:commandButton value="Annuler" action="#{cycleBean.annuler}"
+							update="form">
+						</p:commandButton>
+
+						<p:commandButton value="Supprimer"
+							action="#{cycleBean.supprimer}" update="form"
+							binding="#{cycleBean.btnSuprimer}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{cycleBean.listeCycle}"
+					selection="#{cycleBean.selectedCycle}"
+					rowKey="#{tata.codeCycle}"
+					emptyMessage="Aucun enregistrement">
+					<p:ajax event="rowSelect" listener="#{cycleBean.selectionner}"
+						update=":form" />
+					<f:facet name="header">LISTE DES FILIERES</f:facet>
+					<p:column headerText="Cycle" style="width:60%">#{tata.nomCycle}</p:column>
+					<p:column headerText="Coût" style="width:30%">
+					
+					<h:outputText value="#{tata.tauxHoraire}">
+					<f:convertNumber pattern="##,###.###"></f:convertNumber>
+					</h:outputText>
+					</p:column>
+				</p:dataTable>
+				<!-- </h:form> -->
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

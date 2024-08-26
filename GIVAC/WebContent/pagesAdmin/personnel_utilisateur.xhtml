@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateUtilisateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">PERSONNEL UTILISATEUR</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<p:wizard id="wiz">
+					<p:tab id="identite" title="Identification">
+						<p:panel header="Personnel">
+							<h:panelGrid id="pers_grid" columns="4" cellpadding="5">
+
+								<p:outputLabel for="nom_pers" value="Nom" />
+								<p:inputText id="nom_pers"
+									value="#{personnelUtilisBean.personnel.nom}" required="true" />
+
+								<p:outputLabel for="prenom_enseig" value="Prénoms" />
+								<p:inputText id="prenom_enseig"
+									value="#{personnelUtilisBean.personnel.prenoms}" required="true" />
+
+								<p:outputLabel for="dateNais_enseig" value="Date naissance"/>
+       						    <p:calendar id="dateNais_enseig" value="#{personnelUtilisBean.personnel.dateNais}" 
+       						    locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
+
+								<p:outputLabel for="lieuNais_pers" value="Lieu naissance" />
+								<p:inputText id="lieuNais_pers"
+									value="#{personnelUtilisBean.personnel.lieuNais}" required="true" />
+
+								<p:outputLabel for="sexe_pers" value="Sexe" />
+								<p:selectOneMenu id="sexe_pers"
+									value="#{personnelUtilisBean.chooseedSexe}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{personnelUtilisBean.listeSexe}" var="tata"
+										itemLabel="#{tata.libSexe}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+
+								<p:outputLabel for="phone_enseig" value="Télephone1" />
+								<p:inputText id="phone_enseig"
+									value="#{personnelUtilisBean.personnel.phone1}" required="true" />
+
+								<p:outputLabel for="phone_enseig2" value="Télephone2" />
+								<p:inputText id="phone_enseig2"
+									value="#{personnelUtilisBean.personnel.phone2}" />
+
+								<p:outputLabel for="mail_enseig" value="mail" />
+								<p:inputText id="mail_enseig"
+									value="#{personnelUtilisBean.personnel.email}"/>
+									
+							<p:outputLabel for="fonct_per" value="Fonction" />
+								<p:selectOneMenu id="fonct_per"
+									value="#{personnelUtilisBean.choosedFonction}"
+									converter="#{entityConverter}" required="true">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{personnelUtilisBean.listeFonction}" var="tata"
+										itemLabel="#{tata.libelleFonction}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+							</h:panelGrid>
+
+							<h:panelGrid id="panelGrid3" columns="4" cellpadding="10">
+							<p:outputLabel for="toff" value="Photo" />
+								<p:fileUpload id="toff"
+									fileUploadListener="#{personnelUtilisBean.upload}" uploadLabel="Transferer" cancelLabel="Annuler" 
+									allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="1000000"
+									description="Select Images">
+								</p:fileUpload>
+							</h:panelGrid>	
+
+						</p:panel>
+					</p:tab>
+
+					
+
+					<p:tab id="cpt" title="Compte">
+						<p:panel header="Compte utilisateur">
+							<h:panelGrid columns="2" id="compte_Grid" cellpadding="5">
+								<p:outputLabel for="user_login" value="Nom utilisateur:" />
+								<p:inputText id="user_login"
+									value="#{personnelUtilisBean.personnel.username}" required="true" />
+
+								<h:outputLabel for="pwd1" value="Mot de passe:" />
+								<p:password id="pwd1"
+									value="#{personnelUtilisBean.personnel.password}"
+									validatorMessage="Mot de passe non confirmé" match="pwd2"
+									label="Password" required="true" />
+
+								<h:outputLabel for="pwd2" value="Mot de passe(confimation):" />
+								<p:password id="pwd2"
+									value="#{personnelUtilisBean.personnel.password}"
+									label="Password confirmmation. Veuillez le reprendre SVP!"
+									required="true">
+									<p:ajax event="blur" process=":form:compte_Grid" />
+								</p:password>
+							</h:panelGrid>
+
+							<hr />
+							<h:panelGrid columns="3" id="button_grid" >
+								<p:commandButton value="Enregistrer"
+									action="#{personnelUtilisBean.enregistrer}" immediate="true" update="@parent, :form"
+									binding="#{personnelUtilisBean.btnValider}"
+									oncomplete="document.location.reload(false)">
+								</p:commandButton>
+
+								<p:commandButton value="Annuler"
+									action="#{personnelUtilisBean.annuler}" update="form">
+								</p:commandButton>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+
+				<br />
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{personnelUtilisBean.listPersonnel}"
+					
+					rowKey="#{tata.userId}" emptyMessage="Aucun enregistrement">
+					<f:facet name="header">LISTE DES PERSONNELS</f:facet>
+					<p:column headerText="Code" style="width:5%">#{tata.userId}</p:column>
+					<p:column headerText="Nom" style="width:15%">#{tata.nom}</p:column>
+					<p:column headerText="Prénoms" style="width:25%">#{tata.prenoms}</p:column>
+					<p:column headerText="Téléphone" style="width:20%">#{tata.phone1}  #{tata.phone2}</p:column>
+					<p:column headerText="mail" style="width:20%">#{tata.email}</p:column>
+					<p:column headerText="Fonction" style="width:15%">#{tata.fonction.libelleFonction}</p:column>
+				</p:dataTable>
+
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

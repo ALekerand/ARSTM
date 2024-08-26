@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">ETUDIANT</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<p:wizard id="wiz">
+					<p:tab id="identite" title="Identification">
+						<p:panel header="ELEVE">
+							<h:panelGrid id="eleve_grid" columns="4" cellpadding="5">
+								<h:outputLabel for="matricule" value="Matricule" />
+								<p:inputText id="matricule" 
+									value="#{inscriptionBean.matricule}" readonly="true" />
+								<h:outputLabel />
+								<h:outputLabel />
+
+								<h:outputLabel for="nom_eleve" value="Nom" />
+								<p:inputText id="nom_eleve"
+									value="#{inscriptionBean.etudiants.nomEtudiant}" required="true" styleClass="upercase"/>
+
+								<h:outputLabel for="prenom_eleve" value="Prénoms" styleClass="outputDecalage"/>
+								<p:inputText id="prenom_eleve"
+									value="#{inscriptionBean.etudiants.prenomEtudiant}" required="true" />
+
+								<h:outputLabel for="dateNais_eleve" value="Date naissance"/>
+       						    <p:calendar id="dateNais_eleve" value="#{inscriptionBean.etudiants.datenais}" 
+       						    locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
+
+								<h:outputLabel for="lieuNais_eleve" value="Lieu naissance" styleClass="outputDecalage"/>
+								<p:inputText id="lieuNais_eleve"
+									value="#{inscriptionBean.etudiants.lieunais}" required="true" />
+							
+							<h:outputLabel for="sexe_eleve" value="Genre" />
+								<p:selectOneMenu id="sexe_eleve"
+									value="#{inscriptionBean.chooseedSexe}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeSexe}" var="tata"
+										itemLabel="#{tata.libSexe}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+						
+						<h:outputLabel for="pays_nais" value="Pays de Naissance" styleClass="outputDecalage"/>
+								<p:selectOneMenu id="pays_nais"
+									value="#{inscriptionBean.choosedPaysNaiss}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listePays}" var="tata"
+										itemLabel="#{tata.libpays}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								
+
+								<h:outputLabel for="pays_eleve" value="Pays d'origine" />
+								<p:selectOneMenu id="pays_eleve"
+									value="#{inscriptionBean.choosedPays}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listePays}" var="tata"
+										itemLabel="#{tata.republic}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+
+								<h:outputLabel for="national_eleve" value="Nationalité" styleClass="outputDecalage"/>
+								<p:selectOneMenu id="national_eleve"
+									value="#{inscriptionBean.choosedNationalites}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeNationalites}" var="tata"
+										itemLabel="#{tata.libnationalite}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								
+								
+								<h:outputLabel for="niveau_eleve" value="Niveau" />
+								<p:selectOneMenu id="niveau_eleve"
+									value="#{inscriptionBean.choosedNiveau}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeNiveau}" var="tata"
+										itemLabel="#{tata.libNiveau}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<h:outputLabel for="diplome_eleve" value="Diplôme" styleClass="outputDecalage"/>
+								<p:selectOneMenu id="diplome_eleve"
+									value="#{inscriptionBean.choosedDiplome}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeDiplome}" var="tata"
+										itemLabel="#{tata.libDiplome}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								
+								<h:outputLabel for="matrimoniale_eleve" value="Stuation matrimoniale" />
+								<p:selectOneMenu id="matrimoniale_eleve"
+									value="#{inscriptionBean.choosedMatrimoniale}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeMatrimoniale}" var="tata"
+										itemLabel="#{tata.libmatrimoniale}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<h:outputLabel for="sante_eleve" value="Etat de santé" styleClass="outputDecalage"/>
+								<p:selectOneMenu id="sante_eleve"
+									value="#{inscriptionBean.choosedSante}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeSante}" var="tata"
+										itemLabel="#{tata.libsante}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<h:outputLabel for="phone_eleve" value="Télephone" />
+								<p:inputText id="phone_eleve"
+									value="#{inscriptionBean.etudiants.telEtudiant}" required="true" />
+
+								<h:outputLabel for="mail_eleve" value="mail" styleClass="outputDecalage"/>
+								<p:inputText id="mail_eleve"
+									value="#{inscriptionBean.etudiants.mailEtudiant}"/>
+									
+							<h:outputLabel for="nbr_frer" value="Nombre de frères"/>
+								<p:inputText id="nbr_frer"
+									value="#{inscriptionBean.etudiants.nbfreres}" />
+								
+								
+							<h:outputLabel for="nbr_soeur" value="Nombre de soeurs" styleClass="outputDecalage"/>
+								<p:inputText id="nbr_soeur"
+									value="#{inscriptionBean.etudiants.nbsoeurs}" />	
+								
+								
+							<h:outputLabel for="nbr_enf" value="Nombre d'enfants"/>
+								<p:inputText id="nbr_enf"
+									value="#{inscriptionBean.etudiants.nbenfants}"/>
+							</h:panelGrid>
+
+							<br></br>
+
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="filiere" title="Filière">
+						<p:panel header="Choix Filière">
+							<h:panelGrid id="cplt_grid" columns="4" cellpadding="10">
+								
+								<h:outputLabel for="ecole_eleve" value="Ecole" />
+								<p:selectOneMenu id="ecole_eleve"
+									value="#{inscriptionBean.choosedEcole}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeEcole}"
+										var="tata" itemLabel="#{tata.abrevEcole}"
+										itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<h:outputLabel for="t_formation" value="Formation" />
+								<p:selectOneMenu id="t_formation" value="#{inscriptionBean.choosedTformation}" converter="#{entityConverter}" style="width:50px">
+									<p:ajax listener="#{inscriptionBean.chargerFiliere}" event="change" update="filiere_eleve" process="@this,ecole_eleve"></p:ajax>
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeTformation}"
+										var="tata" itemLabel="#{tata.abrevTformation}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>								
+								
+								<h:outputLabel for="filiere_eleve" value="Filière" />
+								<p:selectOneMenu id="filiere_eleve"
+									value="#{inscriptionBean.choosedFiliere}"
+									converter="#{entityConverter}">
+									<p:ajax listener="#{inscriptionBean.chargerMention}" event="change" update="option_eleve" process="@this"></p:ajax>
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeFiliere}"
+										var="tata" itemLabel="#{tata.abrevFiliere}"
+										itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<h:outputLabel for="option_eleve" value="Option/Mention" />
+								<p:selectOneMenu id="option_eleve"
+									value="#{inscriptionBean.choosedMention}"
+									converter="#{entityConverter}">
+									<p:ajax listener="#{inscriptionBean.chargerSection}" event="change" update="section_eleve" process="@this"></p:ajax>
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeMention}"
+										var="tata" itemLabel="#{tata.abrevMention}"
+										itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+							</h:panelGrid>
+						</p:panel>
+						
+					</p:tab>
+					<p:tab id="section_eleve" title="Section/Parcours">
+						<p:panel header="Choix Section/Parcours">
+						<h:panelGrid id="section_grid" columns="4" cellpadding="5">
+						
+						<h:outputLabel for="parcours_eleve" value="Section/Parcours" />
+								<p:selectOneMenu id="parcours_eleve"
+									value="#{inscriptionBean.choosedSection}"
+									converter="#{entityConverter}">
+									<p:ajax event="change" process="@this"></p:ajax>
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeSection}"
+										var="tata" itemLabel="#{tata.abrevSection}"
+										itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<h:outputLabel for="regime_eleve" value="Regime" />
+								<p:selectOneMenu id="regime_eleve"
+									value="#{inscriptionBean.choosedRegime}"
+									converter="#{entityConverter}" required="true">
+									<p:ajax event="change" process="@this"></p:ajax>
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeRegime}"
+										var="tata" itemLabel="#{tata.libRegime}"
+										itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+
+								<h:outputLabel for="typelog_eleve" value="Hébergement" />
+								<p:selectOneMenu id="typelog_eleve" value="#{inscriptionBean.choosedTypeLogement}" 
+								converter="#{entityConverter}">
+								<p:ajax event="change" process="@this"></p:ajax>
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeTypeLogement}"
+										var="tata" itemLabel="#{tata.libtypeLogement}"
+										itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+							</h:panelGrid>
+							
+							
+							<p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer"
+								
+								actionListener="#{inscriptionBean.enregistrerTout}" immediate="true" update="@parent, :form"
+								binding="#{inscriptionBean.btnValider}"
+								oncomplete="document.location.reload(false)" ajax="false" >
+								<p:confirm header="Confirmation"
+								message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
+								</p:commandButton>
+								
+								<h:commandButton value="Enregistrer"
+								
+								actionListener="#{inscriptionBean.enregistrerTout}" immediate="true" update="@parent, :form"
+								 oncomplete="document.location.reload(false)">
+								</h:commandButton>
+								
+				<p:commandButton value="Annuler"
+									action="#{enseignantBean.annuler}" update="form">
+								</p:commandButton>
+			</f:facet>
+		</p:toolbar>
+							
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+
+<h:form id="form">
+<p:wizard >
+        <p:tab id="personal" title="Personal">
+            <p:panel header="Personal Details">
+                <h:panelGrid id="mention_grid" columns="2" cellpadding="6">
+
+								<p:outputLabel for="cb_ecol" value="Ecole" />
+								<p:selectOneMenu id="cb_ecol" required="true"
+									value="#{fraisScolaireBean.choosedEcole}"
+									converter="#{entityConverter}">
+									<p:ajax listener="#{fraisScolaireBean.chargerFiliere}" event="change"
+										update="cb_filiere" process="@this">
+									</p:ajax>
+									
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{fraisScolaireBean.listEcole}" var="tata"
+									itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>								
+								
+								<p:outputLabel for="cb_filiere" value="Filière" />
+								<p:selectOneMenu id="cb_filiere" required="true"
+									value="#{fraisScolaireBean.choosedFiliere}"
+									converter="#{entityConverter}">
+									
+									<p:ajax listener="#{fraisScolaireBean.chargerMention}" event="change"
+										update="cb_mention" process="@this">
+									</p:ajax>
+									
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{fraisScolaireBean.listFiliere}" var="tata"
+										itemLabel="#{tata.abrevFiliere}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								
+								<p:outputLabel for="cb_mention" value="Mention" />
+								<p:selectOneMenu id="cb_mention" required="true"
+									value="#{fraisScolaireBean.choosedMention}"
+									converter="#{entityConverter}" >
+									<!-- <p:ajax listener="#{fraisScolaireBean.chargerSection}" event="change"
+										update="tab_section, nom_section" process="@this" /> -->
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{fraisScolaireBean.listeMention}" var="tata"
+										itemLabel="#{tata.libMention}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+							</h:panelGrid>
+            </p:panel>
+        </p:tab>
+ 
+        <p:tab id="address" title="Address">
+            <p:panel header="Address Details">
+                <h:panelGrid id="nfrais_grid" columns="4" cellpadding="6">
+							 <p:outputLabel value="Montant Ecolage:" />
+							<p:inputText  styleClass="upercase"/>
+							<!--<p:outputLabel/>
+							<p:outputLabel/>
+							
+							<p:outputLabel value="1er versement:" />
+							<p:inputText value=""/>
+							<p:outputLabel value="Date:" />
+							<p:inputText value=""/>
+							
+							<p:outputLabel value="2e versement:" />
+							<p:inputText value=""/>
+							<p:outputLabel value="Date:" />
+							<p:inputText value=""/>
+							
+							<p:outputLabel value="3e versement:" />
+							<p:inputText value=""/>
+							<p:outputLabel value="Date:" />
+							<p:inputText value=""/>
+							
+							<p:outputLabel value="4e versement:" />
+							<p:inputText value=""/>
+							<p:outputLabel value="Date:" />
+							<p:inputText value=""/>  -->
+							
+							</h:panelGrid>
+            </p:panel>
+        </p:tab>
+ 
+        <p:tab id="contact" title="Contact">
+            <p:panel header="Contact Information">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="Email: *" />
+                    
+ 
+                    <h:outputText value="Phone: " />
+                    
+                </h:panelGrid>
+            </p:panel>
+        </p:tab>
+ 
+        <p:tab id="confirm" title="Confirmation">
+            <p:panel header="Confirmation">
+                <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
+                   
+                        <h:outputText value="Firstname: " />
+                        
+ 
+                        <h:outputText value="Lastname: " />
+                        
+ 
+                       
+                    </h:panelGrid>
+ 
+                    
+ 
+                    
+ 
+                
+            </p:panel>
+        </p:tab>
+    </p:wizard>
+</h:form>
+</body> 
+</html>

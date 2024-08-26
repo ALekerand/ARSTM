@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title>GIVAC</title>
+
+
+<!-- CSS ALekerand -->
+<link rel="stylesheet" type="text/css" href="../resource/cssFolder/secondStyle.css"></link>
+</h:head>
+<h:body>
+		<div style="background-color: #234CA5">
+		
+		<table> 
+<tr>
+	<td> <img src="resource/images/logo_artm.jpg" style="margin-right: 50px; margin-left: 25px"/></td>
+	<td><h1 align="center" style="color: #FFF;" >GESTION INTEGREE DES VACATIONS</h1></td> 
+	</tr>
+	</table>
+		   
+		</div>
+	
+	
+    <h:form id="frm" onsubmit="return initialize();">
+     <div style="position: absolute; width: 350px; height: 300px; top:0; bottom:0; left:0; right: 0; margin: auto;" align="center">
+     	<img src="resource/images/givacLOGO.jpg" style="margin:0px;" alt="lolo" align="center"/>
+     	
+     	<h:panelGrid columns="5" cellspacing="10" style="top:50px; position:relative;" >
+      <h:link  value="Entrée Administrateur"  outcome="/templates/templateAdministrateur.xhtml"  />
+      <h:link  value="Enseignant"  outcome="/templates/templateEnseignant.xhtml" />
+      <h:link  value="Personnel"  outcome=""  />
+      
+     </h:panelGrid>
+     </div>
+    
+  </h:form>
+</h:body>
+</html>

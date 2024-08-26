@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">TYPE LOGEMENT</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<p:panel header="Enregistrement de Type de Logement">
+					<br />
+					<h:panelGrid id="typelogement_grid" columns="4" cellpadding="6">
+						<p:outputLabel for="type_logement" value="Libellé Type Logement" />
+						<p:inputText id="type_logement"
+							value="#{typeLogementBean.typelogement.libtypeLogement}" required="true" />
+					</h:panelGrid>
+
+					<br></br>
+					<h:panelGrid columns="4">
+						<p:commandButton value="Enregistrer"
+							action="#{typeLogementBean.enregistrer}" update="table, typelogement_grid"
+							binding="#{typeLogementBean.btnValider}">
+						</p:commandButton>
+						
+						<p:commandButton value="Modifier"
+							action="#{typeLogementBean.modifier}" update="table, typelogement_grid"
+							binding="#{typeLogementBean.btnModifier}">
+						    <p:confirm header="Confirmation"
+							message="Confirmez-vous la modification?" icon="ui-icon-alert" />
+						</p:commandButton>
+
+						<p:commandButton value="Annuler" action="#{typeLogementBean.annuler}"
+							update="form">
+						</p:commandButton>
+
+						<p:commandButton value="Supprimer"
+							action="#{typeLogementBean.supprimer}" update="form"
+							binding="#{typeLogementBean.btnSuprimer}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{typeLogementBean.listeTypeLogement}"
+					selection="#{typeLogementBean.selectedTypeLogement}"
+					rowKey="#{tata.codetypeLogement}"
+					emptyMessage="Aucun enregistrement">
+					<p:ajax event="rowSelect" listener="#{typeLogementBean.selectionner}"
+						update=":form" />
+					<f:facet name="header">LISTE DES TYPES DE LOGEMENTS</f:facet>
+					<p:column headerText="Type Logement" style="width:100%">#{tata.libtypeLogement}</p:column>
+				</p:dataTable>
+				<!-- </h:form> -->
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

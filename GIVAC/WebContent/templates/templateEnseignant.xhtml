@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>GIVAC</title>
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/bootstrap.min.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/bootstrap-responsive.min.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/adminia.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/adminia-responsive.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/font-awesome.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/app.css" rel="stylesheet"
+		type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/pages/dashboard.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/plugins/fullcalendar/fullcalendar.css"
+		rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resource/cssFolder/owaspSecond.css"></link>
+
+	<!-- CSS ALekerand -->
+	<link rel="stylesheet" type="text/css"
+		href="../resource/cssFolder/theme.css"></link>
+	<link rel="stylesheet" type="text/css"
+		href="../resource/cssFolder/secondStyle.css"></link>
+	<link rel="stylesheet" type="text/css"
+		href="../resource/cssFolder/spinner.css"></link>
+	<link rel="stylesheet" type="text/css"
+		href="../resource/cssFolder/fileupload.css"></link>
+
+
+</h:head>
+<h:body>
+
+	 <div class="navbar">
+
+		<div class="navbar-inner">
+
+		 <div class="container">
+
+				 <a class="brand" >GESTION INTEGREE DES VACATIONS</a>
+				<a class="brand" >
+				 <p:outputLabel id="annesco" value="#{managedInitialisation.anneeScolaireEncours.libAnneeScolaire}" required="true" />
+				 </a>
+			 </div>
+
+		</div>
+
+	 </div>
+
+
+	<div id="content">
+
+		<div class="container">
+
+			<div class="row">
+
+				<div class="span3">
+					<span id="j_id0:templatepage:j_id17"> 
+					<!-- PARTIE MENU (GAUCHE) -->
+
+						<h:form>
+							
+							<div class="account-container">
+
+								<div class="account-avatar">
+									<span id="j_id0:templatepage:j_id17:j_id18:j_id19:j_id26"><img
+										src="../resource/1430457373000/mn4__MNP/img/user.png"
+										style="padding-bottom: 15px;" /></span>
+
+								</div>
+
+								<div class="account-details">
+
+									<span class="account-name">&nbsp;</span> <span
+										class="account-actions"> <a
+										href="#">Profile</a>
+										| <a href="../logout.jsp"
+						                  style="color: red">Déconnecter</a>
+									</span>
+
+								</div>
+
+							</div>
+
+							<hr />
+					
+						<!-- Menu ici -->
+						
+	<p:panelMenu style="width:220px" >
+        <p:submenu label="GESTION DES COURS">
+        <p:menuitem value="Saise de progression"  outcome="/pagesEnseig/editionProgression.xhtml" icon="ui-icon-close"/>
+        <p:menuitem value="Joindre fichier Progression"  outcome="/pagesEnseig/progression.xhtml" icon="ui-icon-close"/>
+        </p:submenu>
+    </p:panelMenu>
+							
+
+						</h:form>
+					</span>
+				</div>
+				<div class="span9">
+					<!-- Insertion du contenu ici -->
+					<ui:insert name="body">
+					</ui:insert>
+
+				</div>
+			</div>
+
+
+		</div>
+
+	</div>
+
+	<!--         </div> -->
+
+	<div id="footer">
+
+		<div class="container">
+			<hr />
+			<p>&copy; 2016&nbsp;SATI(Société Africaine des Technologies de
+				l'Information)</p>
+		</div>
+
+	</div>
+	
+	
+	<script>
+			PrimeFaces.locales['fr'] = {
+				closeText : 'Fermer',
+				prevText : 'Précédent',
+				nextText : 'Suivant',
+				monthNames : [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai',
+						'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre',
+						'Novembre', 'Décembre' ],
+				monthNamesShort : [ 'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun',
+						'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc' ],
+				dayNames : [ 'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi',
+						'Vendredi', 'Samedi' ],
+				dayNamesShort : [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven',
+						'Sam' ],
+				dayNamesMin : [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+				weekHeader : 'Semaine',
+				firstDay : 1,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : '',
+				timeOnlyTitle : 'Choisir l\'heure',
+				timeText : 'Heure',
+				hourText : 'Heures',
+				minuteText : 'Minutes',
+				secondText : 'Secondes',
+				currentText : 'Maintenant',
+				ampm : false,
+				month : 'Mois',
+				week : 'Semaine',
+				day : 'Jour',
+				allDayText : 'Toute la journée'
+			};
+		</script>
+</h:body>
+</html>

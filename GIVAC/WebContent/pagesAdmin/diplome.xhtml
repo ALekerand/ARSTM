@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">DIPLOME</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<!-- <h:form id="form"> -->
+					<p:panel header="Enregistrement">
+					<br />
+							<h:panelGrid id="diplom_grid" columns="4" cellpadding="10">
+								<p:outputLabel for="diplom" value="Diplôme"/>
+								<p:inputText id="diplom" value="#{diplomeBean.diplomes.libDiplome}"
+									styleClass="inputStyle" required="true" />
+									
+							<p:outputLabel for="abr_diplom" value="Abréviation diplôme"/>
+								<p:inputText id="abr_diplom" value="#{diplomeBean.diplomes.abrevDiplome}"
+									styleClass="inputStyle" required="true" />
+								
+							</h:panelGrid>
+						
+						<br></br>
+						<h:panelGrid columns="3">
+							<p:commandButton value="Enregistrer"
+								action="#{diplomeBean.enregistrer}" 
+								update="table, diplom_grid"  binding="#{diplomeBean.btnValider}">
+									<p:confirm header="Confirmation"
+							message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
+								</p:commandButton>
+								
+							<p:commandButton value="Annuler"
+								action="#{diplomeBean.annuler}" update="form" >
+								</p:commandButton>
+								
+						<p:commandButton value="Supprimer" action="#{diplomeBean.supprimer}"
+						update="form" binding="#{diplomeBean.btnSuprimer}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+					</p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+					
+					<br />
+
+					<p:dataTable id="table" selectionMode="single" var="tata"
+						value="#{diplomeBean.listDiplome}" selection="#{diplomeBean.selectedDiplome}"
+						rowKey="#{tata.codeDiplome}" emptyMessage="Aucun enregistrement">
+						<p:ajax event="rowSelect" listener="#{diplomeBean.selectionner}"
+							update=":form" />
+						<f:facet name="header">LISTE DE DIPLOMES</f:facet>
+						<p:column headerText="Code" style="width:20%">#{tata.codeDiplome}</p:column>
+						<p:column headerText="Diplome" style="width:50%">#{tata.libDiplome}</p:column>
+						<p:column headerText="Abréviation" style="width:30%">#{tata.abrevDiplome}</p:column>
+					</p:dataTable>
+				<!-- </h:form> -->
+
+			</div>
+		<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

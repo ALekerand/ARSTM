@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+			<h1 class="page-title">PARAMETRAGE DES FRAIS ANNEXES</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+
+				<!-- WIZARD ICI -->
+				<p:wizard id="wiz" flowListener="#{fraisAnnexeBean.onFlowProcess}">
+						<p:tab id="nationaux" title="Nationaux">
+						<p:panel header="Frais Annexes Nationaux">
+							<h:panelGrid id="nfrais_grid" columns="4" cellpadding="6">
+							
+							<p:outputLabel value="Droit Inscription:" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisInscription}">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Assurance:" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisAssurance}" >
+								<p:ajax event="blur" update="@this" />
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Tenue Complète:" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisTenueComplet}" >
+								<p:ajax event="blur" update="@this" />
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Tenue Sport:" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisTenueSport}" >
+								<p:ajax event="blur" update="@this" />
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Restauration"/>
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisRestauration}" >
+								<p:ajax event="blur" update="@this" />
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais E-Learning" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisElearning}">
+								<p:ajax event="blur" update="@this" />
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Visite médicale"/>
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisVisiteMedic}" >
+								<p:ajax event="blur" update="@this" />
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Ordinateur" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisOrdinateur}" >
+								<p:ajax event="blur" update="@this" />
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Autre Frais" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.autreFrais}" >
+								<p:ajax event="blur" update="@this" />
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					  <p:tab id="non_nationaux" title="Non nationaux">
+						<p:panel header="Frais Annexes Non Nationaux">
+							<h:panelGrid id="nnfrais_grid" columns="4" cellpadding="6">
+														
+							<p:outputLabel value="Droit Inscription:" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisInscription}" >
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Assurance:" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisAssurance}" >
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Tenue Complète:" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisTenueComplet}" >
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Tenue Sport:" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisTenueSport}" >
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Restauration"/>
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisRestauration}" >
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+													
+							<p:outputLabel value="Frais E-Learning" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisElearning}" >
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Visite médicale"/>
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisVisiteMedic}" >
+								<p:ajax event="blur" update="@this" />
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Frais Ordinateur" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisOrdinateur}" >
+							<p:ajax event="blur" update="@this" />						
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel value="Autre Frais" />
+							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.autreFrais}" >
+							<p:ajax event="blur" update="@this" />						
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							</h:panelGrid>
+						</p:panel>
+
+                          <p:commandButton value="ENREGISTRER" action="#{fraisAnnexeBean.enregistrer}"  />
+
+					</p:tab>  
+					
+				</p:wizard>
+			</div>
+			
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

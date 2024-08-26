@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../../templates/templatelogin.xhtml">
+	<ui:define name="content">
+		<p:tabView id="tabView">
+			<p:tab id="tab1" title="Menu">
+				<h:form id="frm" onsubmit="return initialize();">
+					<fieldset id="loginform">
+           Si vous n'etes pas l'adiministrateur, veuillez cliquer sur le lien correspondant à votre profil. 
+             <p><a href="../../../GIVAC/pages/" style="color:blue">Administrateur</a></p>
+            <p><a href="../../../../../../GIVAC/pages/springsecurity/logout.jsf" style="color:red">Déconnecter</a></p>
+					</fieldset>
+				</h:form>
+				<br></br>
+				<br></br>
+
+			</p:tab>
+		</p:tabView>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">PARAMRTRAGE DES MENTIONS FORMATION LMD</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<!-- <h:form id="form"> -->
+				<p:panel header="Enregistrement">
+					<br />
+					<h:panelGrid id="mention_grid" columns="4" cellpadding="10">
+						
+			<p:outputLabel for="ecol" value="Ecole"/>
+			<p:selectOneMenu id="ecol" value="#{mentionBean.choosedEcole}" converter="#{entityConverter}">
+			<p:ajax listener="#{mentionBean.chargerFiliere}" event="change" update="fil" process="@this"></p:ajax>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{mentionBean.listEcole}" var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>
+		    
+		     <p:outputLabel />
+		      <p:outputLabel />
+		    
+		    <p:outputLabel for="fil" value="Filière"/>
+			<p:selectOneMenu id="fil" value="#{mentionBean.choosedFiliere}" converter="#{entityConverter}">
+			<p:ajax listener="#{mentionBean.activerChamps}" event="change" update="table" process="@this"></p:ajax>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{mentionBean.listFiliere}" var="tata" itemLabel="#{tata.nomFiliere}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>		    
+		    
+		     <p:outputLabel />
+		      <p:outputLabel />
+		    
+			<p:outputLabel for="nom_ment" value="Mention" />
+			<p:inputText id="nom_ment"
+			value="#{mentionBean.mention.libMention}" required="true" style="width: 400px"/>
+						
+			<p:outputLabel for="abrev_ment" value="Abréviation" />
+			<p:inputText id="abrev_ment"
+			value="#{mentionBean.mention.abrevMention}" required="true" style="width: 150px" styleClass="upercase"/>
+							
+			<p:outputLabel for="console" value="Niveau"/>
+			<p:selectOneMenu id="console"  value="#{mentionBean.cb_niveau}">
+			<f:selectItem  itemLabel="Selectionnez un niveau"  itemValue=""/>
+			<f:selectItem  itemLabel="Licence 1"  itemValue="Licence 1"/>
+			<f:selectItem  itemLabel="Licence 2"  itemValue="Licence 2"/>
+			<f:selectItem  itemLabel="Licence 3"  itemValue="Licence 3"/>
+			<f:selectItem  itemLabel="Master 1"  itemValue="Master 1"/>
+			<f:selectItem  itemLabel="Master 2"  itemValue="Master 2"/>
+			<f:selectItem  itemLabel="Doctorat 1"  itemValue="Doctorat 1"/>
+			<f:selectItem  itemLabel="Doctorat 2"  itemValue="Doctorat 2"/>
+			<f:selectItem  itemLabel="Doctorat 3"  itemValue="Doctorat 3"/>	
+		    </p:selectOneMenu>
+		    
+		    <p:outputLabel for="cycl" value="Cycle"/>
+			<p:selectOneMenu id="cycl" value="#{mentionBean.choosedCycle}" converter="#{entityConverter}">
+			<f:selectItem  itemLabel="Selectionnez un cycle"  itemValue=""/>
+			<f:selectItems value="#{mentionBean.listCycle}" var="tata" itemLabel="#{tata.nomCycle}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>			
+					
+			</h:panelGrid>
+
+					<br></br>
+					<h:panelGrid columns="4">
+						<p:commandButton value="Enregistrer"
+							action="#{mentionBean.enregistrer}" update="table, mention_grid"
+							binding="#{mentionBean.btnValider}">
+							
+						</p:commandButton>
+
+						<p:commandButton value="Annuler" action="#{mentionBean.annuler}"
+							update="form">
+						</p:commandButton>
+						
+						<p:commandButton value="Modifier"
+							action="#{mentionBean.modifier}" update="form"
+							binding="#{mentionBean.btnModifier}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous la modification?" icon="ui-icon-alert" />
+						</p:commandButton>
+
+						<p:commandButton value="Supprimer"
+							action="#{mentionBean.supprimer}" update="form"
+							binding="#{mentionBean.btnSuprimer}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+						</p:commandButton>
+						
+					
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{mentionBean.listMention}"
+					selection="#{mentionBean.selectedMention}"
+					rowKey="#{tata.codeMention}"
+					emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="160">
+					<p:ajax event="rowSelect" listener="#{mentionBean.selectionner}"
+						update=":form" />
+					<f:facet name="header">LISTE DES MENTIONS</f:facet>
+					<p:column headerText="Libellé Mention" style="width:70%" sortBy="#{tata.libMention}">#{tata.libMention}</p:column>
+					<p:column headerText="Abréviation Mention" style="width:25%">#{tata.abrevMention}</p:column>
+					<p:column headerText="Licence" style="width:25%">#{tata.niveauMention}</p:column>
+				</p:dataTable>
+				<!-- </h:form> -->
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

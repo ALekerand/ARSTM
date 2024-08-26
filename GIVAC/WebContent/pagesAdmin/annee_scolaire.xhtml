@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form_gnl">
+
+			<h1 class="page-title">ANNEE SCOLAIRE</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<legend class="legend">Enregistrement</legend>
+				<h:panelGrid id="grid_anescol" columns="4" cellpadding="4">
+					<p:outputLabel value="Année début" for="debut" />
+					<p:inputText id="debut"
+						value="#{anneeScolaireBean.anneeScolaire.anneesDebut}" required="true"
+						style="width:50px" maxlength="4">
+						<f:convertNumber integerOnly="true" type="number"></f:convertNumber>
+					</p:inputText>
+
+					<p:outputLabel value="Année fin" for="fin"
+						styleClass="outputDecalage" />
+					<p:inputText id="fin"
+						value="#{anneeScolaireBean.anneeScolaire.anneesFin}" required="true"
+						style="width:50px" maxlength="4">
+						<f:convertNumber integerOnly="true" type="number"></f:convertNumber>
+					</p:inputText>
+					
+					<p:outputLabel value="Session examen" for="session"/>
+					<p:inputText id="session"
+						value="#{anneeScolaireBean.anneeScolaire.sessionExamen}" required="true">
+					</p:inputText>
+					
+					
+				<p:outputLabel for="date_commission" value="Date Comission" styleClass="outputDecalage"/>
+			<p:calendar id="date_commission" value="#{anneeScolaireBean.anneeScolaire.dateCommission}" 
+			locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
+				</h:panelGrid>
+				<br />
+				<h:panelGrid id="grid_button" columns="4">
+					<p:commandButton value="Valider"
+						action="#{anneeScolaireBean.enregistrer}" update="form_gnl"
+						binding="#{anneeScolaireBean.btnValider}">
+					</p:commandButton>
+					<p:commandButton value="Annuler" update="form_gnl:grid_anescol, form_gnl:grid_button"
+						process="@this" action="#{anneeScolaireBean.annuler}" />
+						
+					<p:commandButton value="Modifier"
+							action="#{anneeScolaireBean.modifier}" update=":form_gnl"
+							binding="#{anneeScolaireBean.btnModifier}">
+						    <p:confirm header="Confirmation"
+							message="Confirmez-vous la modification?" icon="ui-icon-alert" />
+						</p:commandButton>
+						
+					<p:commandButton value="Supprimer"
+						action="#{anneeScolaireBean.supprimer}" update="form_gnl"
+						binding="#{anneeScolaireBean.btnSuprimer}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+					</p:commandButton>
+				</h:panelGrid>
+
+				<br />
+				<p:dataTable id="table_anneScol" selectionMode="single" var="tata"
+					value="#{anneeScolaireBean.listAnneScol}"
+					selection="#{anneeScolaireBean.selectedAnn}"
+					rowKey="#{tata.codeAnnees}"
+					emptyMessage="Aucun enregistrement">
+					<p:ajax event="rowSelect"
+						listener="#{anneeScolaireBean.selectionnerAnnéeScol}"
+						update=":form_gnl" />
+					<f:facet name="header">ANNEE SCOLAIRE</f:facet>
+					<p:column headerText="Libéllé" style="width:40%">#{tata.libAnneeScolaire}</p:column>
+					<p:column headerText="Sesion examen" style="width:40%">#{tata.sessionExamen}</p:column>
+					<p:column headerText="Date commission" style="width:40%">
+						<h:outputText value="#{tata.dateCommission}">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Etat année" style="width:40%">#{tata.etatAnneScolaire}</p:column>
+				</p:dataTable>
+			</div>
+
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

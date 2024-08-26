@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">LOGEMENT</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<!-- <h:form id="form"> -->
+				<p:panel header="Enregistrement des logements">
+					<br />
+					<h:panelGrid id="logement_grid" columns="4" cellpadding="10">
+						
+			<p:outputLabel for="typelog" value="Type Logement"/>
+			<p:selectOneMenu id="typelog" value="#{logementBean.choosedTypeLogement}" converter="#{entityConverter}">
+			<p:ajax listener="#{logementBean.activerChamps}" event="change" update=":form" process="@this"/>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{logementBean.listTypeLogement}" var="tata" itemLabel="#{tata.libtypeLogement}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>
+		    
+		    <p:outputLabel />
+		    <p:outputLabel />
+	    
+			<p:outputLabel for="lib_camp" value="Libellé Logement" />
+			<p:inputText id="lib_camp"
+			value="#{logementBean.logement.libCampusLoge}" required="true" style="width: 400px" binding="#{logementBean.inputFiliere}"/>
+						
+			<p:outputLabel for="abrev_camp" value="Abréviation" />
+			<p:inputText id="abrev_camp"
+			value="#{logementBean.logement.abrevAmpusLoge}" required="true" style="width: 150px" styleClass="upercase" binding="#{logementBean.inputAbrevFiliere}"/>
+			
+			<p:outputLabel for="det_camp" value="Détail Logement" />
+			<p:inputText id="det_camp"
+			value="#{logementBean.logement.libDetailCampusLoge}" required="true" style="width: 400px" binding="#{logementBean.inputFiliere2}"/>
+			
+			<p:outputLabel for="capac" value="Capacité" />
+			<p:inputText id="capac"
+			value="#{logementBean.logement.capacite}" required="true" style="width: 150px" binding="#{logementBean.inputCapacite}"/>
+			</h:panelGrid>
+
+					<br></br>
+					<h:panelGrid columns="4">
+						<p:commandButton value="Enregistrer"
+							action="#{logementBean.enregistrer}" update="table, logement_grid"
+							binding="#{logementBean.btnValider}">
+							
+						</p:commandButton>
+
+						<p:commandButton value="Annuler" action="#{logementBean.annuler}"
+							update="form">
+						</p:commandButton>
+						
+						<p:commandButton value="Modifier"
+							action="#{logementBean.modifier}" update="form"
+							binding="#{logementBean.btnModifier}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous la modification?" icon="ui-icon-alert" />
+						</p:commandButton>
+
+						<p:commandButton value="Supprimer"
+							action="#{logementBean.supprimer}" update="form"
+							binding="#{logementBean.btnSuprimer}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+						</p:commandButton>
+						
+					
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{logementBean.listeLogByLogement}"
+					selection="#{logementBean.selectedLogement}"
+					rowKey="#{tata.codeLoge}"
+					emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="160">
+					<p:ajax event="rowSelect" listener="#{logementBean.selectionner}"
+						update=":form" />
+					<f:facet name="header">LISTE DES LOGEMENTS</f:facet>
+					<p:column headerText="Libellé Logement" style="width:50%" sortBy="#{tata.libCampusLoge}">#{tata.libCampusLoge}</p:column>
+					<p:column headerText="Abréviation" style="width:30%">#{tata.abrevAmpusLoge}</p:column>
+					<p:column headerText="Capacité" style="width:20%">#{tata.capacite}</p:column>
+				</p:dataTable>
+				<!-- </h:form> -->
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+			<h1 class="page-title">VALIDATION DE SEANCES</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+			<div class="widget-content">
+			<p:panel header="VALIDATION">
+			<h:panelGrid id="chapitre_grid" columns="4" cellpadding="10">
+							<p:outputLabel for="cb_section" value="Section"/>
+							<p:selectOneMenu required="true" id="cb_section"
+								value="#{validationAdminBean.choosedSection}"
+								converter="#{entityConverter}">
+								<p:ajax listener="#{validationAdminBean.chargerListeMatEnseigner}"
+									event="change" update="form" process="@this">
+								</p:ajax>
+								<f:selectItem itemLabel="Selectionnez" itemValue="" />
+								<f:selectItems value="#{validationAdminBean.listeSection}"
+									var="tata" itemLabel="#{tata.abrevSection}" itemValue="#{tata}"></f:selectItems>
+							</p:selectOneMenu>	
+									<p:outputLabel for="cb_enseig" value="Enseignant"/>
+									<p:selectOneMenu id="cb_enseig" value="#{validationAdminBean.chooseedEnseignant}" converter="#{entityConverter}">
+									<p:ajax listener="#{validationAdminBean.chargerListEnseigner}" event="change" update=":form:table_matiere, :form:tabe_seance" process="@this"/>
+									<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+									<f:selectItems value="#{validationAdminBean.listeEnseignant}" var="tata" itemLabel="#{tata.nom} #{tata.prenoms}" itemValue="#{tata}"></f:selectItems>
+								    </p:selectOneMenu>
+									</h:panelGrid>
+							<br />
+							
+						<p:dataTable id="table_matiere" var="tata" selection="#{validationAdminBean.choosedEnseigner}" selectionMode="single"
+							value="#{validationAdminBean.listEseignerEnseignant}" rowKey="#{tata.codeEnseigner}" emptyMessage="Aucune enregistrement">
+							<f:facet name="header">MATIERE PLANIFIEES</f:facet>
+							<p:ajax listener="#{validationAdminBean.chargerListeSeances}" event="rowSelect" update=":form:tabe_seance, :form:table_matiere" process="@this"/>
+							<p:column selectionMode="single" style="width:16px;text-align:center"/>
+							<p:column headerText="Matière" style="width:25%">
+							#{tata.matiere.abrevMatiere}
+							</p:column>
+	
+							<p:column headerText="Abréviation" style="width:20%">
+							#{tata.matiere.abrevMatiere}
+							</p:column>
+							
+							<p:column headerText="Enseignant" style="width:40%">
+							#{tata.enseignant.nom} #{tata.enseignant.prenoms}
+							</p:column>
+						</p:dataTable>
+								
+				
+	<p:dataTable id="tabe_seance" var="toto" value="#{validationAdminBean.listSeance}"  widgetVar="cellSeance"
+					emptyMessage="Aucune séace à valider">
+   	 <f:facet name="header">SEANCES PLANIFIEES</f:facet>
+         <p:column headerText="N°" style="width:25px; text-align: center">
+		<h:outputText value="#{toto.numSeance}"/>
+          </p:column>
+           
+          <p:column headerText="Chapitre" style="width:50px; text-align: center">
+          <h:outputText value="#{toto.chapitre.numeroChapitre}"/>
+       	  </p:column>
+       
+        <p:column headerText="Titre Séance" >
+          <h:outputText value="#{toto.libelleSeance}" />
+        </p:column>
+ 
+       <p:column headerText="VH" style="width:25px; text-align: center">
+          <h:outputText value="#{toto.volumeHoraireSeance}"/>
+       </p:column>
+       
+       <p:column headerText="Date Prévue" style="width:80px">
+       <h:outputText id="german" value="#{toto.datePrevue}"   >
+       	<f:convertDateTime  pattern="dd/MM/yyyy" ></f:convertDateTime>
+       </h:outputText>
+       </p:column>
+       <p:column style="width:70px;text-align: center">
+            <p:commandButton value="Valider" action="#{validationAdminBean.validerSeance}" icon="ui-icon-search" 
+            title="Valider ce cours" update=":form:tabe_seance" process="@this">
+                <f:setPropertyActionListener value="#{toto}" target="#{validationAdminBean.seanceValide}"/>
+            </p:commandButton>
+       </p:column>
+   	</p:dataTable> 
+	</p:panel>
+		</div>
+		
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

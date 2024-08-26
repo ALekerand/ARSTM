@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">PLANNING DES SEANCES</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<p:wizard id="wiz" backLabel="Retour" nextLabel="Suivant">
+					<p:tab id="mat" title="Matières">
+						<p:panel header="Choix de la matière">
+					<table>
+						<tr valign="top">
+							<!-- ici les critères de selection -->
+							<td style="width: 40%;"><h:panelGrid id="affectation_grid"
+									columns="2" cellpadding="5">
+									<p:outputLabel for="cb_section" value="Section" />
+									<p:selectOneMenu required="true" id="cb_section"
+										value="#{planningHebdoBean.choosedSection}"
+										converter="#{entityConverter}">
+										<p:ajax listener="#{planningHebdoBean.chargerListeMatEnseigner}"
+											event="change" update="table, table_planning, planning_Grid" process="@this">
+										</p:ajax>
+										<f:selectItem itemLabel="Selectionnez" itemValue="" />
+										<f:selectItems value="#{planningHebdoBean.listeSection}"
+											var="tata" itemLabel="#{tata.abrevSection}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+								</h:panelGrid></td>
+							<!-- ici le tableau des matières à selectionner -->
+							<td style="width: 60%;">
+								<p:dataTable id="table"
+									selectionMode="single" var="tata" selection="#{planningHebdoBean.choosedEnseigner}"
+									value="#{planningHebdoBean.listeEnseigner}"
+									rowKey="#{tata.codeEnseigner}" 
+									emptyMessage="Aucune enregistrement">
+									<f:facet name="header">MATIERES A PLANIFIER</f:facet>
+									<p:column headerText="Matière" style="width:25%" filterBy="#{tata.codeEnseigner}" filterMatchMode="contains">
+									#{tata.matiere.abrevMatiere}
+									</p:column>
+
+									<p:column headerText="V. H." style="width:20%">
+									#{tata.matiere.abrevMatiere}
+									</p:column>
+									
+									<p:column headerText="Enseignant" style="width:40%">
+									#{tata.enseignant.nom} #{tata.enseignant.prenoms}
+									</p:column>
+								</p:dataTable>
+								</td>
+						</tr>
+					</table>
+					<br></br>
+					
+					<table>
+						<tr valign="top">
+						<!-- ici CHOIX DES PLANNINGS HEBDOMADAIRES -->
+							<td style="width: 40%;">
+							
+					<h:panelGrid columns="4" id="planning_Grid" cellpadding="5">
+					     <p:selectBooleanCheckbox value="#{planningHebdoBean.valLundi}" >	
+					     <p:ajax update="debLun, finLun" listener="#{planningHebdoBean.activerLundi}" />	
+					     </p:selectBooleanCheckbox>	
+						 <h:outputText value="LUNDI"/>
+       					 <p:spinner id="debLun"  min="8" max="18" value="#{planningHebdoBean.hDebut1}" binding="#{planningHebdoBean.spinnerDebLun}" size="20"/>
+       					 <p:spinner id="finLun"  min="8" max="18" value="#{planningHebdoBean.hfin1}" binding="#{planningHebdoBean.spinnerFinLun}"/>
+       					 
+       					 <p:selectBooleanCheckbox value="#{planningHebdoBean.valMardi}">	
+       					 <p:ajax update="debMard, finMard" listener="#{planningHebdoBean.activerMardi}" />	
+       					 </p:selectBooleanCheckbox>	
+       					 <h:outputText value="MARDI" />
+       					 <p:spinner id="debMard" value="#{planningHebdoBean.hdebut2}" min="8" max="18"  binding="#{planningHebdoBean.spinnerDebMard}"/>
+       					 <p:spinner id="finMard"  value="#{planningHebdoBean.hfin2}"   min="8" max="18"  binding="#{planningHebdoBean.spinnerFinMard}"/>
+					
+						<p:selectBooleanCheckbox value="#{planningHebdoBean.valMercred}">	
+       					 <p:ajax update="debMecred, finMercred" listener="#{planningHebdoBean.activerMercredi}" />	
+       					 </p:selectBooleanCheckbox>	
+       					 <h:outputText value="MERCREDI" />
+       					 <p:spinner id="debMecred" value="#{planningHebdoBean.hdebut3}"   min="8" max="18"  binding="#{planningHebdoBean.spinnerDebMerc}"/>
+       					 <p:spinner id="finMercred"  value="#{planningHebdoBean.hfin3}"   min="8" max="18"  binding="#{planningHebdoBean.spinnerFinMerc}"/>
+       					 
+       					 <p:selectBooleanCheckbox value="#{planningHebdoBean.valJeudi}">	
+       					 <p:ajax update="debJeud, finJeud" listener="#{planningHebdoBean.activerJeudi}" />	
+       					 </p:selectBooleanCheckbox>	
+       					 <h:outputText value="JEUDI" />
+       					 <p:spinner id="debJeud" value="#{planningHebdoBean.hdebut4}"   min="8" max="18"  binding="#{planningHebdoBean.spinnerDebJeud}"/>
+       					 <p:spinner id="finJeud"  value="#{planningHebdoBean.hfin4}"   min="8" max="18"  binding="#{planningHebdoBean.spinnerFinJeud}"/>
+					
+						<p:selectBooleanCheckbox value="#{planningHebdoBean.valVendred}">	
+       					 <p:ajax update="debVend, finVend" listener="#{planningHebdoBean.activerVendredi}" />	
+       					 </p:selectBooleanCheckbox>	
+       					 <h:outputText value="VENDREDI" />
+       					 <p:spinner id="debVend" value="#{planningHebdoBean.hdebut5}"   min="8" max="18"  binding="#{planningHebdoBean.spinnerDebVend}"/>
+       					 <p:spinner id="finVend"  value="#{planningHebdoBean.hfin5}"    min="8" max="18"  binding="#{planningHebdoBean.spinnerFinVend}"/>
+					
+					<p:selectBooleanCheckbox value="#{planningHebdoBean.valSamed}">	
+       					 <p:ajax update="debSam, finSam" listener="#{planningHebdoBean.activerSamedi}" />	
+       					 </p:selectBooleanCheckbox>	
+       					 <h:outputText value="SAMEDI" />
+       					 <p:spinner id="debSam" value="#{planningHebdoBean.hdebut6}"   min="8" max="18"  binding="#{planningHebdoBean.spinnerDebSam}"/>
+       					 <p:spinner id="finSam"  value="#{planningHebdoBean.hfin6}"    min="8" max="18"  binding="#{planningHebdoBean.spinnerFinSam}"/>
+					
+					<p:commandButton value="OK" actionListener="#{planningHebdoBean.ajouterPlanning}"
+						update="table_planning">
+					</p:commandButton>
+					</h:panelGrid>
+	
+							</td>
+						<!-- ici RECAP DES PLANNINGS HEBDOMADAIRES -->	
+							<td style="width: 60%;">
+					<p:dataTable id="table_planning" var="tata"
+					value="#{planningHebdoBean.listEmploitemps}"
+					rowKey="#{tata.id}" 
+					emptyMessage="Aucune enregistrement">
+					<f:facet name="header">PLANNING HEBDOMADAIRE</f:facet>
+					<p:column headerText="Jour" style="width:25%">
+					#{tata.jourSemaine.jourSemaine}
+					</p:column>
+
+					<p:column headerText="Heure début" style="width:40%">
+					#{tata.heureDebut}
+					</p:column>
+					
+					<p:column headerText="Heure fin">
+					#{tata.heureFin}
+					</p:column>
+					</p:dataTable>
+							</td>
+						</tr>
+					</table>
+				</p:panel>
+					</p:tab>
+
+					<p:tab id="plang" title="Planning">
+					<p:panel header="Edition ">
+							
+	
+	<h:panelGrid columns="4"  cellpadding="10">
+		<p:outputLabel for="date_modul" value="Date début module" />
+	 <p:calendar id="date_modul" value="#{planningHebdoBean.dateModule}" locale="fr" navigator="true" 
+	 	pattern="dd/MM/yyyy" required="true">		
+	 </p:calendar>
+	<p:commandButton value="Plannifier" actionListener="#{planningHebdoBean.planifierSeance}" update="tabe_seance"></p:commandButton>
+	</h:panelGrid>
+	
+	<p:dataTable id="tabe_seance" var="toto" value="#{planningHebdoBean.listSeance}" 
+	editable="true" editMode="cell" widgetVar="cellSeance">
+    <f:facet name="header">PLANNING DES SEANCES</f:facet>
+ 
+       <p:ajax event="cellEdit" listener="#{planningHebdoBean.onCellEdit}"/>
+        
+         <p:column headerText="N°" style="width:25px">
+		<h:outputText value="#{toto.numSeance}"/>
+          </p:column>
+           
+          <p:column headerText="Chapitre" >
+          <h:outputText value="#{toto.chapitre.numeroChapitre}"/>
+       	  </p:column>
+       
+        <p:column headerText="Titre Séance" >
+          <h:outputText value="#{toto.libelleSeance}" />
+        </p:column>
+ 
+       <p:column headerText="V. Horaire" >
+           <h:outputText value="#{toto.volumeHoraireSeance}"/>
+       </p:column>
+       
+        <p:column headerText="Date Prévue" style="width:75px">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{toto.datePrevue}" ><f:convertDateTime pattern="dd/MM/yyyy" /></h:outputText>
+               </f:facet>
+       		 <f:facet name="input"><p:calendar id="fr" value="#{toto.datePrevue}" locale="de" navigator="true" pattern="dd/MM/yyyy" >
+       		 						</p:calendar>
+       		 </f:facet>
+           </p:cellEditor>
+       </p:column>
+   </p:dataTable>
+   
+   
+   <p:commandButton value="Valider" action="#{planningHebdoBean.EnregistrerPlanning}" immediate="true"
+					update="@parent, form" oncomplete="document.location.reload(false)">
+	</p:commandButton>
+							
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+
+				<br />
+				
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

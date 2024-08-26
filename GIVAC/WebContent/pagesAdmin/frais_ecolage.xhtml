@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+			<h1 class="page-title">PARAMETRAGE DES FRAIS D'ECOLAGE</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+
+				<!-- WIZARD ICI -->
+				<p:wizard id="wiz" flowListener="#{fraisEcolageBean.onFlowProcess}">
+					<p:tab id="tab_mention" title="Mention">
+						<p:panel header="Mention">
+							<h:panelGrid id="mention_grid" columns="2" cellpadding="6">
+							
+								<p:outputLabel for="cb_ecol" value="Ecole" />
+								<p:selectOneMenu id="cb_ecol" required="true"
+									value="#{fraisEcolageBean.choosedEcole}"
+									converter="#{entityConverter}">
+									<p:ajax listener="#{fraisEcolageBean.chargerFiliere}" event="change"
+										update="cb_filiere" process="@this">
+									</p:ajax>
+									
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{fraisEcolageBean.listEcole}" var="tata"
+									itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>								
+								
+								<p:outputLabel for="cb_filiere" value="Filière" />
+								<p:selectOneMenu id="cb_filiere" required="true"
+									value="#{fraisEcolageBean.choosedFiliere}"
+									converter="#{entityConverter}">
+									
+									<p:ajax listener="#{fraisEcolageBean.chargerMention}" event="change"
+										update="cb_mention" process="@this">
+									</p:ajax>
+									
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{fraisEcolageBean.listFiliere}" var="tata"
+										itemLabel="#{tata.abrevFiliere}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								
+								<p:outputLabel for="cb_mention" value="Mention" />
+								<p:selectOneMenu id="cb_mention" required="true"
+									value="#{fraisEcolageBean.choosedMention}"
+									converter="#{entityConverter}" >
+									<!-- <p:ajax listener="#{fraisEcolageBean.chargerSection}" event="change"
+										update="tab_section, nom_section" process="@this" /> -->
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{fraisEcolageBean.listeMention}" var="tata"
+										itemLabel="#{tata.libMention}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								<p:outputLabel value="Droit examen:" />
+								<p:inputText value="#{fraisEcolageBean.fraisExam}">
+								<p:ajax event="blur" update="@this" />
+									<f:convertNumber pattern="##,###.###"></f:convertNumber>
+								</p:inputText>
+								
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="nationaux" title="Nationaux">
+					<p:panel header="Frais Ecolage Nationaux">
+					<br/>
+						<p:outputLabel value="#{fraisEcolageBean.choosedMention.libMention}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
+					<br/>
+							
+							<h:panelGrid id="nfrais_grid" columns="4" cellpadding="6">
+							<p:outputLabel value="Montant Ecolage:" />
+							<p:inputText value="#{fraisEcolageBean.ecolageNation.montantEcolage}" styleClass="upercase">
+							<p:ajax listener="#{fraisEcolageBean.repartirVersNation}" event="blur"
+								update="nfrais_grid" process="@this">
+							</p:ajax>
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel/>
+							<p:outputLabel/>
+							
+							<p:outputLabel value="1er versement:" />
+							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance1}">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							<p:outputLabel value="Date:" />
+							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance1}"
+							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
+							
+							<p:outputLabel value="2e versement:" />
+							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance2}">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							<p:outputLabel value="Date:" />
+							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance2}"
+							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
+							
+							<p:outputLabel value="3e versement:" />
+							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance3}">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							<p:outputLabel value="Date:" />
+							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance3}"
+							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
+							
+							<p:outputLabel value="4e versement:" />
+							<p:inputText value="#{fraisEcolageBean.ecolageNation.mtEchance4}">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							<p:outputLabel value="Date:" />
+							<p:calendar value="#{fraisEcolageBean.ecolageNation.dateEchance4}"
+							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/> 
+							
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					
+						<p:tab id="non_nationaux" title="Non nationaux">
+						<p:panel header="Frais Ecolage Non Nationaux">
+						<br/>
+						<p:outputLabel value="#{fraisEcolageBean.choosedMention.libMention}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
+					<br/>
+							<h:panelGrid id="nnfrais_grid" columns="4" cellpadding="6">
+							<p:outputLabel value="Montant Ecolage:" />
+							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.montantEcolage}" styleClass="upercase">
+							<p:ajax listener="#{fraisEcolageBean.repartirVersNonNation}" event="blur"
+									update="nnfrais_grid" process="@this">
+							</p:ajax>
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>		
+							<p:outputLabel/>
+							<p:outputLabel/>
+							
+							<p:outputLabel value="1er versement:" />
+							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance1}">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							<p:outputLabel value="Date:" />
+							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance1}"
+							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
+							
+							<p:outputLabel value="2e versement:" />
+							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance2}">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							<p:outputLabel value="Date:" />
+							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance2}"
+							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
+							
+							<p:outputLabel value="3e versement:" />
+							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance3}">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							<p:outputLabel value="Date:" />
+							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance3}"
+							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
+							
+							<p:outputLabel value="4e versement:" />
+							<p:inputText value="#{fraisEcolageBean.ecolageNonNation.mtEchance4}">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							<p:outputLabel value="Date:" />
+							<p:calendar value="#{fraisEcolageBean.ecolageNonNation.dateEchance4}"
+							locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/> 
+							
+							</h:panelGrid>
+						</p:panel>
+
+                          <p:commandButton value="ENREGISTRER" action="#{fraisEcolageBean.enregistrer}" immediate="true" update="@parent, :form"
+								oncomplete="document.location.reload(false)">
+								<p:confirm header="Confirmation"
+								message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
+								</p:commandButton>
+
+					</p:tab> 
+					
+				</p:wizard>
+				
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{fraisEcolageBean.listeEcolage}" selection="#{fraisEcolageBean.selectedObject}" rowKey="#{tata.codeEcolage}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="160">
+					<p:ajax event="rowSelect" listener="#{fraisEcolageBean.selectionner}" update=":form" />
+					<f:facet name="header">LISTE DES FRAIS</f:facet>
+					<p:column headerText="Ecole" style="width:15%" sortBy="#{tata.mention.filieres.ecole.abrevEcole}">#{tata.mention.filieres.ecole.abrevEcole}</p:column>
+					<p:column headerText="Mention" style="width:10%">#{tata.mention.abrevMention}</p:column>
+					<p:column headerText="filière" style="width:20%">#{tata.mention.filieres.abrevFiliere}</p:column>
+					<p:column headerText="Nationalité" style="width:20%" sortBy="#{tata.typenationalite.libTypenationalite}">#{tata.typenationalite.libTypenationalite}</p:column>
+					<p:column headerText="Montant" style="width:30%">#{tata.montantEcolage}</p:column>
+					<p:column headerText="Frais examen" style="width:30%">#{tata.fraisExam}</p:column>
+				</p:dataTable>
+			</div>
+			
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

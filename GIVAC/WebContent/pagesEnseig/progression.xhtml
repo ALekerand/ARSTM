@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateEnseignant.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">PROGRAMME</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+			<h:panelGrid id="section_grid" columns="2" cellpadding="10">
+			<p:outputLabel for="cb_section" value="Section"/>
+			<p:selectOneMenu required="true" id="cb_section"
+				value="#{progressionBean.choosedSection}" converter="#{entityConverter}">
+				<p:ajax listener="#{progressionBean.chargerListeMatEnseigner}"
+					event="change" update="table" process="@this">
+				</p:ajax>
+				<f:selectItem itemLabel="Selectionnez" itemValue="" />
+				<f:selectItems value="#{progressionBean.listeSection}"
+					var="tata" itemLabel="#{tata.abrevSection}" itemValue="#{tata}"></f:selectItems>
+			</p:selectOneMenu>	
+			</h:panelGrid>
+				
+					<p:panel header="Enregistrement">
+					<br />
+					<p:dataTable id="table"
+									 var="tata"
+									value="#{progressionBean.listEnseigner}"
+									rowKey="#{tata.matiere.codeMatiere}"
+									emptyMessage="Aucune matière">
+									<f:facet name="header">MATIERES</f:facet>
+									<p:column headerText="Code" style="width:10%">
+					#{tata.matiere.codeMatiere}
+					</p:column>
+
+									<p:column headerText="libéllé Matiere">
+					#{tata.matiere.libMatiere}
+					</p:column>
+
+									<p:column headerText="Abréviation">
+					#{tata.matiere.abrevMatiere}
+					</p:column>
+					
+					<p:column headerText="Section">
+					#{tata.section.abrevSection}
+					</p:column>
+
+					<p:column headerText="Action" style="text-align: center">
+					
+					<h:panelGrid id="button_grid" columns="1" cellpadding="10">
+				<p:commandLink id="btn_fichier_joint" 
+				oncomplete="PF('enseignantDialog').hide()" >
+		        <h:outputText value="Joindre le fichier" />
+		         </p:commandLink>
+		 
+		    <p:commandLink id="btn_editProgres" action="#{progressionBean.editer}" ajax="false">
+		        <h:outputText value="Editer Progression"/>
+		        <f:setPropertyActionListener value="#{tata}" target="#{progressionBean.selectedEnseigner}" />
+		    </p:commandLink>
+		    </h:panelGrid>
+						
+					</p:column>
+								</p:dataTable>
+						
+						<br></br>
+						
+					</p:panel>
+					
+					<br/>
+					
+			</div>
+			
+			<p:dialog id="dialog_affectation" header="Selention des enseignants"
+				widgetVar="enseignantDialog" modal="true" showEffect="fade"
+				hideEffect="fade" resizable="false">
+			</p:dialog>
+			
+			
+		<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+			<h1 class="page-title">HISTORIQUE ETUDIANT</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+			<p:panel header="Historique">
+			
+			<table>
+  <tr>
+    <td>
+    
+    <h:panelGrid columns="2" cellpadding="1">
+    <p:inputText id="matricule" value="#{historiqueBean.matriculeRecherche}" placeholder="Recherche par le matricule" />
+			<p:commandButton actionListener="#{historiqueBean.rechercher}" partialSubmit="true" process="@this,matricule" update="form" icon="ui-icon-search"></p:commandButton>
+    </h:panelGrid>
+    </td>
+    <td>
+    <p:dataTable id="table" selectionMode="single" var="tata"
+						value="#{historiqueBean.listeEtudiant}" selection="#{historiqueBean.selectedEtudiant}"
+						rowKey="#{tata.numetudiant}" emptyMessage="Aucun enregistrement">
+						<p:ajax event="rowSelect" listener="#{historiqueBean.selectionner}" update=":form" />
+						<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
+						<p:column headerText="Nom" style="width:20%" sortBy="#{tata.nomEtudiant}" >#{tata.nomEtudiant}</p:column>
+						<p:column headerText="Prenoms" style="width:50%">#{tata.prenomEtudiant}</p:column>
+						<p:column headerText="Date Naissance" style="width:30%">#{tata.datenais}</p:column>
+						<p:column headerText="Nationalité" style="width:30%">#{tata.nationalites.libnationalite}</p:column>
+					</p:dataTable>
+    </td>
+  </tr>
+</table>
+
+	<fieldset>
+	
+				<legend>Informations de base</legend>		
+					<table>
+					  <tr valign="top">
+					    <td>
+					    <h:panelGrid id="annee_grid" columns="4" cellpadding="6">
+					    
+					    <p:outputLabel for="mat" value="Matricule" styleClass="outputDecalage" />
+						<p:inputText id="mat" value="#{historiqueBean.etudiants.mle}" readonly="true"  />
+						
+						<p:outputLabel for="name" value="Nom" styleClass="outputDecalage"/>
+						<p:inputText id="name" value="#{historiqueBean.etudiants.nomEtudiant}" readonly="true"  />
+						
+						<p:outputLabel for="pren" value="Prenoms" styleClass="outputDecalage"/>
+						<p:inputText id="pren" value="#{historiqueBean.etudiants.prenomEtudiant}" readonly="true" />
+						
+						<p:outputLabel for="dat_nais" value="Date Nais" styleClass="outputDecalage" />
+						<p:inputText id="dat_nais" value="#{historiqueBean.etudiants.datenais}" pattern="dd/MM/yyyy" readonly="true">
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</p:inputText>
+						
+						<p:outputLabel for="tel" value="Contact" styleClass="outputDecalage" />
+						<p:inputText id="tel" value="#{historiqueBean.etudiants.telEtudiant}" readonly="true"/>
+						
+						<p:outputLabel for="email" value="E-mail" styleClass="outputDecalage" />
+						<p:inputText id="email" value="#{historiqueBean.etudiants.mailEtudiant}" readonly="true"/>
+	</h:panelGrid>
+			 </td>
+			<td align="right">
+					<p:graphicImage id="graphIm" value="#{historiqueBean.content}" height="110" width="110"></p:graphicImage>	
+					 </td>
+					  </tr>
+			</table>
+	
+					
+	</fieldset>				
+			<fieldset>
+				<legend>Parcours</legend>
+				
+						<h:panelGrid id="ecolage_gid" columns="4" cellpadding="8">
+				
+				<p:dataTable id="table1" selectionMode="single" var="tata"
+					value="#{historiqueBean.listInscription}"
+					rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement">
+					<p:ajax event="rowSelect" listener="#{historiqueBean.selectionner}" update=":form" />
+					<f:facet name="header">PARCOURS</f:facet>
+					<p:column headerText="Années" style="width:50%">#{tata.anneesScolaire.libAnneeScolaire}</p:column>
+					<p:column headerText="Parcours" style="width:50%">#{tata.section.abrevSection}</p:column>
+				</p:dataTable>			
+
+			</h:panelGrid>
+			
+	
+			</fieldset>
+
+			
+<legend>Autres informations</legend>
+				<h:panelGrid id="annex_grid" columns="4" cellpadding="6">
+				
+				<p:outputLabel for="pere" value="Nom père" />
+				<p:inputText id="pere" value="#{historiqueBean.etudiants.nomPrenomsPere}" readonly="true"/>
+				
+				<p:outputLabel for="profes" value="Profession" styleClass="outputDecalage"/>
+				<p:inputText id="profes" value="#{historiqueBean.etudiants.fonctionPere}" readonly="true"/>
+				
+				<p:outputLabel for="tel_pere" value="Telephone:" />
+				<p:inputText id="tel_pere" value="#{historiqueBean.etudiants.telPere}" readonly="true"/>
+				
+				
+				
+				<p:outputLabel for="mere" value="Nom mère" styleClass="outputDecalage" />
+				<p:inputText id="mere" value="#{historiqueBean.etudiants.nomPrenomsMere}" readonly="true"/>
+				
+				<p:outputLabel for="profmere" value="Prefession " />
+				<p:inputText id="profmere" value="#{historiqueBean.etudiants.fonctionMere}" readonly="true"/>
+				
+				<p:outputLabel for="tel_mere" value="Telephone" styleClass="outputDecalage"/>
+				<p:inputText id="tel_mere" value="#{historiqueBean.etudiants.telMere}" readonly="true"/>
+				
+				
+				
+				<p:outputLabel for="nom_cor" value="Nom corespondant"/>
+				<p:inputText id="nom_cor" value="#{historiqueBean.etudiants.nomPrenomsTuteur}" readonly="true"/>
+				
+				<p:outputLabel for="tel_cor" value="Téléphone" styleClass="outputDecalage"/>
+				<p:inputText id="tel_cor" value="#{historiqueBean.etudiants.telTuteur}" readonly="true"/>
+				
+				<p:outputLabel for="nom_med" value="Nom médecin:" />
+				<p:inputText id="nom_med" value="#{historiqueBean.etudiants.nomPrenomsDocteur}" readonly="true"/>
+				
+				<p:outputLabel for="tel_med" value="Télephone:" styleClass="outputDecalage" />
+				<p:inputText id="tel_med" value="#{historiqueBean.etudiants.telDocteur}" readonly="true"/>
+				
+
+			</h:panelGrid>			
+					<p:toolbar >
+			<f:facet name="right">
+				<p:commandButton value="Imprimer"
+							action="#{historiqueBean.enregistrer}" 
+							binding="#{historiqueBean.btnValider}" update="form">
+						</p:commandButton>
+						
+				<p:commandButton value="Annuler" action="#{historiqueBean.annuler}"
+				binding="#{historiqueBean.btnAnuler}"
+							update="form" process="@this">
+						</p:commandButton>
+				
+			</f:facet>
+		</p:toolbar>
+					
+					
+				</p:panel>
+
+				<br />
+
+				
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

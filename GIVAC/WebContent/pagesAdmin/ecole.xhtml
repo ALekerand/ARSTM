@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">ECOLE</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<!-- <h:form id="form"> -->
+					<p:panel header="Enregistrement">
+					<br />
+					
+							<h:panelGrid id="ecole_grid" columns="4" cellpadding="8">
+								<p:outputLabel for="nom_ecole" value="Ecole"/>
+								<p:inputText id="nom_ecole" value="#{ecoleBean.ecole.nomEcole}"
+								required="true" style="width:350px" />
+								
+						<p:outputLabel for="abrev_ecole" value="Abréviation école"/>
+						<p:inputText id="abrev_ecole" value="#{ecoleBean.ecole.abrevEcole}" required="true" style="width: 100px" styleClass="upercase"/>
+						
+						
+						</h:panelGrid>
+						
+						<br></br>
+						<h:panelGrid columns="4">
+							<p:commandButton value="Enregistrer"
+								action="#{ecoleBean.enregistrer}" 
+								update="table, ecole_grid"  binding="#{ecoleBean.btnValider}">
+								</p:commandButton>
+								
+								<p:commandButton value="Annuler"
+								action="#{ecoleBean.annuler}" update="form" >
+								</p:commandButton>
+								
+							<p:commandButton value="Modifier"
+								action="#{ecoleBean.modifier}" 
+								update="table, ecole_grid"  binding="#{ecoleBean.btnModifier}">
+									<p:confirm header="Confirmation"
+							message="Confirmez-vous la modification" icon="ui-icon-alert" />
+								</p:commandButton>
+								
+							
+								
+						<p:commandButton value="Supprimer" action="#{ecoleBean.supprimer}"
+						update="form" binding="#{ecoleBean.btnSuprimer}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+					</p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+					
+					<br />
+
+					<p:dataTable id="table" selectionMode="single" var="tata"
+						value="#{ecoleBean.listEcole}" selection="#{ecoleBean.selectedEcole}"
+						rowKey="#{tata.codeEcole}" emptyMessage="Aucun enregistrement">
+						<p:ajax event="rowSelect" listener="#{ecoleBean.selectionner}"
+							update=":form" />
+						<f:facet name="header">LISTE DES ECOLES</f:facet>
+						<p:column headerText="Libellé Ecole" style="width:60%">#{tata.nomEcole}</p:column>
+						<p:column headerText="Abréviation Ecole" style="width:40%">#{tata.abrevEcole}</p:column>
+					</p:dataTable>
+
+			</div>
+		<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

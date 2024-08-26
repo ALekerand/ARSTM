@@ -1,0 +1,27 @@
+.ie-cm-alert{
+  display: none;
+  position: fixed;
+  top: 100px;
+  left: 45%;
+  width: 35%;
+  margin: 0 0 0 -12%;
+  padding: 10px;
+  background: #EA3928;
+  border: 2px solid #A92A23;
+  color: #fff;
+  text-shadow: -1px -1px 0 #A92A23;
+  text-align: center;
+  z-index: 9001;
+}
+
+.ie-cm-alert p{
+  margin: 0;
+  line-height: 1;
+}
+
+.ie-cm-alert p.close-alert{
+  margin-top: 10px;
+  font-size: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+}

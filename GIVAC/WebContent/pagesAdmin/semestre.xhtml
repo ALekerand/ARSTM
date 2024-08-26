@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">SEMESTRE</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				
+					<p:panel header="Enregistrement">
+					<br />
+							<h:panelGrid id="semestre_grid" columns="4" cellpadding="10">
+								<p:outputLabel for="sem" value="Libéllé semestre"/>
+								<p:inputText id="sem" value="#{semestreBean.semestre.libSemestre}"
+								 required="true" />
+									
+																	 
+								<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="etat" value="Etat:" />
+							        <p:selectOneRadio id="etat" value="#{semestreBean.semestre.etatSemestre}">
+							            <f:selectItem itemLabel="Actif" itemValue="true" />
+							            <f:selectItem itemLabel="Inactif" itemValue="false" />
+							        </p:selectOneRadio>
+							    </h:panelGrid>
+							</h:panelGrid>
+						
+						<br></br>
+						<h:panelGrid columns="3">
+							<p:commandButton value="Enregistrer"
+								action="#{semestreBean.enregistrer}" 
+								update="table, semestre_grid"  binding="#{semestreBean.btnValider}">
+									<p:confirm header="Confirmation"
+							message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
+								</p:commandButton>
+								
+							<p:commandButton value="Annuler"
+								action="#{semestreBean.annuler}" update="form" >
+								</p:commandButton>
+								
+						<p:commandButton value="Supprimer" action="#{semestreBean.supprimer}"
+						update="form" binding="#{semestreBean.btnSuprimer}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+					</p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+					
+					<br/>
+					<p:dataTable id="table" selectionMode="single" var="tata"
+						value="#{semestreBean.listSemestre}" selection="#{semestreBean.selectedSemestre}"
+						rowKey="#{tata.codeSemestre}" emptyMessage="Aucun enregistrement">
+						<p:ajax event="rowSelect" listener="#{semestreBean.selectionnerRow}"
+							update=":form" />
+						<f:facet name="header">LISTE DES SEMESTRES</f:facet>
+						<p:column headerText="Libéllé semestre" style="width:50%">#{tata.libSemestre}</p:column>
+						<p:column headerText="Etat" style="width:30%">#{tata.etatSemestre}</p:column>
+					</p:dataTable>
+			</div>
+		<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form_gnl">
+
+			<h1 class="page-title">PARAMETRAGE DES ORIGINES</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="well">
+				<legend class="legend">Enregistrement</legend>
+				<h:panelGrid id="grid_orig" columns="2" cellpadding="10">
+					<h:outputLabel value="Libéllé Origine" for="lib_orig"/>
+					<h:inputText id="lib_orig"  value="#{origineBean.origine.libOrigine}" required="true" />
+				</h:panelGrid>
+				<br />
+				<h:panelGrid id="grid_button" columns="4">
+					<p:commandButton value="Enregistrer"
+						action="#{origineBean.enregistrer}" update="form_gnl" binding="#{origineBean.btnValider}">
+					</p:commandButton>
+					
+					<p:commandButton value="Annuler"
+						update="form_gnl:grid_orig, form_gnl:grid_button" process="@this"
+						action="#{origineBean.annuler}" />
+					
+					<p:commandButton value="Modifier" action="#{origineBean.modifier}"
+						update="form_gnl" binding="#{origineBean.btnModifier}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la modification?" icon="ui-icon-alert" />
+					</p:commandButton>
+						
+					<p:commandButton value="Supprimer" action="#{origineBean.supprimer}"
+						update="form_gnl" binding="#{origineBean.btnSuprimer}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+					</p:commandButton>
+				</h:panelGrid>
+
+				<br />
+				<p:dataTable id="table_orig" selectionMode="single" var="tata"
+					value="#{origineBean.listorigine}" selection="#{origineBean.selectedorigine}"
+					rowKey="#{tata.codeOriginr}" emptyMessage="Aucun enregistrement">
+					<p:ajax event="rowSelect" listener="#{origineBean.selectionner}"
+						update=":form_gnl" />
+					<f:facet name="header">LISTE DES MODES</f:facet>
+					<p:column headerText="Libéllé Origine" style="width:30%">#{tata.libOrigine}</p:column>
+				</p:dataTable>
+			</div>
+
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

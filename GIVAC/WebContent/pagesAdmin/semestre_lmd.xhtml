@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">SEMESTRE LMD</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<!-- <h:form id="form"> -->
+					<p:panel header="Enregistrement des Semestres LMD">
+					<br />
+							<h:panelGrid id="sem_grid" columns="4" cellpadding="10">
+								<p:outputLabel for="sem_lmd" value="Semestre LMD"/>
+								<p:inputText id="sem_lmd" value="#{semestreLmdBean.semestrelmd.libSemestreLmd}"
+								required="true" style="width:350px" />
+								
+								<p:outputLabel />
+		      					<p:outputLabel />
+								
+								<p:outputLabel for="niveau" value="Libellé Licence"/>
+								<p:selectOneMenu id="niveau"  value="#{semestreLmdBean.semestrelmd.libLicence}" required="true">
+								<f:selectItem  itemLabel="Selectionnez un niveau"  itemValue=""/>
+								<f:selectItem  itemLabel="Licence 1"  itemValue="Licence 1"/>
+								<f:selectItem  itemLabel="Licence 2"  itemValue="Licence 2"/>
+								<f:selectItem  itemLabel="Licence 3"  itemValue="Licence 3"/>
+								<f:selectItem  itemLabel="Master 1"  itemValue="Master 1"/>
+								<f:selectItem  itemLabel="Master 2"  itemValue="Master 2"/>
+								<f:selectItem  itemLabel="Doctorat 1"  itemValue="Doctorat 1"/>
+								<f:selectItem  itemLabel="Doctorat 2"  itemValue="Doctorat 2"/>
+								<f:selectItem  itemLabel="Doctorat 3"  itemValue="Doctorat 3"/>	
+    							</p:selectOneMenu>
+								
+							</h:panelGrid>
+						
+						<br></br>
+						<h:panelGrid columns="4">
+							<p:commandButton value="Enregistrer"
+								action="#{semestreLmdBean.enregistrer}" 
+								update="table, sem_grid"  binding="#{semestreLmdBean.btnValider}">
+								</p:commandButton>
+								
+								<p:commandButton value="Annuler"
+								action="#{semestreLmdBean.annuler}" update="form" >
+								</p:commandButton>
+								
+							<p:commandButton value="Modifier"
+								action="#{semestreLmdBean.modifier}" 
+								update="table, sem_grid"  binding="#{semestreLmdBean.btnModifier}">
+									<p:confirm header="Confirmation"
+							message="Confirmez-vous la modification" icon="ui-icon-alert" />
+								</p:commandButton>
+								
+							
+								
+						<p:commandButton value="Supprimer" action="#{semestreLmdBean.supprimer}"
+						update="form" binding="#{semestreLmdBean.btnSuprimer}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+					</p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+					
+					<br />
+
+					<p:dataTable id="table" selectionMode="single" var="tata"
+						value="#{semestreLmdBean.listSemestrelmd}" selection="#{semestreLmdBean.selectedSemestrelmd}"
+						rowKey="#{tata.codeSemestreLmd}" emptyMessage="Aucun enregistrement">
+						<p:ajax event="rowSelect" listener="#{semestreLmdBean.selectionner}"
+							update=":form" />
+						<f:facet name="header">LISTE DES SEMESTRES LMD</f:facet>
+						<p:column headerText="Libellé Semestre LMD" style="width:100%">#{tata.libSemestreLmd}</p:column>
+					</p:dataTable>
+
+			</div>
+		<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

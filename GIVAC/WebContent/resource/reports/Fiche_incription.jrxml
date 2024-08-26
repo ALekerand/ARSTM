@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="template" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e138a687-6075-495c-80dd-1d441a183138">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="non_prenoms" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="niveau" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="ecole" class="java.lang.String"/>
+	<parameter name="filiere" class="java.lang.String"/>
+	<parameter name="section" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="annee_academique" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="82" splitType="Stretch">
+			<staticText>
+				<reportElement x="41" y="1" width="472" height="24" forecolor="#010208" uuid="fa53e7a3-fba1-4edc-83ef-10111166c045">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACADEMIE REGIONALE DES SCIENCES ET TECHNIQUE DE LA MER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="21" width="100" height="14" uuid="24b9ccef-16e1-4c45-a5a0-d0ef940a89d9"/>
+				<text><![CDATA[BP: V158 Abidjan ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="36" width="100" height="14" uuid="0fd21d93-57d1-449d-8b44-198c38b8ea0f"/>
+				<text><![CDATA[Tél: 23 46 08 08 / 09]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="51" width="100" height="14" uuid="3d840592-a2b1-4f3f-a1ca-e3ddcfbc5207"/>
+				<text><![CDATA[site web: www.arstm.org]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="20" width="100" height="14" uuid="9cf7426e-15f7-4772-b25c-c07e64350c5e"/>
+				<text><![CDATA[Fax:23 46 08 11]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="34" width="100" height="14" uuid="fef7d51f-701d-423a-bd45-ee1eff55f349"/>
+				<text><![CDATA[E-mail: info@arstm.ci]]></text>
+			</staticText>
+			<image>
+				<reportElement x="-1" y="18" width="61" height="53" uuid="f5adcbd3-cfbe-43f2-9441-7fd7023a0e53"/>
+				<imageExpression><![CDATA["/WebContent/resource/images/logo_artm.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="332" y="58" width="100" height="13" uuid="65c0dc37-b5a5-44e1-be5f-3be3102bb678"/>
+				<text><![CDATA[Année académique:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="432" y="60" width="120" height="22" uuid="94b2d726-7111-4639-90a9-bb0e462c6a6e"/>
+				<textFieldExpression><![CDATA[$P{annee_academique}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="160" y="3" width="240" height="27" uuid="02707860-c457-47a3-9ec8-876f86e784bb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Bell MT" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FICHE D'INSCRIPTION]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="100" height="30" uuid="c4ba4b10-2aed-4529-a4aa-ae359b65f3ec"/>
+				<text><![CDATA[Nom et prénoms:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="1" width="380" height="30" uuid="5aeb978e-f527-4152-9f50-8591218f9739"/>
+				<textFieldExpression><![CDATA[$P{non_prenoms}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="161" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="0" width="100" height="20" uuid="503012ec-607b-4c04-b5dd-ed0ee42417ab"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Est inscrit en ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="92" width="80" height="20" uuid="1ec334c6-d781-4674-a3aa-9616bcfa1739"/>
+				<textFieldExpression><![CDATA[$P{niveau}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="61" width="80" height="20" uuid="120adf02-4785-4625-8607-2c08acdc71a9"/>
+				<text><![CDATA[Filière]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="92" width="80" height="20" uuid="162db144-a6d1-4e8e-b20a-017484d066a4"/>
+				<text><![CDATA[Niveau]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="32" width="80" height="20" uuid="7f01e4ef-fb02-4619-9d24-7eddeaa6ea45"/>
+				<text><![CDATA[Ecole:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="30" width="100" height="22" uuid="ad005ee3-2a80-4009-bb0b-f2309bd004bd"/>
+				<textFieldExpression><![CDATA[$P{ecole}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="60" width="100" height="21" uuid="7b5afd04-3eaa-40c1-8be7-e03554191612"/>
+				<textFieldExpression><![CDATA[$P{filiere}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="123" width="80" height="20" uuid="f52d6b04-78b7-45a4-9a28-37cfd73b7281"/>
+				<text><![CDATA[Section:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="123" width="100" height="20" uuid="fb9ffd40-1e1c-47c9-a10c-1aa9c634fe2b"/>
+				<textFieldExpression><![CDATA[$P{section}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="391" y="40" width="40" height="21" uuid="96182952-10d1-4a36-a83c-98a171b77423">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<text><![CDATA[Edition:]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="431" y="40" width="94" height="21" uuid="e06ba0c1-6c78-4ec0-b558-41ae6f701698"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="525" y="39" width="27" height="22" uuid="e8178220-5117-409a-83a6-f5a085f9b50c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

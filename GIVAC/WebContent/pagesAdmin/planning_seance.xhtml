@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">PLANNING DES SEANCES</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<p:wizard id="wiz" backLabel="Retour" nextLabel="Suivant">
+					<p:tab id="mat" title="Matières">
+						<p:panel header="Choix de la matière">
+					<table>
+						<tr valign="top">
+							<!-- ici les critères de selection -->
+							<td style="width: 40%;"><h:panelGrid id="affectation_grid"
+									columns="2" cellpadding="5">
+									<p:outputLabel for="cb_ecol" value="Ecole" />
+									<p:selectOneMenu required="true" id="cb_ecol"
+										value="#{planningSeanceBean.choosedEcole}"
+										converter="#{entityConverter}">
+										<p:ajax listener="#{planningSeanceBean.chargerFiliere}"
+											event="change" update="cb_filiere, cb_section"
+											process="@this">
+										</p:ajax>
+										<f:selectItem itemLabel="Selectionnez" itemValue="" />
+										<f:selectItems value="#{planningSeanceBean.listEcole}"
+											var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+
+									<p:outputLabel for="cb_filiere" value="Filière" />
+									<p:selectOneMenu required="true" id="cb_filiere"
+										value="#{planningSeanceBean.choosedFiliere}"
+										converter="#{entityConverter}">
+										<p:ajax listener="#{planningSeanceBean.chargerSection}"
+											event="change" update="cb_section" process="@this">
+										</p:ajax>
+										<f:selectItem itemLabel="Selectionnez" itemValue="" />
+										<f:selectItems value="#{planningSeanceBean.listeFiliere}"
+											var="tata" itemLabel="#{tata.abrevFiliere}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+									
+									<p:outputLabel for="cb_section" value="Section" />
+									<p:selectOneMenu required="true" id="cb_section"
+										value="#{planningSeanceBean.choosedSection}"
+										converter="#{entityConverter}" >
+										<p:ajax listener="#{planningSeanceBean.chargerMatiereDispo}"
+											event="change" update="table"  process="@this">
+										</p:ajax>
+										<f:selectItem itemLabel="Selectionnez" itemValue="" />
+										<f:selectItems value="#{planningSeanceBean.listeSection}"
+											var="tata" itemLabel="#{tata.abrevSection}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+									
+								</h:panelGrid></td>
+							<!-- ici le tableau des matières à selectionner -->
+							<td style="width: 60%;">
+								<p:dataTable id="table"
+									 var="tata" selection="#{planningSeanceBean.choosedEnseigner}"
+									value="#{planningSeanceBean.listeEnseigner}"
+									rowKey="#{tata.codeEnseigner}" 
+									emptyMessage="Aucune enregistrement">
+									
+									<f:facet name="header">MATIERES A PLANIFIER</f:facet>
+									<p:ajax event="rowSelectRadio" listener="#{planningSeanceBean.chargerSeance}" update=":form:tabe_seance" process="table"/>
+									<p:column selectionMode="single" style="width:16px;text-align:center">
+									</p:column>
+				
+									<p:column headerText="Matière" style="width:25%" filterBy="#{tata.codeEnseigner}" filterMatchMode="contains">
+									#{tata.matiere.abrevMatiere}
+									</p:column>
+									<p:column headerText="V. H." style="width:20%">
+									#{tata.matiere.abrevMatiere}
+									</p:column>
+									
+									<p:column headerText="Enseignant" style="width:40%">
+									#{tata.enseignant.nom} #{tata.enseignant.prenoms}
+									</p:column>
+								</p:dataTable>
+				
+				 		<h:panelGrid columns="2"  cellpadding="10">
+				 	<p:outputLabel for="date_modul" value="Date début module" />
+					<p:calendar id="date_modul" value="#{planningSeanceBean.dateModule}" locale="fr" navigator="true" 
+				 		pattern="dd/MM/yyyy" required="true">
+				 	<p:ajax event="blur" listener="#{planningSeanceBean.chargerSeance}" update=":form:tabe_seance" process="table"/>
+				 	</p:calendar>
+				</h:panelGrid>
+	
+						</td>
+						</tr>
+					</table>
+					<br></br>
+
+				</p:panel>
+					</p:tab>
+
+					<p:tab id="plang" title="Planning">
+					<p:panel header="Edition ">
+							
+	<table> 
+		<tr valign="top">
+		<td style="width:20%">	
+			<!-- ici le tableau des séances datées -->	
+			<p:outputLabel for="cb_semaine" value="Semaine"/>
+			<p:selectOneMenu id="cb_semaine"
+				value="#{planningSeanceBean.choosedSemaine}"
+				converter="#{entityConverter}" styleClass="ui-selectonemenu" required="true">
+				<p:ajax event="change" process="@this" listener="#{planningSeanceBean.chargerDate}" update="dateDT"/>
+				<f:selectItem itemLabel="Selectionnez" itemValue="" />
+				<f:selectItems value="#{planningSeanceBean.listSemaine}" var="tata"
+					itemLabel="#{tata.libSemaine}" itemValue="#{tata}" itemDescription="Semaine #{tata.codeSemaine}"></f:selectItems>
+			</p:selectOneMenu>
+
+
+	 <p:dataTable id="dateDT" var="tata" value="#{planningSeanceBean.listDateSemaine}" selection="#{planningSeanceBean.selectedDates}" rowKey="#{tata.numDate}">
+	        <p:column headerText="Jour" style="width:30px">
+	            <h:outputText value="#{tata.jourSemaine}" />
+	        </p:column>
+	        <p:column headerText="Date" style="width:40px">
+	            <h:outputText value="#{tata.date}" >
+	            <f:convertDateTime pattern="dd/MM/yyyy" />
+	            </h:outputText>
+	        </p:column>
+	        <p:column selectionMode="multiple" style="width:12px;text-align:center"/>
+     </p:dataTable>
+    
+    <p:commandButton value="Valider" actionListener="#{planningSeanceBean.validerCheckedDate}"
+					update="dateDT, det_seance, dateSelecte, tabe_seance" >
+	</p:commandButton>
+
+		</td>
+		
+		<td >
+			<!-- ici Détails des selections -->
+			<fieldset id="recap_Fieldset">
+			
+			<legend>Détails plannification</legend>
+							
+			<table id="tableRecap">
+				<tr valign="top">
+				<td >
+				<!-- Ici recap des details liés à la matière -->
+				<h:panelGrid id="det_seance" columns="2" cellpadding="4">
+				<p:outputLabel for="totalVH" value="Total VH:"/>
+				<p:outputLabel id="totalVH" value="#{planningSeanceBean.choosedEnseigner.vhEffectif}" styleClass="outputAffich"/>
+				
+				<p:outputLabel  value="SEANCES"/>
+				<p:outputLabel />
+				<p:outputLabel for="nbr_seance" value="Total:"/>
+				<p:outputLabel id="nbr_seance" value="#{planningSeanceBean.nombreSeance}" styleClass="outputAffich"/>
+				
+				<p:outputLabel for="nbseance_affect" value="Affectées:" />
+				<p:outputLabel id="nbseance_affect" value="#{planningSeanceBean.nombreSeanceDate}" styleClass="outputAffich"/>
+
+				<p:outputLabel for="nbSeance_nAffect" value="Restantes:"/>
+				<p:outputLabel id="nbSeance_nAffect" value="#{planningSeanceBean.nombreSeanceRest}" styleClass="outputAffich"/>
+				</h:panelGrid>
+				</td>
+				
+				<td style="width:85%">
+				<!-- Ici tableau de recap de date selectionnée -->
+				
+				<p:outputLabel id="dateSelecte" value="Séances Restantes:  #{planningSeanceBean.nombreDateSelect}"/>
+				 <p:commandButton value="Affecter Dates" actionListener="#{planningSeanceBean.affecterDates}" update="tabe_seance"/>
+		<p:dataTable id="tabe_seance" var="toto" value="#{planningSeanceBean.listSeance}" widgetVar="cellSeance">
+    <f:facet name="header"> PLANNING DES SEANCES  </f:facet>
+         <p:column headerText="N°" style="width:15px">
+		<h:outputText value="#{toto.numSeance}"/>
+          </p:column>
+           
+          <p:column headerText="Chapitre" style="width:40px">
+          <h:outputText value="#{toto.chapitre.numeroChapitre}"/>
+       	  </p:column>
+       
+        <p:column headerText="Titre Séance" >
+          <h:outputText value="#{toto.libelleSeance}" />
+        </p:column>
+ 
+       <p:column headerText="V. Horaire" style="width:50px">
+           <h:outputText value="#{toto.volumeHoraireSeance}"/>
+       </p:column>
+       
+        <p:column headerText="Date Prévue" style="width:70px">
+               <h:outputText value="#{toto.datePrevue}" ><f:convertDateTime pattern="dd/MM/yyyy" />
+               </h:outputText>
+       </p:column>
+   </p:dataTable>
+   
+   <br />
+   	<p:commandButton value="Confirmer" action="#{planningSeanceBean.EnregistrerPlanning}" immediate="true"
+		update="@parent, form" oncomplete="document.location.reload(false)">
+	</p:commandButton>
+
+				</td>
+				
+				</tr>
+			
+			</table>
+			<h:panelGrid id="seance_grid" columns="2" cellpadding="4">
+				<h:panelGroup >
+				
+				</h:panelGroup>
+				
+				<h:panelGroup>
+				
+				</h:panelGroup>
+			</h:panelGrid> 
+			</fieldset>
+			
+		</td>
+		</tr>
+	</table>
+						</p:panel>
+					</p:tab>
+					
+				</p:wizard>
+
+				<br />
+				
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

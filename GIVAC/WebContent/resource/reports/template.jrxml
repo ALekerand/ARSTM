@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="template" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e138a687-6075-495c-80dd-1d441a183138">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="71" splitType="Stretch">
+			<staticText>
+				<reportElement x="41" y="1" width="472" height="24" forecolor="#010208" uuid="fa53e7a3-fba1-4edc-83ef-10111166c045">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACADEMIE REGIONALE DES SCIENCES ET TECHNIQUE DE LA MER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="21" width="100" height="14" uuid="24b9ccef-16e1-4c45-a5a0-d0ef940a89d9"/>
+				<text><![CDATA[BP: V158 Abidjan ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="36" width="100" height="14" uuid="0fd21d93-57d1-449d-8b44-198c38b8ea0f"/>
+				<text><![CDATA[Tél: 23 46 08 08 / 09]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="51" width="100" height="14" uuid="3d840592-a2b1-4f3f-a1ca-e3ddcfbc5207"/>
+				<text><![CDATA[site web: www.arstm.org]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="20" width="100" height="14" uuid="9cf7426e-15f7-4772-b25c-c07e64350c5e"/>
+				<text><![CDATA[Fax:23 46 08 11]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="34" width="100" height="14" uuid="fef7d51f-701d-423a-bd45-ee1eff55f349"/>
+				<text><![CDATA[E-mail: info@arstm.ci]]></text>
+			</staticText>
+			<image>
+				<reportElement x="7" y="20" width="50" height="50" uuid="66ad55d1-a16c-4fb9-8ac0-bf405dc16574"/>
+				<imageExpression><![CDATA["/WebContent/resource/images/logo_artm.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="3" width="147" height="15" uuid="02707860-c457-47a3-9ec8-876f86e784bb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Bell MT" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FICHE DE NOTATION]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="391" y="40" width="40" height="21" uuid="96182952-10d1-4a36-a83c-98a171b77423">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<text><![CDATA[Edition:]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="431" y="40" width="94" height="21" uuid="e06ba0c1-6c78-4ec0-b558-41ae6f701698"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="525" y="39" width="27" height="22" uuid="e8178220-5117-409a-83a6-f5a085f9b50c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

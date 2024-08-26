@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">ATTRIBUTION DE DROIT</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<!-- <h:form id="form"> -->
+				<p:panel header="Enregistrement">
+					<br />
+					<h:panelGrid id="f_grid" columns="4" cellpadding="10">
+						<p:outputLabel for="nom_fil" value="Filière" />
+						<p:inputText id="nom_fil"
+							value="#{filiereBean.filieres.nomFiliere}" required="true" />
+						
+						<p:outputLabel for="abrev_fil" value="Abréviation" />
+						<p:inputText id="abrev_fil"
+							value="#{filiereBean.filieres.abrevFiliere}" required="true" />
+							
+					<p:outputLabel for="ecol" value="Ecole"/>
+			<p:selectOneMenu id="ecol" value="#{filiereBean.choosedEcole}" converter="#{entityConverter}">
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{filiereBean.listEcole}" var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>
+					</h:panelGrid>
+
+					<br></br>
+					<h:panelGrid columns="3">
+						<p:commandButton value="Enregistrer"
+							action="#{filiereBean.enregistrer}" update="table"
+							binding="#{filiereBean.btnValider}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
+						</p:commandButton>
+
+						<p:commandButton value="Annuler" action="#{filiereBean.annuler}"
+							update="form">
+						</p:commandButton>
+
+						<p:commandButton value="Supprimer"
+							action="#{filiereBean.supprimer}" update="form"
+							binding="#{filiereBean.btnSuprimer}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{filiereBean.listFiliere}"
+					selection="#{filiereBean.selectedFiliere}"
+					rowKey="#{tata.codeFiliere}"
+					emptyMessage="Aucun enregistrement">
+					<p:ajax event="rowSelect" listener="#{filiereBean.selectionner}"
+						update=":form" />
+					<f:facet name="header">LISTE DES FILIERES</f:facet>
+					<p:column headerText="Code" style="width:10%">#{tata.codeFiliere}</p:column>
+					<p:column headerText="Nom filière" style="width:60%">#{tata.nomFiliere}</p:column>
+					<p:column headerText="Abréviation filière" style="width:30%">#{tata.abrevFiliere}</p:column>
+				</p:dataTable>
+				<!-- </h:form> -->
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">ENREGISTREMENT DES PARCOURS LMD</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<!-- <h:form id="form"> -->
+				<p:panel header="Enregistrement des Parcours">
+					<br />
+			<h:panelGrid id="parcours_grid" columns="4" cellpadding="10">
+						
+			<p:outputLabel for="ecol" value="Ecole"/>
+			<p:selectOneMenu id="ecol" value="#{parcoursBean.choosedEcole}" converter="#{entityConverter}">
+			<p:ajax listener="#{parcoursBean.activerChamps1}" event="change" update="fil" process="@this"></p:ajax>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{parcoursBean.listEcole}" var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>
+		    
+		     <p:outputLabel />
+		      <p:outputLabel />
+		    
+		    <p:outputLabel for="fil" value="Filière"/>
+			<p:selectOneMenu id="fil" value="#{parcoursBean.choosedFiliere}" converter="#{entityConverter}">
+			<p:ajax listener="#{parcoursBean.chargerMention}" event="change" update="table, ment" process="@this"></p:ajax>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{parcoursBean.listFiliere}" var="tata" itemLabel="#{tata.nomFiliere}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>		    
+		    
+		     <p:outputLabel />
+		      <p:outputLabel />
+		      
+		    <p:outputLabel for="ment" value="Mention"/>
+			<p:selectOneMenu id="ment" value="#{parcoursBean.choosedMention}" converter="#{entityConverter}">
+			<p:ajax listener="#{parcoursBean.activerChamps2}" event="change" update="table" process="@this"></p:ajax>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{parcoursBean.listMention}" var="tata" itemLabel="#{tata.libMention}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>		    
+		    
+		     <p:outputLabel />
+		      <p:outputLabel />
+		      
+			<p:outputLabel for="nom_parcours" value="Parcours" />
+			<p:inputText id="nom_parcours"
+			value="#{parcoursBean.section.nomSection}" required="true" style="width: 400px"/>
+						
+			<p:outputLabel for="abrev_parcours" value="Abréviation" />
+			<p:inputText id="abrev_parcours"
+			value="#{parcoursBean.section.abrevSection}" required="true" style="width: 150px" styleClass="upercase"/>
+		      
+			<p:outputLabel for="cb_exam" value="Examen"/>
+			<p:selectOneMenu id="cb_exam" value="#{parcoursBean.cb_exam}" converter="#{entityConverter}">
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItem  itemLabel="Oui"  itemValue="Oui"/>
+			<f:selectItem  itemLabel="Non"  itemValue="Non"/>
+		    </p:selectOneMenu>
+		    
+			</h:panelGrid>
+			
+					<br></br>
+						
+					<h:panelGrid columns="4">
+						<p:commandButton value="Enregistrer"
+							action="#{parcoursBean.enregistrer}" update="table, parcours_grid"
+							binding="#{parcoursBean.btnValider}">
+							
+						</p:commandButton>
+
+						<p:commandButton value="Annuler" action="#{parcoursBean.annuler}"
+							update="form">
+						</p:commandButton>
+						
+						<p:commandButton value="Modifier"
+							action="#{parcoursBean.modifier}" update="form"
+							binding="#{parcoursBean.btnModifier}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous la modification?" icon="ui-icon-alert" />
+						</p:commandButton>
+
+						<p:commandButton value="Supprimer"
+							action="#{parcoursBean.supprimer}" update="form"
+							binding="#{parcoursBean.btnSuprimer}">
+							<p:confirm header="Confirmation"
+								message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+						</p:commandButton>
+						
+					
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{parcoursBean.listeSection}"
+					selection="#{parcoursBean.selectedSection}"
+					rowKey="#{tata.codeSection}"
+					emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="160">
+					<p:ajax event="rowSelect" listener="#{parcoursBean.selectionner}"
+						update=":form" />
+					<f:facet name="header">LISTE DES PARCOURS</f:facet>
+					<p:column headerText="Libellé Parcours" style="width:70%" sortBy="#{tata.nomSection}">#{tata.nomSection}</p:column>
+					<p:column headerText="Abréviation Parcours" style="width:30%">#{tata.abrevSection}</p:column>
+				</p:dataTable>
+				<!-- </h:form> -->
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

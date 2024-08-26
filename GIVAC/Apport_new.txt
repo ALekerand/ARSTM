@@ -1,0 +1,63 @@
+************************** MODIFICATION A APPORTER*****************************
+	MCD
+	*Revoir le lien entre Ecolage et Mention (Pas besoin que l'association devienne une table)
+	
+	
+	
+	Frais logement: ramener le wizard au depart apr�s enregistrement
+	parcours.xhtml:vider les champs �pr�s enregistrement
+	Se pencher sur les scope des bean
+	Se pencher sur les combos et autres info Mis � jour par l'administrateur (Ne doit pas n�cessiter le rede�marrage deu serveur)
+
+	
+	
+	06/06/2020
+	Voir la page Ecolage (gerer le wizard et aussi un tableau recap)
+	- Page complement: Gerer le fait que la photo ne soit pas renseigner avant enregistrement
+	
+	05/06/2020: g�rer le taux de r�duction dans etablissement scolarit� afin de prende en compte les virgules
+		- Mettre un etat sold� dans l'inscription pour faciliter les requettes sur les versement (OK Mis dans le MCD)
+		
+	12/09/2020
+		Mettre un tableau recap des montant logement
+		vider les champs apres enregistrement et remettre le wizard au depart
+		
+		revoir les dates ech�ances dans �colage(celle desnon nationaux ne s'enregistre pas)
+=============================================================10/03/2021===============================================
+	*Gerer les matricules des enseignants (Modifi� dans le MCD) reste dans le code
+		comninaison: ann�e-USER_ID
+	
+	
+	
+	
+	*Gerer les photos des enseignentas comme ceux des �tudiants
+	
+	Creer une table niveau qui sera rattach�e aux entit�s Mention et Semestre
+	
+	* Vider la page UE apr�s enregistrement
+	* Apr�s s�lection d'une mention, afficher toutes les UEs d�ja enregistr�e.
+	* Page ECUE: Reactualiser toutes les combos apr�s concern�es apr�s un choix	
+	
+	
+	====================================09/11/22=============================
+	* Vider la page Mention apr�s enregistrement
+	* Vider la page frais ecolage apres enregistrement
+	* vider la page inscription apr�s enregistrement
+	
+	=================================== 24/03/2024 ============================
+	Tous les ic (code) des tables sont passé en seqenciel dans la modélisation
+	
+	
+	
+
+
+
+
+
+
+
+		
+		
+		
+
+

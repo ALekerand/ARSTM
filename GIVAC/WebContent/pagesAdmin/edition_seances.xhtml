@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+	<h:form id="form">
+
+			<h1 class="page-title">EDITION DES SEANCES</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+			
+			<p:wizard id="wiz" backLabel="Retour" nextLabel="Suivant">
+					<p:tab id="matiere" title="Matières">
+					<p:panel header="Choix de la matière">
+			
+							<h:panelGrid id="chapitre_grid"
+									columns="4" cellpadding="10">
+									
+							<p:outputLabel for="cb_section" value="Section"/>
+							<p:selectOneMenu required="true" id="cb_section"
+								value="#{editionSeanceBean.choosedSection}"
+								converter="#{entityConverter}">
+								<p:ajax listener="#{editionSeanceBean.chargerListeMatEnseigner}"
+									event="change" update="enseig, table_matiere" process="@this">
+								</p:ajax>
+								<f:selectItem itemLabel="Selectionnez" itemValue="" />
+								<f:selectItems value="#{editionSeanceBean.listeSection}"
+									var="tata" itemLabel="#{tata.abrevSection}" itemValue="#{tata}"></f:selectItems>
+							</p:selectOneMenu>	
+								
+									<p:outputLabel for="enseig" value="Enseignant"/>
+									<p:selectOneMenu id="enseig" value="#{editionSeanceBean.chooseedEnseignant}" converter="#{entityConverter}" required="true">
+									<p:ajax listener="#{editionSeanceBean.chargerListEnseigner}" event="change" update=":form:table_matiere" process="@this"/>
+									<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+									<f:selectItems value="#{editionSeanceBean.listeEnseignant}" var="tata" itemLabel="#{tata.nom} #{tata.prenoms}" itemValue="#{tata}"></f:selectItems>
+								    </p:selectOneMenu>
+								</h:panelGrid>
+					<br />
+				
+				<p:dataTable id="table_matiere" var="tata" selection="#{editionSeanceBean.choosedEnseigner}"
+					value="#{editionSeanceBean.listEseignerEnseignant}"
+					rowKey="#{tata.codeEnseigner}" 
+					emptyMessage="Aucune enregistrement">
+					<f:facet name="header">MATIERE A ENSEIGNER</f:facet>
+				   
+				    <p:ajax event="rowSelectRadio" listener="#{editionSeanceBean.choisirEnseigner}" update="form" process="table_matiere"/>
+                   
+                    <p:column selectionMode="single" style="width:16px;text-align:center"></p:column>					
+					<p:column headerText="Matière" style="width:25%" filterBy="#{tata.matiere.abrevMatiere}" filterMatchMode="contains">
+					#{tata.matiere.abrevMatiere}
+					</p:column>
+
+					<p:column headerText="Abréviation" style="width:20%">
+					#{tata.matiere.abrevMatiere}
+					</p:column>
+					
+					<p:column headerText="Enseignant" style="width:40%">
+					#{tata.enseignant.nom} #{tata.enseignant.prenoms}
+					</p:column>
+				</p:dataTable>
+				</p:panel>
+				</p:tab>
+				
+				<p:tab id="edit_seance" title="Séances">
+				<p:panel header="Chaiptre">
+				<div class="div">
+						<h:panelGrid id="recap_grid"
+								columns="6" cellpadding="6">
+			
+								<p:outputLabel for="sect_choisie" value="Filière:" />
+								<p:outputLabel id="sect_choisie"
+									value="#{editionSeanceBean.choosedSection.abrevSection}"/>
+								
+								<p:outputLabel for="mat_selected" value="Matière:" styleClass="outputDecalage"/>
+								<p:outputLabel id="mat_selected" value="#{editionSeanceBean.choosedEnseigner.matiere.libMatiere}" />
+
+								<p:outputLabel for="enseig_choisie" value="Enseigant:" styleClass="outputDecalage"/>
+								<p:outputLabel id="enseig_choisie" value="#{editionSeanceBean.chooseedEnseignant.nom} #{editionSeanceBean.chooseedEnseignant.prenoms}" />
+							</h:panelGrid> 
+							</div>
+				
+				<fieldset>
+				<legend>Edition des chapitres et seances</legend>
+				<h:panelGrid columns="6" cellpadding="5" cellspacing="5">
+				<p:outputLabel for="num_Chap" value="N° Chapitre/Module" />
+				<p:inputText id="num_Chap" value="#{editionSeanceBean.chapitre.numeroChapitre}" required="true" style="width:30px" readonly="true"/>
+					
+				<p:outputLabel for="lib_Chap" value="Intitulé" styleClass="outputDecalage"/>
+				<p:inputTextarea id="lib_Chap" rows="3" cols="10" value="#{editionSeanceBean.chapitre.libelleChap}" required="true"/>
+				
+				<p:outputLabel for="VH_Chap" value="Volume horaire" styleClass="outputDecalage"/>
+				<p:inputText id="VH_Chap" value="#{editionSeanceBean.chapitre.volumeHoraireChap}" required="true" style="width:30px">
+				<p:ajax event="blur" process=":form:VH_Chap"/>
+				</p:inputText>	
+				</h:panelGrid>
+				
+				
+				
+	<p:dataTable id="editTable" var="toto" value="#{editionSeanceBean.listSeanceEdit}" 
+	widgetVar="cellSeance" editable="true" style="margin-bottom:20px" emptyMessage="Aucun enregistrement">
+       <f:facet name="header">
+ 		<p:commandButton value="+Séance" action="#{editionSeanceBean.ajouterSeance}"
+			update="form" title="Ajouter une ligne de séance"  style="float:left">
+		</p:commandButton>
+		
+		<p:commandButton value="-Séance" action="#{editionSeanceBean.supprimerSeance}"
+			update="form" title="Retirer la dernière ligne" style="float:left">
+		</p:commandButton>
+		
+		EDITION DES SEANCES
+		</f:facet>
+       <p:ajax event="rowEdit" listener="#{editionSeanceBean.onRowEdit}" update="editTable"/>
+       <p:ajax event="rowEditCancel" listener="#{editionSeanceBean.onRowCancel}" update="form"/>
+ 
+       <p:column headerText="N° Séance" style="width:60px">
+		<h:outputText value="#{toto.numSeance}" />
+       </p:column>
+ 
+       <p:column headerText="Séance">
+		<p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{toto.libelleSeance}" /></f:facet>
+               <f:facet name="input">
+               <p:inputTextarea rows="2" cols="100" value="#{toto.libelleSeance}"/>
+               </f:facet>
+         </p:cellEditor>
+        </p:column>
+ 
+        <p:column headerText="V. Horaire" style="width:60px">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{toto.volumeHoraireSeance}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{toto.volumeHoraireSeance}" label="volume Horaire"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+
+ 
+       <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
+       
+       <f:facet name="footer">
+        
+      </f:facet>
+   </p:dataTable>
+	
+	<h:panelGrid columns="8">
+		<p:commandButton value="Enregistrer"
+			action="#{editionSeanceBean.enregistrerSeance}" 
+			binding="#{editionSeanceBean.btnValider}" update="form">
+		</p:commandButton>
+		
+		<p:commandButton value="Annuler" action="#{editionSeanceBean.annuler}"
+		      process="@this"	update="form">
+		</p:commandButton>
+		
+		<h:outputLabel for="VH_total" value="VH Total:" styleClass="outputDecalage"/>
+        <h:outputLabel id="VH_total" value="#{editionSeanceBean.choosedEnseigner.vhEffectif}"/> 
+        
+        <h:outputLabel for="VH_edite" value="VH édité:" styleClass="outputDecalage"/>
+        <h:outputLabel id="VH_edite" value="#{editionSeanceBean.VHEdite}"/> 
+        
+        <h:outputLabel for="VH_restant" value="VH Restant: " styleClass="outputDecalage"/>
+        <h:outputLabel id="VH_restant" value="#{editionSeanceBean.VHRestant}"/>
+	</h:panelGrid> 
+
+	</fieldset>
+				<br/>
+			
+		<p:dataTable id="table_planning" var="toto" value="#{editionSeanceBean.listeRecapSeance}" 
+						 rowKey="#{tata.codeSeance}" emptyMessage="Aucun enregistrement">
+		<f:facet name="header">SEANCE DE LA MATIIERE
+				</f:facet>	
+		<p:column headerText="N° Chapitre/Module" style="width:60px">
+		<h:outputText value="#{toto.chapitre.numeroChapitre}"/>
+		</p:column>
+		
+		<p:column headerText="N° Séance" style="width:60px">
+		<h:outputText value="#{toto.numSeance}" />
+		</p:column>
+		
+         <p:column headerText="libéllé Séance">
+			<h:outputText value="#{toto.libelleSeance}" />
+          </p:column>
+ 
+       	<p:column headerText="V. Horaire" style="width:50px">
+               <h:outputText value="#{toto.volumeHoraireSeance}" />
+		</p:column>	
+			</p:dataTable>
+				
+				</p:panel>
+				</p:tab>
+				</p:wizard>
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

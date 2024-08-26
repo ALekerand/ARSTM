@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">NIVEAU</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+					<p:panel header="Enregistrement">
+					<br />
+							<h:panelGrid id="niveau_grid" columns="2" cellpadding="4">
+								<p:outputLabel for="nivo" value="Niveau"/>
+								<p:inputText id="nivo" value="#{niveauBean.niveau.libNiveau}"
+									styleClass="inputStyle" required="true" style="width:400px" />
+									
+								<p:outputLabel for="abrev" value="Abréviation"/>
+								<p:inputText id="abrev" value="#{niveauBean.niveau.abrevNiveau}"
+									styleClass="inputStyle" required="true" />
+							</h:panelGrid>
+						
+						<br></br>
+						<h:panelGrid columns="3">
+							<p:commandButton value="Enregistrer"
+								action="#{niveauBean.enregistrer}" 
+								update="table, niveau_grid"  binding="#{niveauBean.btnValider}">
+									<p:confirm header="Confirmation"
+							message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
+								</p:commandButton>
+								
+							<p:commandButton value="Annuler"
+								action="#{niveauBean.annuler}" update="form" >
+								</p:commandButton>
+								
+						<p:commandButton value="Supprimer" action="#{niveauBean.supprimer}"
+						update="form" binding="#{niveauBean.btnSuprimer}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+					</p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+					
+					<br />
+
+					<p:dataTable id="table" selectionMode="single" var="tata"
+						value="#{niveauBean.listNiveau}" selection="#{niveauBean.selectedNiveau}"
+						rowKey="#{tata.codeniveau}" emptyMessage="Aucun enregistrement">
+						<p:ajax event="rowSelect" listener="#{niveauBean.selectionner}"
+							update=":form" />
+						<f:facet name="header">LISTE DES NIVEAUX</f:facet>
+						<p:column headerText="Code" style="width:30%">#{tata.codeniveau}</p:column>
+						<p:column headerText="Niveau" style="width:50%">#{tata.libNiveau}</p:column>
+						<p:column headerText="Abréviation" style="width:20%">#{tata.abrevNiveau}</p:column>
+					</p:dataTable>
+			</div>
+		<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

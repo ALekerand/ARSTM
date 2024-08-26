@@ -1,0 +1,36 @@
+@CHARSET "ISO-8859-1";
+
+<style type="text/css">
+        .actionLink-custom { font-size: 15px; margin-top: 5px; }
+        .actionImage { float: left; }
+        .actionImageDescription { margin-top:7px;margin-left:7px; }
+        select { height: 28px !important; }
+        input[type="select"] { height: 28px !important }
+        .page_navigation > a {padding: 3px 6px 3px 6px;border:1px solid #ccc;margin:3px;}
+        .page_navigation > a:hover { border: 1px solid #aaa }
+        body { background: #FFFFFF; font-family:  ; }
+        p { font-family:  ; }
+        .navbar-inner { background: #51606E; }
+        #main-nav.nav-tabs.nav-stacked > li.active > a, #main-nav.nav-tabs.nav-stacked > li > a:hover { background: #345397 !important ; border: 1px solid #345397 !important ; }
+        .page-title { background: #345397 !important ; border: 1px solid #345397 !important ; }
+        h3 { color : #345397 ; }
+        .navbar .nav > li > a {color: #fff;text-decoration: none;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);}
+        .navbar .divider-vertical {height: 40px;width: 1px;margin: 0 9px;overflow: hidden;background-color: transparent;border-right: 1px solid transparent;}
+        #login-header {background: #345397; }
+        a { color: #006699;}
+        a:hover { color: #006699;}
+        .btn-primary, .btn-primary:hover { background: #006699 ; }
+        a.no-underline { text-decoration : none ; }
+        .dropdown-menu li > a:hover, .dropdown-menu .active > a, .dropdown-menu .active > a:hover {background-color: #345397 ;}
+        .btn-primary { background-color: #345397 ;}
+        [class^="icon-"], [class*=" icon-"] { line-height: 18px; }
+        .modal-header > h3 { margin-bottom : 0px; }    
+        .carousel-caption { position: relative !important; }
+        .primarycolor { color: #345397; }
+        .pagination{height:36px;margin:18px 0;float:right;margin-top:-6px;}
+        .dataTables_filter{float:right;}
+        .datatable { margin-top: 12px; }
+
+
+        .nav-pills>.active>a, .nav-pills>.active>a:hover{background-color:#345397;}
+    </style>

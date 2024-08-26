@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form_gnl">
+
+			<h1 class="page-title">ENREGISTREMENT DES UNITES D'ENSEIGNEMENT (UE)</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<!-- <h:form id="form"> -->
+				
+				<table>
+					<tr>
+						<td>
+						<h:panelGrid id="parcours_grid" columns="4" cellpadding="10">
+						
+			<p:outputLabel for="ecol" value="Ecole"/>
+			<p:selectOneMenu id="ecol" value="#{ueBean.choosedEcole}" converter="#{entityConverter}">
+			<p:ajax listener="#{ueBean.activerChamps1}" event="change" update="fil" process="@this"></p:ajax>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{ueBean.listEcole}" var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>
+		    
+		     <p:outputLabel />
+		      <p:outputLabel />
+		    
+		    <p:outputLabel for="fil" value="Filière"/>
+			<p:selectOneMenu id="fil" value="#{ueBean.choosedFiliere}" converter="#{entityConverter}">
+			<p:ajax listener="#{ueBean.chargerMention}" event="change" update="ment" process="@this"></p:ajax>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{ueBean.listFiliere}" var="tata" itemLabel="#{tata.abrevFiliere}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>		    
+		    
+		     <p:outputLabel />
+		      <p:outputLabel />
+		      
+		    <p:outputLabel for="ment" value="Mention"/>
+			<p:selectOneMenu id="ment" value="#{ueBean.choosedMention}" converter="#{entityConverter}">
+			<p:ajax listener="#{ueBean.chargerSemestreLmd}" event="change" process="@this" update="table_semestre"></p:ajax>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{ueBean.listMention}" var="tata" itemLabel="#{tata.abrevMention}" itemValue="#{tata}"></f:selectItems>
+		    </p:selectOneMenu>		    
+		    
+			</h:panelGrid>
+						</td>
+						<td>
+					<p:dataTable id="table_semestre"  var="tata"
+					value="#{ueBean.listSemestreLmd}" selection="#{ueBean.selectedSemestreLmd}"
+					rowKey="#{tata.codeSemestreLmd}" emptyMessage="Aucun enregistrement" selectionMode="single">
+					<p:ajax event="rowSelect" listener="#{ueBean.actualiserList}" update=":form_gnl" process="@this, :form_gnl:ment"/>
+					<f:facet name="header">SEMESTRE LMD</f:facet>
+					<p:column selectionMode="single" style="width:16px;text-align:center"/>
+					<p:column headerText="Libellé Semestre" style="width:100%">#{tata.libSemestreLmd}</p:column>
+				</p:dataTable>
+						</td>
+						<td>
+				
+				
+				<p:dataTable id="table_typeUE"  var="tata"
+					value="#{ueBean.listTypeUe}" selection="#{ueBean.selectedTypeUe}"
+					rowKey="#{tata.codeTypeUe}" emptyMessage="Aucun enregistrement" selectionMode="single">
+					<f:facet name="header">TYPE UE</f:facet>
+					<p:column selectionMode="single" style="width:16px;text-align:center"/>
+					<p:column headerText="Libellé type" style="width:100%">#{tata.libTypeUe}</p:column>
+				</p:dataTable>
+				
+						</td>
+					</tr>
+				</table>
+				
+			<table>
+					<tr>
+						<td>
+							<fieldset>
+			<legend class="legend">Information UE</legend>
+				
+			<h:panelGrid columns="4" cellpadding="10"> 
+			<p:outputLabel for="code_ue" value="Code UE" />
+			<p:inputText id="code_ue" value="#{ueBean.ues.codeUeLmd}" required="true"/>
+			
+			<p:outputLabel for="code_ue" value="Libellé UE" />
+			<p:inputText id="lib_ue" value="#{ueBean.ues.libUes}" required="true"/>
+			
+			<p:outputLabel for="credit_ue" value="Crédit UE" />
+			<p:inputText id="credit_ue" value="#{ueBean.ues.creditUe}" required="true"/>
+			
+			<p:outputLabel for="etat" value="Etat:" />
+	        <p:selectOneRadio id="etat" value="#{ueBean.etatUe}">
+	            <f:selectItem itemLabel="Actif" itemValue="true" />
+	            <f:selectItem itemLabel="Inactif" itemValue="false" />
+	        </p:selectOneRadio>
+			</h:panelGrid>	
+			
+			</fieldset>
+						</td>
+						<td>
+						<fieldset>
+						<legend class="legend">Actions</legend>
+					<h:panelGrid id="grid_button" columns="1" cellpadding="4">
+					<p:commandButton value="Valider"
+						action="#{ueBean.enregistrer}" update="form_gnl" binding="#{ueBean.btnValider}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous l'enregistrement" icon="ui-icon-alert" />
+					</p:commandButton>
+					<p:commandButton value="Modifier"
+						action="#{ueBean.modifier}" update="form_gnl" binding="#{ueBean.btnModifier}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous modifier cet enregistrement" icon="ui-icon-alert" />
+					</p:commandButton>
+					<p:commandButton value="Annuler" process="@this"
+						action="#{ueBean.annuler}" />
+					<p:commandButton value="Supprimer" action="#{ueBean.supprimer}"
+						update="form_gnl" binding="#{ueBean.btnSuprimer}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+					</p:commandButton>
+				</h:panelGrid> 
+				</fieldset>
+						</td>
+					</tr>
+				</table>
+						
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{ueBean.listeUe}"
+					selection="#{ueBean.selectedUe}"
+					rowKey="#{tata.codeEus}"
+					emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="150">
+					<p:ajax event="rowSelect" listener="#{ueBean.selectionner}" update=":form_gnl" />
+					<f:facet name="header">LISTE DES UNITES D'ENSEIGNEMENT (UE)</f:facet>
+					<p:column headerText="Code UE" style="width:15%" sortBy="#{tata.codeUeLmd}">#{tata.codeUeLmd}</p:column>
+					<p:column headerText="Libellé UE" style="width:40%" sortBy="#{tata.libUes}">#{tata.libUes}</p:column>
+					<p:column headerText="Semestre" style="width:15%">#{tata.semestreLmd.libSemestreLmd}</p:column>
+					<p:column headerText="Type UE" style="width:20%">#{tata.typeue.libTypeUe}</p:column>
+					<p:column headerText="Credit" style="width:10%">#{tata.creditUe}</p:column>
+					<f:facet name="footer">
+					<h:panelGrid  columns="4" cellpadding="10">
+					<p:outputLabel value="TOTAL CREDITS UE:"/>
+					<p:outputLabel value="#{ueBean.totalCreditUe}"/>
+					</h:panelGrid>
+					</f:facet>
+				</p:dataTable>	
+
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,43 @@
+/** jQuery UI CSS Framework 1.8.9** Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)* Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/license** http://docs.jquery.com/UI/Theming/API** To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Helvetica,%20Arial,%20sans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=2px&bgColorHeader=dddddd&bgTextureHeader=03_highlight_soft.png&bgImgOpacityHeader=50&borderColorHeader=dddddd&fcHeader=444444&iconColorHeader=0073ea&bgColorContent=ffffff&bgTextureContent=01_flat.png&bgImgOpacityContent=75&borderColorContent=dddddd&fcContent=444444&iconColorContent=ff0084&bgColorDefault=f6f6f6&bgTextureDefault=03_highlight_soft.png&bgImgOpacityDefault=100&borderColorDefault=dddddd&fcDefault=0073ea&iconColorDefault=666666&bgColorHover=0073ea&bgTextureHover=03_highlight_soft.png&bgImgOpacityHover=25&borderColorHover=0073ea&fcHover=ffffff&iconColorHover=ffffff&bgColorActive=ffffff&bgTextureActive=02_glass.png&bgImgOpacityActive=65&borderColorActive=dddddd&fcActive=ff0084&iconColorActive=454545&bgColorHighlight=ffffff&bgTextureHighlight=01_flat.png&bgImgOpacityHighlight=55&borderColorHighlight=cccccc&fcHighlight=444444&iconColorHighlight=0073ea&bgColorError=ffffff&bgTextureError=01_flat.png&bgImgOpacityError=55&borderColorError=ff0084&fcError=222222&iconColorError=ff0084&bgColorOverlay=eeeeee&bgTextureOverlay=01_flat.png&bgImgOpacityOverlay=0&opacityOverlay=80&bgColorShadow=aaaaaa&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=60&thicknessShadow=4px&offsetTopShadow=-4px&offsetLeftShadow=-4px&cornerRadiusShadow=0px*/
+/* 
+
+Component containers----------------------------------*/
+.ui-widget {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 1em;
+}
+
+.ui-widget .ui-widget {
+	font-size: .9em;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button
+	{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 1em;
+}
+
+.ui-widget-content {
+	border: 1px solid #dddddd;
+	background: #ffffff
+		url("#{resource['primefaces-flick:images/ui-bg_flat_75_ffffff_40x100.png']}")
+		50% 50% repeat-x;
+	color: #444444;
+}
+
+.ui-widget-content a {
+	color: #444444;
+}
+
+.ui-widget-header {
+	border: 1px solid #dddddd;
+	background: #dddddd
+		url("#{resource['primefaces-flick:images/ui-bg_highlight-soft_50_dddddd_1x100.png']}")
+		50% 50% repeat-x;
+	color: #444444;
+	font-weight: bold;
+}
+
+.ui-widget-header a {
+	color: #444444;
+}

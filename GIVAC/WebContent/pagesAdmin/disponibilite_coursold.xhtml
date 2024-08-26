@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">DISPONIBILITE DE L'ENSEIGNANT</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+						<p:panel header="Choix de la matière">
+					<table>
+						<tr valign="top">
+							<!-- ici les critères de selection -->
+							<td style="width: 40%;"><h:panelGrid id="affectation_grid"
+									columns="2" cellpadding="5">
+								<p:outputLabel for="cb_ecol" value="Ecole" />
+									<p:selectOneMenu required="true" id="cb_ecol"
+										value="#{disponibiliteCoursBean.choosedEcole}"
+										converter="#{entityConverter}">
+										<p:ajax listener="#{disponibiliteCoursBean.chargerFiliere}"
+											event="change" update="cb_filiere, cb_section"
+											process="@this">
+										</p:ajax>
+										<f:selectItem itemLabel="Selectionnez" itemValue="" />
+										<f:selectItems value="#{disponibiliteCoursBean.listEcole}"
+											var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+
+									<p:outputLabel for="cb_filiere" value="Filière" />
+									<p:selectOneMenu required="true" id="cb_filiere"
+										value="#{disponibiliteCoursBean.choosedFiliere}"
+										converter="#{entityConverter}">
+										<p:ajax listener="#{disponibiliteCoursBean.chargerSection}"
+											event="change" update="cb_section" process="@this">
+										</p:ajax>
+										<f:selectItem itemLabel="Selectionnez" itemValue="" />
+										<f:selectItems value="#{disponibiliteCoursBean.listeFiliere}"
+											var="tata" itemLabel="#{tata.abrevFiliere}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+
+									<p:outputLabel for="cb_section" value="Section" />
+									<p:selectOneMenu required="true" id="cb_section"
+										value="#{disponibiliteCoursBean.choosedSection}"
+										converter="#{entityConverter}" >
+										<p:ajax listener="#{disponibiliteCoursBean.chargerListeEnseignant}"
+											event="change" update="table, table_planning, planning_Grid, cb_enseig" process="@this">
+										</p:ajax>
+										<f:selectItem itemLabel="Selectionnez" itemValue="" />
+										<f:selectItems value="#{disponibiliteCoursBean.listeSection}"
+											var="tata" itemLabel="#{tata.abrevSection}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+								
+								<p:outputLabel for="cb_enseig" value="Enseignant" />
+								<p:selectOneMenu required="true" id="cb_enseig"
+										value="#{disponibiliteCoursBean.cbEnseigner}"
+										converter="#{entityConverter}" >
+									<p:ajax listener="#{disponibiliteCoursBean.chargerMatiere}"
+											event="change" update="table, table_planning, planning_Grid" process="@this">
+									</p:ajax>
+										
+										<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+										<f:selectItems value="#{disponibiliteCoursBean.list_cbEnseigner}"
+											var="tata" itemLabel="#{tata.enseignant.nom} #{tata.enseignant.prenoms}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+								</h:panelGrid></td>
+							<!-- ici le tableau des matières à selectionner -->
+							<td style="width: 60%;">
+								
+								
+								
+		<p:dataTable id="table" var="tata" value="#{disponibiliteCoursBean.listeEnseigner}" selection="#{disponibiliteCoursBean.choosedEnseigner}" rowKey="#{tata.codeEnseigner}">
+        <f:facet name="header">MATIERES A PLANIFIER</f:facet>
+        <p:column selectionMode="single" style="width:16px;text-align:center"/>
+        <p:column headerText="Matière" style="width:25%" filterBy="#{tata.codeEnseigner}" filterMatchMode="contains">
+									#{tata.matiere.abrevMatiere}
+									</p:column>
+        <p:column headerText="V. H." style="width:20%">
+									#{tata.matiere.abrevMatiere}
+									</p:column>
+        <p:column headerText="Enseignant" style="width:40%">
+									#{tata.enseignant.nom} #{tata.enseignant.prenoms}
+									</p:column>
+    </p:dataTable>
+								</td>
+						</tr>
+					</table>
+					<br></br>
+					
+					<table>
+						<tr valign="top">
+						<!-- ici CHOIX DES PLANNINGS HEBDOMADAIRES -->
+							<td style="width: 40%;">
+							
+					<h:panelGrid columns="6" id="planning_Grid" cellpadding="5">
+					     <p:selectBooleanCheckbox value="#{disponibiliteCoursBean.valLundi}" >	
+					     <p:ajax update="debLun, finLun, vh_lun" listener="#{disponibiliteCoursBean.activerLundi}"/>
+					     </p:selectBooleanCheckbox>	
+						 <h:outputText value="LUNDI"/>
+       					 <p:spinner id="debLun"  min="8" max="18" value="#{disponibiliteCoursBean.hDebut1}" binding="#{disponibiliteCoursBean.spinnerDebLun}" size="20"/>
+       					 <p:spinner id="finLun"  min="8" max="18" value="#{disponibiliteCoursBean.hfin1}" binding="#{disponibiliteCoursBean.spinnerFinLun}">
+       					 <p:ajax update="vh_lun" listener="#{disponibiliteCoursBean.calculerVHLundi}" process="debLun, @this"/>	
+       					 </p:spinner>
+       					 <p:inputText id="vh_lun" value="#{disponibiliteCoursBean.vhLundi}" style="width:20px" binding="#{disponibiliteCoursBean.inputTextLundi}" readonly="true"/>
+       					 <h:outputText value="H" style="width:10px" />
+       					 
+       					 <p:selectBooleanCheckbox value="#{disponibiliteCoursBean.valMardi}">	
+       					 <p:ajax update="debMard, finMard, vh_mar" listener="#{disponibiliteCoursBean.activerMardi}" />	
+       					 </p:selectBooleanCheckbox>	
+       					 <h:outputText value="MARDI" />
+       					 <p:spinner id="debMard" value="#{disponibiliteCoursBean.hdebut2}" min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerDebMard}"/>
+       					 <p:spinner id="finMard"  value="#{disponibiliteCoursBean.hfin2}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinMard}"/>
+						<p:inputText id="vh_mar" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextMardi}" readonly="true"/>
+						<h:outputText value="H" style="width:10px" />
+						
+						<p:selectBooleanCheckbox value="#{disponibiliteCoursBean.valMercred}">	
+       					 <p:ajax update="debMecred, finMercred, vh_mer" listener="#{disponibiliteCoursBean.activerMercredi}" />	
+       					 </p:selectBooleanCheckbox>	
+       					 <h:outputText value="MERCREDI" />
+       					 <p:spinner id="debMecred" value="#{disponibiliteCoursBean.hdebut3}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerDebMerc}"/>
+       					 <p:spinner id="finMercred"  value="#{disponibiliteCoursBean.hfin3}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinMerc}"/>
+       					 <p:inputText id="vh_mer" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextMercredi}" readonly="true"/>
+       					 <h:outputText value="H" style="width:10px" />
+       					 
+       					 <p:selectBooleanCheckbox value="#{disponibiliteCoursBean.valJeudi}">	
+       					 <p:ajax update="debJeud, finJeud, vh_jeu" listener="#{disponibiliteCoursBean.activerJeudi}" />	
+       					 </p:selectBooleanCheckbox>	
+       					 <h:outputText value="JEUDI" />
+       					 <p:spinner id="debJeud" value="#{disponibiliteCoursBean.hdebut4}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerDebJeud}"/>
+       					 <p:spinner id="finJeud"  value="#{disponibiliteCoursBean.hfin4}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinJeud}"/>
+						<p:inputText id="vh_jeu" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextJeudi}" readonly="true"/>
+						<h:outputText value="H" style="width:10px"/>
+						
+						<p:selectBooleanCheckbox value="#{disponibiliteCoursBean.valVendred}">	
+       					 <p:ajax update="debVend, finVend, vh_ven" listener="#{disponibiliteCoursBean.activerVendredi}" />	
+       					 </p:selectBooleanCheckbox>	
+       					 <h:outputText value="VENDREDI" />
+       					 <p:spinner id="debVend" value="#{disponibiliteCoursBean.hdebut5}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerDebVend}"/>
+       					 <p:spinner id="finVend"  value="#{disponibiliteCoursBean.hfin5}"    min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinVend}"/>
+						<p:inputText id="vh_ven" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextVendredi}" readonly="true"/>
+						<h:outputText value="H" style="width:10px"/>
+						
+					<p:selectBooleanCheckbox value="#{disponibiliteCoursBean.valSamed}">	
+       					 <p:ajax update="debSam, finSam, vh_sam" listener="#{disponibiliteCoursBean.activerSamedi}" />	
+       					 </p:selectBooleanCheckbox>	
+       					 <h:outputText value="SAMEDI" />
+       					 <p:spinner id="debSam" value="#{disponibiliteCoursBean.hdebut6}"   min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerDebSam}"/>
+       					 <p:spinner id="finSam"  value="#{disponibiliteCoursBean.hfin6}"    min="8" max="18"  binding="#{disponibiliteCoursBean.spinnerFinSam}"/>
+						 <p:inputText id="vh_sam" value=" " style="width:20px" binding="#{disponibiliteCoursBean.inputTextSamedi}" readonly="true"/>
+						 <h:outputText value="H" style="width:10px"/>
+					
+					<p:commandButton value="OK" actionListener="#{disponibiliteCoursBean.ajouterPlanning}"
+						update="table_planning">
+					</p:commandButton>
+					</h:panelGrid>
+	
+							</td>
+					<!-- ici RECAP DES PLANNINGS HEBDOMADAIRES -->	
+					<td style="width: 60%;">
+					<p:dataTable id="table_planning" var="tata"
+					value="#{disponibiliteCoursBean.listEmploitemps}"
+					rowKey="#{tata.id}" 
+					emptyMessage="Aucune enregistrement">
+					<f:facet name="header">PLANNING HEBDOMADAIRE</f:facet>
+					<p:column headerText="Jour" style="width:25%">
+					#{tata.jourSemaine.jour}
+					</p:column>
+
+					<p:column headerText="Heure début" style="width:40%">
+					#{tata.heureDebut}
+					</p:column>
+					
+					<p:column headerText="Heure fin">
+					#{tata.heureFin}
+					</p:column>
+					
+					<p:column headerText="V.H.">
+					#{tata.vhJour}
+					</p:column>
+					</p:dataTable>
+					
+					<h:panelGrid columns="4">
+						<p:commandButton value="Confirmer" binding="#{disponibiliteCoursBean.btnValider}"
+							action="#{disponibiliteCoursBean.enregistrerEmploiT}" 
+							update="form"> 
+						</p:commandButton>
+								
+						<p:commandButton value="Annuler" binding="#{disponibiliteCoursBean.btnAnnuler}"
+						 update="form" >
+						</p:commandButton>
+					</h:panelGrid>
+							</td>
+						</tr>
+					</table>
+					
+					
+				</p:panel>
+						
+				<br />
+				
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

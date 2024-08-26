@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+			<h1 class="page-title">VERSEMENT SCOLARITE</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+			<p:panel header="Versement">
+			
+			<table>
+  <tr>
+    <td>
+    
+    <h:panelGrid columns="2" cellpadding="1">
+    <p:inputText id="matricule" value="#{versementScolariteBean.matriculeRecherche}" placeholder="Recherche par le matricule" />
+			<p:commandButton actionListener="#{versementScolariteBean.rechercher}" partialSubmit="true" process="@this,matricule" update="form" icon="ui-icon-search"></p:commandButton>
+    </h:panelGrid>
+    </td>
+    <td>
+    <p:dataTable id="table" selectionMode="single" var="tata"
+						value="#{versementScolariteBean.listInscription}" selection="#{versementScolariteBean.selectedInscription}"
+						rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement">
+						<p:ajax event="rowSelect" listener="#{versementScolariteBean.selectionner}" update=":form" />
+						<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
+						<p:column headerText="Nom" style="width:20%" sortBy="#{tata.etudiants.nomEtudiant}" >#{tata.etudiants.nomEtudiant}</p:column>
+						<p:column headerText="Prenoms" style="width:50%">#{tata.etudiants.prenomEtudiant}</p:column>
+						<p:column headerText="Date Naissance" style="width:30%">#{tata.etudiants.datenais}</p:column>
+						<p:column headerText="Nationalité" style="width:30%">#{tata.etudiants.nationalites.libnationalite}</p:column>
+					</p:dataTable>
+    </td>
+  </tr>
+</table>
+
+	<fieldset>
+	
+				<legend>Informations de base</legend>		
+					<table>
+					  <tr valign="top">
+					    <td>
+					    <h:panelGrid id="annee_grid" columns="4" cellpadding="6">
+						<p:outputLabel for="name" value="Nom:" />
+						<p:inputText id="name" value="#{versementScolariteBean.etudiants.nomEtudiant}" readonly="true"  />
+						
+						<p:outputLabel for="pren" value="Prenoms" styleClass="outputDecalage"/>
+						<p:inputText id="pren" value="#{versementScolariteBean.etudiants.prenomEtudiant}" readonly="true" />
+						
+						<p:outputLabel for="cont_eleve" value="Contact" />
+						<p:inputText id="cont_eleve" value="#{versementScolariteBean.etudiants.telEtudiant}" readonly="true">
+						</p:inputText>
+						
+						<p:outputLabel for="ses" value="Section/Parcours" styleClass="outputDecalage"/>
+						<p:inputText id="ses" value="#{versementScolariteBean.inscriptions.section.abrevSection}" />
+						
+						<p:outputLabel for="nas" value="Nationalité"/>
+						<p:inputText id="nas" value="#{versementScolariteBean.etudiants.nationalites.libnationalite}" />
+						
+						<p:outputLabel for="reg" value="Regime" styleClass="outputDecalage"/>
+						<p:inputText id="reg" value="#{versementScolariteBean.inscriptions.regime.libRegime}" />
+</h:panelGrid>
+			 </td>
+			<td align="right">
+					<p:graphicImage id="graphIm" value="#{versementScolariteBean.content}" height="110" width="110"></p:graphicImage>	
+					 </td>
+					  </tr>
+			</table>	
+	</fieldset>				
+			<fieldset>
+				<legend>Frais Scolarité</legend>
+				
+					<h:panelGrid id="e_grid" columns="4" cellpadding="8">
+					<p:outputLabel for="mt_scolarite" value="Montant scolarité:" />
+					<p:inputText id="mt_scolarite" value="#{versementScolariteBean.totalScolarite}" />
+                         
+            <p:outputLabel for="p_vers" value="Montant déjà versé"/>
+			<p:inputText id="p_vers" value="#{versementScolariteBean.totalVersement}"/>
+					
+			<p:outputLabel for="mt_rest" value="Reste à verser"/>
+			<p:inputText id="mt_rest" value="#{versementScolariteBean.resteVersement}"/>
+			
+			<p:outputLabel for="lib_vers" value="Libellé versement"/>
+			<p:inputText id="lib_vers" value=" " />
+			
+			<p:outputLabel for="mt_vers" value="Montant versement"  />
+			<p:inputText id="mt_vers" value="#{versementScolariteBean.versementScolarite.montantVersementScolarite}"/>
+			
+			<h:outputLabel for="mod" value="Mode"/>
+			 <p:selectOneMenu id="mod" value="#{versementScolariteBean.codeMode}">
+			 <p:ajax event="change" process="@this"/>
+				<f:selectItem itemLabel="Selectionnez" itemValue="" />
+				<f:selectItems value="#{versementScolariteBean.listMode}" var="tata"
+					itemLabel="#{tata.libMode}" itemValue="#{tata.codeMode}"></f:selectItems>
+			</p:selectOneMenu>
+       
+			</h:panelGrid>
+			</fieldset>
+					
+		<p:toolbar >
+		<f:facet name="right">
+			<p:commandButton value="Verser" action="#{versementScolariteBean.enregistrer}"   update="form"></p:commandButton>
+			<p:commandButton value="Annuler" action="#{versementScolariteBean.annuler}" binding="#{versementScolariteBean.btnAnuler}" update="form" process="@this"> </p:commandButton>
+		</f:facet>
+		</p:toolbar>
+					
+					
+				</p:panel>
+
+				<br />
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

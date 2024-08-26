@@ -1,0 +1,6 @@
+*********************NOTES DE PARAMETRAGE*******************************************
+ENTITE "ETATDEMANT"
+	**En atten ===== codeEtatDemant : CED001
+	**Validée ===== codeEtatDemant : CED002
+	**Rejetée ===== codeEtatDemant : CED003
+	

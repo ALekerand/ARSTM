@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">ATTRIBUTION DES MATIERES</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<p:panel header="Affection">
+
+					<table>
+						<tr valign="top">
+							<!-- ici les critères de selection -->
+							<td style="width: 40%;"><h:panelGrid id="affectation_grid"
+									columns="2" cellpadding="5">
+									<p:outputLabel for="cb_ecol" value="Ecole" />
+									<p:selectOneMenu required="true" id="cb_ecol"
+										value="#{attributionMatBean.choosedEcole}"
+										converter="#{entityConverter}">
+										<p:ajax listener="#{attributionMatBean.chargerFiliere}"
+											event="change" update="cb_filiere, cb_section, table"
+											process="@this">
+										</p:ajax>
+										<f:selectItem itemLabel="Selectionnez" itemValue="" />
+										<f:selectItems value="#{attributionMatBean.listEcole}"
+											var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+
+									<p:outputLabel for="cb_filiere" value="Filière" />
+									<p:selectOneMenu required="true" id="cb_filiere"
+										value="#{attributionMatBean.choosedFiliere}"
+										converter="#{entityConverter}">
+										<p:ajax listener="#{attributionMatBean.chargerSection}"
+											event="change" update="cb_section, table" process="@this">
+										</p:ajax>
+										<f:selectItem itemLabel="Selectionnez" itemValue="" />
+										<f:selectItems value="#{attributionMatBean.listeFiliere}"
+											var="tata" itemLabel="#{tata.abrevFiliere}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+
+									<p:outputLabel for="cb_section" value="Section" />
+									<p:selectOneMenu required="true" id="cb_section"
+										value="#{attributionMatBean.choosedSection}"
+										converter="#{entityConverter}">
+										<p:ajax listener="#{attributionMatBean.chargerListesMatiere}"
+											event="change" update="table , table_matAffect"
+											process="@this">
+										</p:ajax>
+										<f:selectItem itemLabel="Selectionnez" itemValue="" />
+										<f:selectItems value="#{attributionMatBean.listeSection}"
+											var="tata" itemLabel="#{tata.abrevSection}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+								</h:panelGrid></td>
+							<!-- ici le tableau des matières à selectionner -->
+							<td style="width: 60%;">
+								
+								<p:dataTable id="table"
+									selectionMode="single" var="tata"
+									value="#{attributionMatBean.listeRatachNonAffecte}"
+									rowKey="#{tata.id}" 
+									emptyMessage="Aucune matière à affecter">
+									<f:facet name="header">MATIERES A AFFECTER</f:facet>
+									<p:column headerText="Code" style="width:25%" filterBy="#{tata.id}" filterMatchMode="contains">
+					#{tata.codeMatLmd}
+					</p:column>
+
+					<p:column headerText="libéllé Matiere" style="width:40%" filterBy="#{tata.matiere.libMatiere}" filterMatchMode="contains">
+					#{tata.matiere.libMatiere}
+					</p:column>
+
+									<p:column headerText="Abréviation" style="width:18%">
+					#{tata.matiere.abrevMatiere}
+					</p:column>
+
+									<p:column style="width:17%;text-align: center">
+										<p:commandButton value="Choisir" action="#{attributionMatBean.initiate}"
+											oncomplete="PF('enseignantDialog').show()"
+											icon="ui-icon-search" title="Affecter l'enseignant"
+											update=":form:dialog_affectation" process="@this">
+											<f:setPropertyActionListener value="#{tata}"
+												target="#{attributionMatBean.selectedRattacher}"   />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>
+								</td>
+						</tr>
+					</table>
+					<br></br>
+
+
+					<p:dataTable id="table_matAffect" var="tata"
+						value="#{attributionMatBean.listeAffecter}" emptyMessage="Aucune matière affectée">
+						<f:facet name="header">MATIERES AFFECTEES</f:facet>
+						<p:column headerText="Matière">
+							<h:outputText value="#{tata.matiere.libMatiere}" />
+						</p:column>
+
+						<p:column headerText="Enseignant">
+							<h:outputText
+								value="#{tata.enseignant.nom}  #{tata.enseignant.prenoms}" />
+						</p:column>
+
+						<p:column headerText="Volume horaire">
+							<h:outputText value="#{tata.vhEffectif}" />
+						</p:column>
+					</p:dataTable>
+
+
+				</p:panel>
+
+				<br />
+			</div>
+
+
+
+			<p:dialog id="dialog_affectation" header="Selection des enseignants"
+				widgetVar="enseignantDialog" modal="true" showEffect="fade"
+				hideEffect="fade" resizable="false">
+				<table>
+					<tr valign="top">
+						<!-- ici le tableau de la liste des enseignants -->
+						<td style="width: 42%;">
+						<p:dataTable id="table_enseig" var="tata"
+								value="#{attributionMatBean.listEnseignant}"
+								selection="#{attributionMatBean.selectedEnseignant}"
+								rowKey="#{tata.userId}"
+								emptyMessage="Aucun enregistrement" scrollable="true"
+								scrollHeight="350">
+								
+								<f:facet name="header">LISTE DES ENSEIGNANTS</f:facet>
+								<p:ajax event="rowSelectRadio" listener="#{attributionMatBean.selectionnerEnseig}" update=":form:ensg_grid, :form:button_grid" process="table_enseig"/>
+								<p:column selectionMode="single" style="width:16px;text-align:center">
+									</p:column>
+								<p:column headerText="Matricule" style="width: 108px" filterBy="#{tata.matriculeEns}" filterMatchMode="contains">
+								#{tata.matriculeEns}
+								</p:column>
+								<p:column headerText="Nom" style="width: 108px" filterBy="#{tata.nom}" filterMatchMode="contains">
+								#{tata.nom}
+								</p:column>
+								<p:column headerText="Prénoms">#{tata.prenoms}</p:column>
+								<p:column headerText="VH obligatoire" style="width: 80px">#{tata.vhObligatoireSemaine}</p:column>
+								<f:facet name="footer">
+
+								</f:facet>
+							</p:dataTable></td>
+						<!-- ici le détail de l'enseignant sélectionné -->
+						<td style="width: 58%;">
+						<div class="div">
+						<h:panelGrid id="recap_grid"
+								columns="6" cellpadding="6">
+			
+								<p:outputLabel for="filiere_choisie" value="Filière:" />
+								<p:outputLabel id="filiere_choisie"
+									value="#{attributionMatBean.choosedFiliere.abrevFiliere}"/>
+
+								<p:outputLabel for="sect_choisie" value="Section:" styleClass="outputDecalage"/>
+								<p:outputLabel id="sect_choisie"
+									value="#{attributionMatBean.choosedSection.abrevSection}"/>
+								
+									<p:outputLabel for="mat_selected" value="Matière:" styleClass="outputDecalage"/>
+								<p:outputLabel id="mat_selected"
+									value="#{attributionMatBean.selectedRattacher.matiere.libMatiere}" />
+								
+							</h:panelGrid> 
+							
+							</div>
+							
+							<fieldset>
+						<legend>Détails enseignant</legend>
+							
+							<h:panelGrid id="ensg_grid" columns="6" cellpadding="7">
+							<div class="account-avatar">
+									<span id="j_id0:templatepage:j_id17:j_id18:j_id19:j_id26"><img
+										src="../resource/1430457373000/mn4__MNP/img/user.png"
+										style="padding-bottom: 15px;" /></span>
+								</div>
+								
+								<p:outputLabel for="mat_enseig"/>
+							
+							<p:outputLabel for="mat_enseig" value="Matricule"/>
+								<p:outputLabel id="mat_enseig" 
+									value="#{attributionMatBean.enseignant.matriculeEns}" styleClass="outputAffich"/>
+									
+								<p:outputLabel for="nom_prenom_enseig" value="Nom Prénoms"  styleClass="outputDecalageGrd"/>
+								<p:outputLabel id="nom_prenom_enseig"
+									value="#{attributionMatBean.enseignant.nom} #{attributionMatBean.enseignant.prenoms}" styleClass="outputAffich"/>
+
+								<p:outputLabel for="sexe_ens" value="Sexe"/>
+								<p:outputLabel id="sexe_ens" value="#{attributionMatBean.sexe.libSexe}" styleClass="outputAffich"/>
+
+								<p:outputLabel for="specialite_ens" value="Spécialité" />
+								<p:outputLabel id="specialite_ens" styleClass="outputAffich"
+								value="#{attributionMatBean.enseignant.specialite.libelleSpecial}"  />
+
+								<p:outputLabel for="phone_enseig" value="Télephone"  styleClass="outputDecalageGrd"/>
+								<p:outputLabel id="phone_enseig" styleClass="outputAffich"
+									value="#{attributionMatBean.enseignant.phone1} / #{attributionMatBean.enseignant.phone2}"/>
+
+								<p:outputLabel for="mail_enseig" value="Email" />
+								<p:outputLabel id="mail_enseig" styleClass="outputAffich"
+									value="#{attributionMatBean.enseignant.email}"/>
+
+								<p:outputLabel for="statut_ens" value="Statut" />
+								<p:outputLabel id="statut_ens" value="#{attributionMatBean.statut.libelleStatut}" styleClass="outputAffich"/>
+							</h:panelGrid> 
+				</fieldset>
+						
+							
+							<fieldset>
+						<legend>Complement d'informations</legend>	
+							<h:panelGrid id="taux_grid" columns="4" cellpadding="10">
+							<p:outputLabel for="cb_semestre" value="Semestre" />
+									<p:selectOneMenu required="true" id="cb_semestre"
+										value="#{attributionMatBean.choosedSemestre}"
+										converter="#{entityConverter}">
+										<f:selectItem itemLabel="Selectionnez" itemValue="" />
+										<f:selectItems value="#{attributionMatBean.listeSemestre}"
+											var="tata" itemLabel="#{tata.libSemestre}" itemValue="#{tata}"></f:selectItems>
+									</p:selectOneMenu>
+									
+									<p:outputLabel/>
+									<p:outputLabel/>
+									
+								<p:outputLabel for="th_prevu" value="Montant horaire prévu"/>
+								<p:outputLabel id="th_prevu" value="#{attributionMatBean.choosedSection.cycle.tauxHoraire}" style="color: red">
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+								</p:outputLabel>
+								
+								<p:outputLabel for="th_effect" value="Montant horaire effectif" />
+								<p:inputText id="th_effect" value="#{attributionMatBean.enseigner.tauxHoraireEffectif}" 
+								required="true" converterMessage="L'entrée doit être une valeur numérique" style="width:60px" >
+								<p:ajax event="blur" update="@this" />
+								<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							    </p:inputText>
+							     
+							<p:outputLabel for="vh_prevu" value="Volume horaire prévu" />
+							<p:outputLabel id="vh_prevu" value="#{attributionMatBean.selectedRattacher.volumeHoraire}" style="color: red"/>
+							
+							<p:outputLabel for="vh_effectif" value="Volume horaire effectif" />
+								<p:inputText id="vh_effectif" value="#{attributionMatBean.enseigner.vhEffectif}"
+								 required="true" style="width:60px"/>
+								
+							</h:panelGrid>
+							</fieldset>
+							
+							<hr />
+							
+							<h:panelGrid id="button_grid" columns="2" cellpadding="10">
+								<p:commandButton value="Valider"
+									action="#{attributionMatBean.affecterEnseignant}"
+									binding="#{attributionMatBean.btnValider}"
+									oncomplete="PF('enseignantDialog').hide()"
+									update=":form">
+								</p:commandButton>
+								
+								<p:commandButton value="Annuler"
+									action="#{attributionMatBean.annuler}"
+									binding="#{attributionMatBean.btnAnnuler}"
+									update=":form" process="@this">
+									<p:confirm header="Confirmation"
+										message="Voulez-vous annuler l'opération?"
+										icon="ui-icon-alert"/>
+								</p:commandButton>
+							</h:panelGrid>
+							</td>
+					</tr>
+				</table>
+				<!-- </p:outputPanel> -->
+
+			</p:dialog>
+
+
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

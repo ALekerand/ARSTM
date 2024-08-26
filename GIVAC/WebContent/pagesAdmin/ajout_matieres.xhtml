@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+			<h1 class="page-title">AJOUT DE MATIERE</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+
+				<!-- WIZARD ICI -->
+				<p:wizard id="wiz">
+
+					<p:tab id="matiere" title="Matière">
+						<p:panel header="Affectation des matières">
+							<table width="100%">
+								<tr>
+									<td>
+									<h:panelGrid id="grid_afect" columns="2" cellpadding="6">
+									<p:outputLabel for="section" value="Section" />
+									<p:selectOneMenu id="section"
+									value="#{ajoutMatiereBean.choosedSection}"
+									converter="#{entityConverter}">
+									<p:ajax listener="#{ajoutMatiereBean.chargerListesMatiere}" event="change"
+										update="tab_mat, mat_consult" process="@this" />
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{ajoutMatiereBean.listSection}" var="tata"
+										itemLabel="#{tata.abrevSection}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<p:outputLabel for="cmd_link" />
+								<p:commandLink id="cmd_link" value="Matières de la section" onclick="PF('dlg2').show();" >
+
+	                             </p:commandLink>
+								<br />
+										</h:panelGrid> 
+										<p:dataTable id="table_selected" selectionMode="single"
+											var="tata" value="#{ajoutMatiereBean.selectedMatieres}"
+											scrollable="true" scrollHeight="200"
+											rowKey="#{tata.codeMatiere}" emptyMessage=""
+											style="width:300px">
+											<p:column headerText="Matiere Sélectionnées" style="width:60%">#{tata.libMatiere}</p:column>
+										</p:dataTable> <br></br></td>
+
+
+									<td align="center" valign="top">
+										<!-- Ici le tableau pour la liste des matière --> 
+										<p:dataTable
+											id="tab_mat" var="tata"
+											value="#{ajoutMatiereBean.listeMatieres}"
+											selection="#{ajoutMatiereBean.selectedMatieres}"
+											rowKey="#{tata.codeMatiere}" style="width:450px"
+											scrollable="true" scrollHeight="200">
+											<f:facet name="header"> Matières </f:facet>
+											<p:column selectionMode="multiple"
+												style="width:16px;text-align:center" />
+											
+											<p:column headerText="Libéllé" sortBy="#{tata.libMatiere}">
+												<h:outputText value="#{tata.libMatiere}" />
+											</p:column>
+											<p:column headerText="Abrev" style="width:60px">
+												<h:outputText value="#{tata.abrevMatiere}" />
+											</p:column>
+											<f:facet name="footer">
+												<p:commandButton
+													action="#{ajoutMatiereBean.chargerListeEditable}" update=":form"
+													value="Valider" />
+											</f:facet>
+										</p:dataTable>
+									</td>
+								</tr>
+
+							</table>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="vh" title="Volume Horaire">
+						<p:panel header="Edition compléments">
+							<!-- Pour le recap ici -->
+							<div class="div">
+								<h:panelGrid id="recap_grid" columns="8" cellpadding="5">
+									<p:outputLabel value="Section:" />
+									<p:outputLabel value="#{ajoutMatiereBean.choosedSection.nomSection}" />
+									<p:outputLabel value="Ecole:" styleClass="outputDecalage" />
+									<p:outputLabel  />
+									<p:outputLabel value="Filière:" styleClass="outputDecalage" />
+									<p:outputLabel  />
+								</h:panelGrid>
+							</div>
+							<h:panelGrid id="affect_grid" columns="4" cellpadding="4">
+
+
+								<p:dataTable id="editTable" var="toto"
+									value="#{ajoutMatiereBean.listRattachers}" editable="true"
+									editMode="cell" widgetVar="cellCars" scrollable="true"
+									scrollHeight="200">
+									<f:facet name="header"> EDITION DES MATIERES </f:facet>
+
+									<p:ajax event="cellEdit" listener="#{ajoutMatiereBean.onCellEdit}" />
+
+									<p:column headerText="Matière">
+										<h:outputText value="#{toto.matiere.libMatiere}" />
+									</p:column>
+
+									<p:column headerText="Code LMD" style="width:150px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{toto.codeMatLmd}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{toto.codeMatLmd}" style="width:170px"
+													label="Coefficient"   />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									
+
+									<p:column headerText="Coefficient" style="width:80px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{toto.coefMatiere}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{toto.coefMatiere}" style="width:100px"
+													label="Coefficient"  />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column headerText="Volume Horaire" style="width:80px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{toto.volumeHoraire}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{toto.volumeHoraire}" style="width:100px"
+													label="volume Horaire" required="true" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+								</p:dataTable>
+
+							</h:panelGrid>
+
+							<br />
+							<h:panelGrid columns="3">
+								<p:commandButton value="Enregistrer"
+									action="#{ajoutMatiereBean.enregistrer}"
+									binding="#{ajoutMatiereBean.btnValider}" immediate="true"
+									update="@parent, form" oncomplete="document.location.reload(false)">
+								</p:commandButton>
+
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+			</div>
+			
+			<p:dialog header="LISTE DES MATIERES DE LA SECTION  #{ajoutMatiereBean.choosedSection.abrevSection}" widgetVar="dlg2" id="mat_consult" modal="true" width="800" closable="true">
+   				 <p:dataTable var="tata" value="#{ajoutMatiereBean.listRattachers}" emptyMessage="Aucun enregistrement">
+				    <p:column headerText="Code" style="width:60px">
+				        <h:outputText value="#{tata.codeMatLmd}" />
+				    </p:column>
+				 
+				    <p:column headerText="Libéllé">
+				        <h:outputText value="#{tata.matiere.libMatiere}" />
+				    </p:column>
+				 
+				    <p:column headerText="Abréviation" style="width:100px">
+				        <h:outputText value="#{tata.matiere.abrevMatiere}" />
+				    </p:column>
+				 
+				    <p:column headerText="V. horaire" style="width:60px">
+				        <h:outputText value="#{tata.volumeHoraire}" />
+				    </p:column>
+				    
+				    <p:column headerText="Coeff" style="width:60px">
+				        <h:outputText value="#{tata.coefMatiere}" />
+				    </p:column>
+				    
+				</p:dataTable>
+			</p:dialog>
+			
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+			<h1 class="page-title">PARAMETRAGE DES FRAIS TYPES LOGEMENTS</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+
+				<!-- WIZARD ICI -->
+				<p:wizard id="wiz" flowListener="#{fraisLogementBean.onFlowProcess}">
+					<p:tab id="tab_type_logement" title="Logement">
+						<p:panel header="Type Logement">
+							<h:panelGrid id="type_logement_grid" columns="2" cellpadding="6">
+
+								<p:outputLabel for="cb_type_logement" value="Type Logement" />
+								<p:selectOneMenu id="cb_type_logement" required="true"
+									value="#{fraisLogementBean.choosedTypeLogement}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{fraisLogementBean.listTypeLogement}" var="tata"
+									itemLabel="#{tata.libtypeLogement}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>								
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="nationaux" title="Nationaux">
+						<p:panel header="Frais Type Logements Nationaux">
+						<br/>
+						<p:outputLabel value="#{fraisLogementBean.choosedTypeLogement.libtypeLogement}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
+						<br/>
+							<h:panelGrid id="lognfrais_grid" columns="4" cellpadding="6">
+							<p:outputLabel value="Montant Type Logement:" />
+							<p:inputText value="#{fraisLogementBean.typeLogementNation.montantTypeLogement}" styleClass="upercase">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							
+							<p:outputLabel/>
+							<p:outputLabel/>
+							
+							<p:outputLabel value="Montant Caution Type Logement:" />
+							<p:inputText value="#{fraisLogementBean.typeLogementNation.cautionTypeLogement}" styleClass="upercase">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					 <p:tab id="non_nationaux" title="Non nationaux">
+						<p:panel header="Frais Type Logement Non Nationaux">
+						<br/>
+						<p:outputLabel value="#{fraisLogementBean.choosedTypeLogement.libtypeLogement}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
+						<br/>
+							<h:panelGrid id="lognnfrais_grid" columns="4" cellpadding="6">
+							
+							<p:outputLabel value="Montant Type Logement:" />
+							<p:inputText value="#{fraisLogementBean.typeLogementNonNation.montantTypeLogement}" styleClass="upercase">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>		
+									
+							<p:outputLabel/>
+							<p:outputLabel/>
+							
+							<p:outputLabel value="Montant Caution Type Logement:" />
+							<p:inputText value="#{fraisLogementBean.typeLogementNonNation.cautionTypeLogement}" styleClass="upercase">
+							<p:ajax event="blur" update="@this" />
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+							</p:inputText>	
+							</h:panelGrid>
+						</p:panel>
+						
+						 <p:commandButton value="ENREGISTRER" action="#{fraisLogementBean.enregistrer}"  />
+
+					</p:tab> 
+					
+				</p:wizard>
+				
+				
+				<p:dataTable id="table"  var="tata"
+						value="#{fraisLogementBean.listTypeLogementNationalite}" selection="#{fraisLogementBean.selectedInscription}"
+						rowKey="#{tata.idTypeLogNation}" emptyMessage="Aucun enregistrement">
+						<f:facet name="header">LISTE DES FRAIS DE LOGEMENT</f:facet>
+					<p:column headerText="Tpe logement" style="width:25%">#{tata.typeLogement.libtypeLogement}</p:column>
+					<p:column headerText="Montant" style="width:20%">#{tata.montantTypeLogement}</p:column>
+					<p:column headerText="Caution" style="width:40%">#{tata.cautionTypeLogement}</p:column>
+					<p:column headerText="Année Scolaire" style="width:25%">#{tata.anneesScolaire.libAnneeScolaire}</p:column>
+					<p:column headerText="Nationalité" style="width:20%">#{tata.typenationalite.libTypenationalite}</p:column>
+			</p:dataTable>
+			</div>
+			
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

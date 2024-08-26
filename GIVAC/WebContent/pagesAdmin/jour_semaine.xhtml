@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">JOUR DE LA SEMAINE</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+			<div class="widget-content">
+				<p:panel header="Enregistrement">
+					<br />
+					<h:panelGrid id="eng_grid" columns="4" cellpadding="8">
+						<p:outputLabel for="j_semaine" value="Jour"/>
+						<p:inputText id="j_semaine" value="#{jourSemaineBean.jourSemaine.jour}" required="true" />
+					</h:panelGrid>
+
+					<br></br>
+					<h:panelGrid columns="4">
+						<p:commandButton value="Enregistrer"
+							action="#{jourSemaineBean.enregistrer}" update="table, eng_grid"
+							binding="#{jourSemaineBean.btnValider}">
+						</p:commandButton>
+						
+						<p:commandButton value="Modifier"
+							action="#{jourSemaineBean.modifier}" update="table, eng_grid"
+							binding="#{jourSemaineBean.btnModifier}">
+						    <p:confirm header="Confirmation"
+							message="Confirmez-vous la modification?" icon="ui-icon-alert" />
+						</p:commandButton>
+
+						<p:commandButton value="Annuler" action="#{jourSemaineBean.annuler}"
+							update="form">
+						</p:commandButton>
+
+						<p:commandButton value="Supprimer"
+							action="#{jourSemaineBean.supprimer}" update="form"
+							binding="#{jourSemaineBean.btnSuprimer}">
+							<p:confirm header="Confirmation"
+						message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+
+				<br />
+
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{jourSemaineBean.listJour}"	selection="#{jourSemaineBean.selectedObject}"
+					rowKey="#{tata.codeJour}" emptyMessage="Aucun enregistrement">
+					<p:ajax event="rowSelect" listener="#{jourSemaineBean.selectionner}" update=":form" />
+					<f:facet name="header">LISTE DES JOURS DE LA SEMAINE</f:facet>					
+					<p:column headerText="Jour" style="width:30%">#{tata.jour}</p:column>
+				</p:dataTable>
+				
+		
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

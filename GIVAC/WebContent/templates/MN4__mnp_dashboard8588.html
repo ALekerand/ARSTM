@@ -1,0 +1,631 @@
+
+<!DOCTYPE HTML>
+<html>
+<!-- Mirrored from myowasp.force.com/apex/MN4__mnp_dashboard?sfdc.tabName=01rU00000009a7G by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 21 Dec 2015 17:17:07 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<!-- /Added by HTTrack -->
+<head>
+<script src="../static/111213/js/perf/stub.js" type="text/javascript"></script>
+<script src="../jslibrary/1442862172000/ui-sfdc-javascript/SfdcCore.js" type="text/javascript"></script>
+<script src="../static/111213/js/picklist.js" type="text/javascript"></script>
+<script src="../jslibrary/1449190104000/sfdc/VFState.js" type="text/javascript"></script>
+<script src="../../ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="../resource/1430457373000/mn4__MNP/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../resource/1430457373000/mn4__MNP/js/IE_Support_JS.js" type="text/javascript"></script>
+<script src="../resource/1430457373000/mn4__MNP/plugins/datatables/js/jquery.dataTables.js" type="text/javascript"></script>
+<script src="../resource/1430457373000/mn4__MNP/plugins/datatables/js/TableTools.js" type="text/javascript"></script>
+<script src="../resource/1430457373000/mn4__MNP/plugins/datatables/js/ZeroClipboard.js" type="text/javascript"></script>
+<script src="../resource/1430457373000/mn4__MNP/plugins/datatables/js/DT_bootstrap.js" type="text/javascript"></script>
+<script src="../resource/1430457373000/mn4__jQuery/jqueryblock.js" type="text/javascript"></script>
+<script src="../resource/1430457373000/mn4__jQuery/JqueryValidator.js" type="text/javascript"></script>
+<script src="../resource/1430457373000/mn4__MNP/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+<link class="user" href="../resource/1430457373000/mn4__MNP/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link class="user" href="../resource/1430457373000/mn4__MNP/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link class="user" href="../resource/1430457373000/mn4__MNP/css/adminia.css" rel="stylesheet" type="text/css" />
+<link class="user" href="../resource/1430457373000/mn4__MNP/css/adminia-responsive.css" rel="stylesheet" type="text/css" />
+<link class="user" href="../resource/1430457373000/mn4__MNP/css/font-awesome.css" rel="stylesheet" type="text/css" />
+<link class="user" href="../resource/1430457373000/mn4__MNP/css/app.css" rel="stylesheet" type="text/css" />
+<link class="user" href="../resource/1430457373000/mn4__MNP/css/pages/dashboard.css" rel="stylesheet" type="text/css" />
+<link class="user" href="../resource/1430457373000/mn4__MNP/plugins/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" />
+<script src="../jslibrary/1449190104000/sfdc/NetworkTracking.js" type="text/javascript"></script>
+<script>try{ NetworkTracking.init('/_ui/networks/tracking/NetworkTrackingServlet', 'network', '066U0000000kTSm'); }catch(x){}try{ NetworkTracking.logPageView();}catch(x){}</script>
+</head><body>
+
+<html lang="en">
+  <head>
+<meta HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE" />
+<meta HTTP-EQUIV="Expires" content="Mon, 01 Jan 1990 12:00:00 GMT" />
+
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta charset="utf-8" />
+    <title>OWASP Foundation Member Portal</title>
+    
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <style type="text/css">
+        .actionLink-custom { font-size: 15px; margin-top: 5px; }
+        .actionImage { float: left; }
+        .actionImageDescription { margin-top:7px;margin-left:7px; }
+        select { height: 28px !important; }
+        input[type="select"] { height: 28px !important }
+        .page_navigation > a {padding: 3px 6px 3px 6px;border:1px solid #ccc;margin:3px;}
+        .page_navigation > a:hover { border: 1px solid #aaa }
+        body { background: #FFFFFF; font-family:  ; }
+        p { font-family:  ; }
+        .navbar-inner { background: #51606E; }
+        #main-nav.nav-tabs.nav-stacked > li.active > a, #main-nav.nav-tabs.nav-stacked > li > a:hover { background: #345397 !important ; border: 1px solid #345397 !important ; }
+        .page-title { background: #345397 !important ; border: 1px solid #345397 !important ; }
+        h3 { color : #345397 ; }
+        .navbar .nav > li > a {color: #fff;text-decoration: none;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);}
+        .navbar .divider-vertical {height: 40px;width: 1px;margin: 0 9px;overflow: hidden;background-color: transparent;border-right: 1px solid transparent;}
+        #login-header {background: #345397; }
+        a { color: #006699;}
+        a:hover { color: #006699;}
+        .btn-primary, .btn-primary:hover { background: #006699 ; }
+        a.no-underline { text-decoration : none ; }
+        .dropdown-menu li > a:hover, .dropdown-menu .active > a, .dropdown-menu .active > a:hover {background-color: #345397 ;}
+        .btn-primary { background-color: #345397 ;}
+        [class^="icon-"], [class*=" icon-"] { line-height: 18px; }
+        .modal-header > h3 { margin-bottom : 0px; }    
+        .carousel-caption { position: relative !important; }
+        .primarycolor { color: #345397; }
+        .pagination{height:36px;margin:18px 0;float:right;margin-top:-6px;}
+        .dataTables_filter{float:right;}
+        .datatable { margin-top: 12px; }
+
+
+        .nav-pills>.active>a, .nav-pills>.active>a:hover{background-color:#345397;}
+    </style><span id="j_id0:templatepage:j_id12">
+            <style type="text/css">
+                #calendar {
+                    width: 100%;
+                    margin: 0 auto;
+                    font-size: 12px;
+                }
+                .fc-header-title h2 {
+                    font-size: 16px;
+                    white-space: normal !important;
+                    line-height: 32px;
+                }
+                .fc-view-month .fc-event, .fc-view-agendaWeek .fc-event {
+                    font-size: 0;
+                    overflow: hidden;
+                    height: 2px;
+                }
+               .fc-view-agendaWeek .fc-event-vert {
+                    font-size: 0;
+                    overflow: hidden;
+                    width: 2px !important;
+                }
+                .fc-agenda-axis {
+                    width: 20px !important;
+                    font-size: .7em;
+                }
+                 
+                .fc-button-content {
+                    padding: 3px;
+                }
+            </style></span>
+    
+    <style type="text/css">
+            #atedrop1 {
+position: relative;
+right: -120px;
+}
+
+#j_id0\3a templatepage\3a j_id38 > a {
+margin-bottom: 70px;
+}
+
+#maintabnav > li:nth-child(7) > a {
+display:none
+}
+
+#maintabnav > li.dropdown > a {
+display:none
+}
+
+#mnpnewcasepage\3a templatepage\3a new-case > fieldset > div:nth-child(2) > label {
+display:none
+}
+
+#mnpnewcasepage\3a templatepage\3a new-case\3a severity {
+display:none
+}
+
+#mnprenewalmembershippage\3a templatepage\3a mainform\3a pricepanel > table > tbody > tr:nth-child(7) {
+display:none
+}
+
+#mnprenewalorgmembershippage\3a templatepage\3a mainform\3a paymentinformationpanel > div > div > table > tbody > tr:nth-child(5) {
+display:none
+}
+
+#j_id0\3a templatepage\3a j_id42 > div {
+display:none
+}
+
+#publiceventreg\3a mainform\3a j_id22 > div > div.span5 {
+display:none
+}
+
+#publiceventreg\3a mainform\3a j_id131 > table > tbody > tr:nth-child(1) > td > div:nth-child(3) > span {
+display:none
+}
+
+#content > div > div > div.span9 > div:nth-child(3) > div > div:nth-child(2) > h4 {
+display:none
+}
+#j_id0\3a templatepage\3a j_id37 > div > div {
+display:none
+}
+#atedrop1 {
+display:none
+}
+
+#checkOutPage\3a templatepage\3a mainform\3a singlepanel > input[type="checkbox"]:nth-child(1) {display:none}
+#checkOutPage\3a templatepage\3a mainform\3a singlepanel > span {display:none}
+            .iewarning { display:none; }
+    </style>
+        
+    
+  </head>
+
+<body>
+    
+<div class="navbar navbar-fixed-top">
+    
+    <div class="navbar-inner">
+        
+        <div class="container">
+            
+            <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse"> 
+                <i class="icon-reorder" style="color:white;"></i>           
+            </a>
+            
+            <a class="brand" href="https://myowasp.force.com/MN4__MNP_Dashboard" style="display: none;">OWASP</a>
+            <a class="brand" href="https://myowasp.force.com/MN4__MNP_Login" style="display: ">OWASP</a>
+            
+            <div class="nav-collapse">
+                        
+                <ul class="nav pull-right" style="display: none;">
+                    
+                    <li class="divider-vertical"></li>
+                    
+                    <li class="dropdown">
+                        
+                        <a class="dropdown-toggle " data-toggle="dropdown" href="#">
+                            Member Portal&nbsp;Site Guest User <b class="caret"></b>                         
+                        </a>
+                        
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="https://myowasp.force.com/MN4__MNP_MyAccount"><i class="icon-user"></i> My Account  </a>
+                            </li>
+                            
+                            <li>
+                                <a href="https://myowasp.force.com/MN4__MNP_ChangePassword"><i class="icon-lock"></i> Change Password</a>
+                            </li>
+                            
+                            <li class="divider"></li>
+                            
+                            <li>
+                                <a href="https://myowasp.force.com/secur/logout.jsp"><i class="icon-off"></i> Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                
+            </div> 
+            
+        </div> 
+        
+    </div> 
+    
+</div> 
+        
+        
+        <div class="container iewarning">
+            <div class="row">
+                <div class="span12" style="padding-top:80px;">
+                    <div class="alert alert-error alert-block">
+                        <a class="close" data-dismiss="alert" href="#">X</a>
+                        <h3 style="color:inherit;">Unsupported Browser Detected</h3>
+                        Sorry, the website does not work using older versions of Internet Explorer.  For the best results, use the latest versions of Firefox, Safari, or Chrome.  And to use Internet Explorer, upgrade to versions 8, 9, 10, and 11 with compatibility mode off.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="ie-cm-alert">
+            <p>It looks like you have enabled Internet Explorer Compatibility View. This site works best if you turn this off.  <a class="cmwindowlink" href="https://support.google.com/mail/answer/181472?hl=en&amp;ctx=mail" target="_blank">&nbsp;Learn how to do this.</a> </p>
+            <p class="close-alert">Close this alert.</p>
+        </div>
+
+        <div id="content">
+    
+            <div class="container">
+                
+                <div class="row">
+                    
+                    <div class="span3"><span id="j_id0:templatepage:j_id17">
+<form id="j_id0:templatepage:j_id17:j_id18:j_id19" name="j_id0:templatepage:j_id17:j_id18:j_id19" method="post" action="https://myowasp.force.com/MN4__mnp_dashboard" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_id0:templatepage:j_id17:j_id18:j_id19" value="j_id0:templatepage:j_id17:j_id18:j_id19" />
+<input type="image" src="https://myowasp.force.com/servlet/servlet.FileDownload?file=015U0000001fjW2IAI" name="j_id0:templatepage:j_id17:j_id18:j_id19:j_id22" style="padding-bottom:15px;max-width:100%;" />                  
+                        <div class="account-container">
+                                        
+                            <div class="account-avatar"><span id="j_id0:templatepage:j_id17:j_id18:j_id19:j_id26"><img src="../resource/1430457373000/mn4__MNP/img/user.png" style="padding-bottom:15px;" /></span>
+
+                            </div> 
+                        
+                            <div class="account-details">
+                            
+                                <span class="account-name">&nbsp;</span>
+                                                               
+                                <span class="account-actions">
+                                    <a href="https://myowasp.force.com/MN4__mnp_viewmember?id=">Profile</a> |
+                                    <a href="https://myowasp.force.com/secur/logout.jsp">Logout</a>
+                                </span>
+                            
+                            </div> 
+                        
+                        </div> 
+                        
+                        <hr />
+                        
+                        <ul class="nav nav-tabs nav-stacked" id="main-nav">
+                            
+                            <li class="menu-item active ">
+                                <a href="https://myowasp.force.com/MN4__mnp_dashboard">
+                                    <i class="icon icon-home icon-white"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            
+                            <li class="menu-item  ">
+                                <a href="https://myowasp.force.com/MN4__mnp_myaccount?id=005U0000001YOHQIA4">
+                                    <i class="icon-user "></i>
+                                    My Account
+                                </a>
+                            </li>  
+                            
+                            <li class="menu-item  hidden">
+                                <a href="https://myowasp.force.com/MN4__mnp_resources">
+                                    <i class="icon icon-download "></i>
+                                    Member Resources
+                                </a>
+                            </li>
+                            
+                            <li class="menu-item  hidden">
+                                <a href="https://myowasp.force.com/MN4__mnp_support">
+                                    <i class="icon icon-question-sign "></i>
+                                    Support
+                                </a>
+                            </li>
+
+                            <li class="menu-item  hidden">
+                                <a href="https://myowasp.force.com/MN4__mnp_blog">
+                                    <i class="icon icon-bullhorn "></i>
+                                    Blog
+                                </a>
+                            </li>
+                            
+                            <li class="menu-item  hidden">
+                                <a href="https://myowasp.force.com/MN4__mnp_forum">
+                                    <i class="icon icon-comments-alt "></i>
+                                    Forums
+                                </a>
+                            </li>                          
+                            
+                            <li class="menu-item  hidden">
+                                <a href="https://myowasp.force.com/MN4__mnp_chapters">
+                                    <i class="icon icon-th-list "></i>
+                                    Chapters
+                                </a>
+                            </li>
+                            
+                            <li class="menu-item  hidden">
+                                <a href="https://myowasp.force.com/MN4__mnp_committees">
+                                    <i class="icon icon-group "></i>
+                                    Committees
+                                </a>
+                            </li>
+                            
+                            <li class="menu-item  hidden">
+                                <a href="https://myowasp.force.com/MN4__mnp_education">
+                                    <i class="icon-book "></i>
+                                    Education
+                                </a>
+                            </li>
+                            
+                            <li class="menu-item  ">
+                                <a href="https://myowasp.force.com/MN4__mnp_events">
+                                    <i class="icon icon-calendar "></i>
+                                    Events
+                                </a>
+                            </li>
+                            
+                            <li class="menu-item  hidden">
+                                <a href="https://myowasp.force.com/MN4__mnp_fundraisingcampaigns">
+                                    <i class="icon icon-gift "></i>
+                                    Donate Now
+                                </a>
+                            </li>
+                            
+                            <li class="menu-item  ">
+                                <a href="https://myowasp.force.com/MN4__mnp_store">
+                                    <i class="icon-tag "></i>
+                                    Store
+                                </a>
+                            </li>
+                            
+                            <li class="menu-item  hidden">
+                                <a href="https://myowasp.force.com/MN4__mnp_awardscategory">
+                                    <i class="icon icon-trophy "></i>
+                                    Awards
+                                </a>
+                            </li>
+                                <li class="menu-item">
+                                    <a href="https://myowasp.force.com/_ui/core/chatter/ui/ChatterPage" target="">
+                                        <i class="icon icon-comments"></i>
+                                        OWASP Community  
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="https://myowasp.force.com/memberappregion" target="">
+                                        <i class="icon icon-star"></i>
+                                        New Member Sign Up  
+                                    </a>
+                                </li>
+
+                        </ul>   
+                        
+                        <hr />
+                        
+                        <div class="sidebar-extra">
+                        
+                        </div><div id="j_id0:templatepage:j_id17:j_id18:j_id19:j_id166"></div>
+</form><span id="ajax-view-state-page-container" style="display: none"><span id="ajax-view-state" style="display: none"><input type="hidden"  id="com.salesforce.visualforce.ViewState" name="com.salesforce.visualforce.ViewState" value="i:4CYAZrj8Q6bOrMqSL0JSbUGgz/xBx928qeN2Chb+JWvr3qK4jrzdvqTNEhQ8PK2+UWUgWUnj+uFx0UfVCKup86M/Wgl/QIiVPnBWTh1LjSyUVPBkHl1KwEVeKqrN8Y3/KsWBincWKV1LHPfK7C1ujKwTRaWYKPOHZefJYQdgm3YVeCYjtqhhj3NrH9RS3VEw8nj6R0jXkLWNaF6S2EAjBxQXioG5W5gTE7/Cz7APCFAJR8jCQZfT2DxSkpuVQavcJ448hgT8OKg8MECsDP1s2plsqDj281EkjkJQGEgacSqgNjN9JMDFlqKy28hBhJT7WCjSy4yy/CPp2gkSx1/+WrkR8tP74yeN1vXfDGfGRfRJVULr2KY5WxIWPYcqsKmcMY3d69T2j0V+Vaoa/f47sWxeE+J4X7vy6aInKouZmutv75dOUUnN4HEOuxCsbVPHWJfi7YEP2PU9KrkfaQVSj7j3819Ryxj2Ctq2L66CFqNIwObj1saQGO5nsqmpxrgTIXxCmTxNrfm2ov/B4azsqcO+iLyTLvOQC0+k6icuc/HOA3GXvGRWdSAw5KAE/3gXMVFH/A3OQrCguGMouk3QNGjOCNZjd687BUowDDzywvQDHpKDL8BzwbUXntJrw0qCoMJI76B/c0BEYXi2MBy12SwpMuIWJBh/OK0oexg9KJTw6vZoRVPsAJtT9AaH1RK40L6HeibURX4w+Ad9GG7VXpPEPaHLuyI1NZ3op+UrKz+xVKm04x5KmsDaWv0yP/dTQlle4HCwUzj2yf7KDyne/Cy1dgPg1/HsQN4JzLVPS7s7/SOOzeJJPSNkfe4KD72zzKMgZ+5k7KNHEnIIlOsZ/k3Gwewv/bS68KNwTNKTo/QpaXbG6QZOtt8byVrpFQs/ps89SE81iTFqdtPbUWEddpIN18+P7WV/Y3Hrl4NCl1F8qW1SnfH+0QncoOjN+qne2bRkqO6yhFk5Weg/wg61n/v1+MLMKk9a2oE0nAW42c+I0/vMAUGkWE7aNm6I0frhoGd4zk613CwR+7EwtvyWlJw/f8rY27e4TvtIBi8ukEHHT6j24dVl6iZnVlPmYx4LHWJMSNEiIE1/xSi1V5oS1jQuSx6K7Y2/J2I+WxJEN3psumt5qZRm0UHooR6RT7MtAi4WfvBE97Gx5jTI9Sm0/rlC4Vt/WNbaipikBdL0xBZJzolgnMKRQqh7nw5B1ozLnX9j2Iwi9UOS3tI82XLMqHnXk9goFLUZdaMvgobapy/cW06UWh/yrUvm1rmNXiUibbtQAr/PjI1bsV8H9MFX0Zo1gmjxu88ETiOFyVddEMNwIqIX2vos9ibsrMImZeHcSx5ypEYKu0y70HrxeJ5PNdHCSZEMKudgv71Qz/B+5pGg9s2Vz5HtW9ZrLWeAtrJ7WK9Yw6mc0UN8o81pEmkJ6FhMbVRIhd8xfGnTNUn8FTNSkwbUL/q4pXiBhZxply0IzLTYSy5etBbEq+0XyfB8QoMSJTmk7FEidrILXyXXtHmJTsnzkS6tjNSir/pq+cCyMR5ceF1khHQiPT9sIkWwkPRUz9+hw8WvShxqXImkOkMrlVRa9S9ZW9AVuIRFCwKgM+4vbeZrRt3n8Gt1pyyaO6aM7okm88qnuM7q8QUEtyPkX9hCcJnuFXEybuIRGmjOdl4HVhB/2m9wiwoDcI1KBf6p4ysqpaOqCFFmvLO9/DPYpcZxExXW40Fs7vNVMM1HKL0BCadAO4hQQnKy4LLXtSKGF1HC4Fcqzp0IYVGVmriP+sntCpcZNbcQ39Fx+0qLeNwr0OpxjvIlFlsYd7qLK3b0QUGn2kt81J/uHTtcEDl40NopjlX0A4kxOLz+I+9Lt1GZXbcscjstvCtPxTQzdB/TDjgLbM+w0gvbpNXc4bQMW+yj2hS1oB5P05Akubu3KochW43YLdPYyQ8jDGV2JvuJ7JSXHOQiUrDEsmdQpC5Y3hvgfNmiL3LN0MD9g6JNzOQy7q20DemuqnkjLs1xg1qJecdYRs1bTJnIDO1EkPOq1c1TBLlyqTwr9iW7ZcgQoYDP456jFt6oAjiioTsX8QZIP/EQ6XloFqt44yrV8jgGmlracK4uXKVCoiQ8yzF5Lu5Z6Lyf6ubF/ZxFKWCU4hQrhhaEwiCkl7AyF+eHEe66QktnNguZ0EiI51eQ8wFMQLR8sSlZMLZlKp0cdZp5/kEeLk3s9AFIcu79d8ZmnmB8vPu3nYzLb58bqvZFrZ3s4xYRrW7vKTdwhh9Q2/8QFVcAJT6O424W0ErUwvAC0Cij06DI7gZle8orPRAck2zOB2beOrnmkxREqxxLBhD0qzK0FTDf4JjYt7LLXroqw+S6bxpS6O/StPSVjzyS6y4KTs99i/DLtegLA/VL+ckRNOXquUW1aaa5wEzlwwbfT5SaluJuA1UIv85JwTOwHZQ+DLO10hEUzX/LtA6+7MnCOfvBYhuEHGNtmY8vXgoQEr4SDmh2aj1J0Kvjtq1NwoAJEUX+xc0sT4UY0C/kpOtBqte48NSw+yE9mBoAKqseES2Q1/HgSUgzGctvim+2CP4XV4s7eufAgbCCm/Y/WvePY61Q88z59D+lpOK6gRdksDVTnH0uuh6FKC0aKrq8iRoWZxZ/LpQSVQT2dQZUaAors+I82GEHAORs3/YhFBwlsgQ6bCfafFqaF+E8ZZZv9nULACLTpV4XDor6W11XbY3/eCTw+KQzEzZuNkjcKB5Wsl6UN6bynEFFJOOqiPXkz0YFPBT3lpGOVQvDVTp+lvRBZlf851YeTy2UfrMII3aDMWfBYSfJT5/yN59ekvK9p7L3uysBkRx0HriK4Imfk0y5amFHEilpQnR6ZRumY1rqLIDeXxxLE8Qcg4opfRIBkT0od+lpEe1u+pBxPVAMGRjFBQlzYautzPfiAaVThQX9TpUoMycm4PprYl3dWH/Q8BuEbV/7lStVLVTYW3GOwmqU0fRqMrd69DPL8wR0ruOfW28SwdmT82BXTsBCZgnGFKMC9d4d6KyJWsBaex4Q+0J5YdFZa5OZ8sy7TrwVcrQ1ECWJ5SlNaVQGsyqlUeitJIpj2EJCkOvjrG1y/4tA2RvDALSCxPg+5c6nW2nU8X3DHe6M69yfz6nL0jrcsUufALsH+wqSq5thSd5K4W49VEmn0PZaMwauEcoo9GZLIpLcBZgEN71oaHr4dEwGvcF+pO24RutY4CVTCIiO5dCRisX9/Vc1GkJIuknakM121hqEGvK0PU75/DkfXgqn9v6KabS/LjgwWDdEpu7vlzp2OCldxSpKn0CP0pbQHW8xzA8ZoMylZFbDMhD8cAEKmjUvCNPp/ZD5jEb6uXe9SWMmNpaUc7oPoPECu6hj2quqXOpaPhWUd6tK6lMBGzGUP3GyhNAf4+F58CpxUSbjhkbnIpWhjrULES8/5aozKh2lmYYK5h79wh1vuZw8yjAB2WRgadWJVgEl9tvd654QspVHQrFjqg49JFu59wjEE85rkNtXuzuoPPMk5PkwJ/+W20qF3iqR1CfFGoikwrEo3HVhhz6gM0hPSmG3KsoCjaGmsJqJuRUDFH/xM/FcDV5+e2hRRCgClIVZb2Kucw0fa79CFR/dnkjZHPKjoRzCvD//TGGq8ESYpl0F3i+pQ8JUyxsNeV6iz03neR+mpcL0LWEFpS44HrqIBfRYNkakIidnSkugtmqAputNHfdg/CqaZt+OT+F1RLKGprj+UjUOyZshF8lIHZHTRK0FyMo6Q/1CWar7D3rRmN4VmLtx0VXHi60f+t+idC2VYT61JxTM2H5QvmVGDlp+fjOFIFwiYh3gTg6JlW9RmRIV5dsuTDM8c9sSUTTlb1Btr1wwV2xkleW2BC2gPh7qM/lLyCjFTcHKOLl7k4QdWcpp9AuqOeQz0VH66s0G3simPfbLfZ/D8C8RlmdMzEe4vSEJ7+g4UVGC2USr5LN3l7vagMWmVzAkyTOnFZs+lUM9u3P+v6G4H+1/wUJ1Eq92hX/6yyXHhDw8XgvEOnDDOHCGHEr+7O18U1IWo8ZT6EYhKGujOQVNFH7Njc4bbt5GwXV1gPwWIZE7xEAbgnazTz+l2Xg4WhlRO8UflwVhzoymPjsjZF4Izts1D+ji36Jp/QQ3O3cPjcvyjtWQr2GEYIQfY66kvTKegzOBmsaqJD0cqqdmCpW2teIRjlPRbfaywZsXepkeT5LrqMNFGZHhwtsvhKnnrGM0ZN+uqAXH5ux7OPqnUcJiCAkhDJAHbeC51NQD0D+69usC+l9jK8VK8Y9R6pyzoyNNYL453uDS9/z8len/TR9TNssH9xmhs7Gka6MQ5DoPNRl/l2RF0ZjdUyWCyn7lG4HiqnSEUpFbgqFm+cU7fic4EEJ7J6CVhr1SNhXMNwRJbA20Y7a7fsMMwug+Zbb3Azc2evDLVoSZVe8zn1JAvrHH7pj0hhyCDgl6h9rDqpV01znjEEroIKlbnMqOa6gSK24DRKhDtnq/iJP2VvxNiX+P3i2gTGYWZQtG9GMmceO16EpI1OOHzka5BdUQiuztQvCpTwxMvRXcNzLMODZjOtP+DrFXrblWYOjZMzc8xik4vzDkOV6J84oX4wytex9chqwkJEGnGZkRF+GaMhT5unca2Df6fXrKq5bYJ+aeGK9iI2l989Dut9BGjYBMtP6iIWdpTATMy9k7cOxGFtiohyHNCsIaLcOW7ZPPQcntqdLVhBwFNDxR1xemonJn7PdOT9HfqpXGaE4dNlD714AJiG1PRAfBICCY5Jk+HTBZrhDoj9KAy4eqZphLPubej0wxUix9hSZg9CGFyXFhysSwpnZKUuC9fqgw8I8jplnE6LlHeErvubVkKitpIv1gei0Hf6GPkUBK8RHLW08bBi13+RKFR2eXqpCIWRUkN09+vLaq2V/zHvTxZfd5IeGpwSEs1eA+glaOTOyenr8D6qoiaGauLLDZB7zVOYittKaZw8bFAMa1n1bqmd67PCrKrh+dpGwudQsBzWjWrcraSjKl20vNacsWuwCocu9IdaDKgzmMdUegjtYhMvVcoQScwYo4YvCHaOMZWVN7lIF08fsxQEbsGsiUR/CLt6VKFIOLM7XxV3Ueg4t03jgjvtQwDIgbKcEe48qLYekbwkg5dRCK83i7JmTPixWT0vvEqlA0f2O1p8zNXvBtWdFjxczSxb6B05rvo5Vph0F6LwAbbpz8nxo3jXmSOSYx9GilIDfjZsK/Rz/FTR5RVQ+A2FzecaC/B9PHFA1otcdF3rcc3GuBvvs2LU0zg/sP35w6PeJPBSvkDFQdkbA9A4Wr0mtkh81lD5PWlP1wqK/8KQvbb6l1TWmIsDLdv1swdpgJGeD5271MU0A386J99vfjfdr8+ghs6aFCkZ5qakaa8WJ3EjicJtNknZb1Omi8FsyEZnN4IJISStJPavvDPN/t+6C2e+RKH0Sy+kZGO2J8VFvEW2+nLcnIakovt5wyrSimw7YOeF4OoQPbAswJTSBeUTTlLLBDl9VGsJX24KvDvUlKn8BSlysu3QSAsxxYvfIM80u5rT1M5RmVV2CFmG37Vv//PI+akt/wH9z3AQ1cHrOmHdjij3b2o3VnNZdZ/4oC7PKhRH81FfmyRzZuMDia9xC697c4DGUMoVdOX8oTDwKoVPMvYpLy/ePY9NXYeEyOhjczjxlYvG+PYJenphwuHjmExS7HQ2t1NyQ9t5N9mGfiG0DZpAa6cIkq73JV893Sko65Zbso03vFigRFz96qGQ/3HgAbL3YAIvztXyCjkZrfryLJH6wlmEzkHf/dU6+bsaKAghw3AqgQRzJV7hWETNxP1wVdEZMir6DTV0XCvyrHMOXusUsa6zDUogm0+9PSapX2o2u+qX9kQQSe+QM/jtJf1aJ/d3JQEJeFFH/x1oOeUTxivF5oSTIN3xNtyeqqPgVrb9laZ4Dg9ewgaBmRJ9ZJDKc8ZCVI9NO/xBLanqw/HMZ/ji50ogdxrOiKZbq+a5oKCgaKhBlYQ2RFsD0yJ+WZzmeZzd974RNoC3tpFYJZzqox0v6CRNMBHIb4MxMjoLP2qOtYEaO/+wyme455zxkdOtHi0I/N9UoHzORgx/l/h5ecMFgkHZ5uNm8CzBnd5BD3CWm1+SNgKkokUx6rYTq5TSAg9aVfh0V+oQwU9jFTn1fXbZ9fvDPg65NibUbWJBqxjZnCksy8uUSCcMYb73wsn382liZ/XBKFQ5l0qOMr9JFR5HoAS6iuzdI06orD4f6NKoSQWt6Qjo9zlFH0C2ee+4T5OlCILTd4kJ13IRNxUZ13dSl5OiNp/uLh0B3VeoPTvGhdAFbUszO91idKg/03EkCfsdt/t/3gSbH4GIh8H3V5lwdnZMm71CUhu2mJzckPkPKw/veMYXLdw/xnITwxq3rulm9s9namT7R8HYCVn/2wUl+3EP5/6NCwA783MR3j7N3BFnTH9dAIHI1T5PGIEwZPPgEqoNenqDZ7oO2uSxrmp8IN0DbQ+XCTEu1aImNZxIvZp+CR4feK3dnvT24XhoZj56IlQGwyX39enB956kkEjGbXwRWW8tAnZaRLSwmaSvWpwy9AOFnRfi/mOux9A2ipXnRki0YewiR9AHLGUdR6tMUQdUN223fzsuuBtPXBFUukV+E2oKqIn5X99qo2cZtN7/BoCV0sxiZweDrzSumlrWZW2+qY24HI57NCIzN2rSUoChqRJB/XR425D/jGPP4+kytmkRk/mt4mosCb44vsVPSCdgjeZqDNcumR8l8c9uhaPIhbth3ROaBRbv3qj+TiOoGYbq1glNgm76MtBMNyJVc/0JiItHnjnyp6QmLkebRNrkTibzRCPc8tydDteQNYSpauRA1tBCnH/hz4UKF0b8SNj11Aj9/oLGIX0Q/0ArUnxkcTk1EFKtf7DE50zwYCTsICqy7h7c+SLvEM6wdTtQRFcB7lXCQ65tM0TYvBk5IaUdmsbjTWOaRy+F2oYdkdNX/yU7gbBWKNdoW+S5nDEjIQdXXVXLwoleLKTdMnfTZLTy8fI4UJj7kxkwd7rcaD0nZI9za7n2UrHeqLPGtejidkvUNFPwhpDgoRROf4r63mMz7uO2uNSFyO8mr26kiy5e8z+m0OoMEiJwg7lePDd/gU99DltLgChUtRX4rQaD+1NFvbceUZMvWPES6HO8UZtBubNc7LYCuvsEUWSwpzkfYK3GBo2B+EMapInsTnFdg6aViiLV2VzpQw6/QMjXnJGsAplhlEfnMhXbZOpvM3fOxl8AXCcjh08T3OsAkIPynuylHSR+UOnJqz/kyR71yuOWxF5udG+R48w97BmETfBn1uhVUkdSEWC+WWLaMtWvFZJknQptPuaAHLaArncuydCeBEmOEo7vV0FRQzwQjUfOX0JouMgQCHEt28Bfss/RgDzYAndZtmFgdi57JLdw9ml+NH9wPX1LbfnRuyk7/8aRo3M4KgE0iR0hgKe69Remw0Bzx12VWMJTAahsOfa/6rVlYsd1fFogVfFS85pHikwdmWMGYSM3a3/wzggE/E5oFjFahLuZJvVmdmMtf8//tjlrREL7++EthZDmRIHHvW+K4HvQJWfO+phsoaFUZPJ0p1PuaiWZqZlThX/hRo2Q2O/KaLf2FVWzWUMl4AeOA5VVtDPjY010MeqO7gy6nddxTSYdCO/ND+rI6Lal1f9pjp4dc3IUkibKQIVzSaSMMhcWzSKH3Th7prTWOXYEjAPBWH6yvEmlGAMsGEXIVFjFN6CrZnywknMS8t+c93v+2Ezre1SXYyR/gWiXGX73Jzdl7sQON9UW4RrCBN/WAONOALmn/AjclTaUMwgoQ9S8Gx3LFIyhFyp729hus5UcLtgmQ2GV0bYrliEBYcELm9MAN+7nSCrmVjgdRy0Yp15mhQ8zebkqkKtGIQ+pxXDxZCSnwUZrdsVYXy/y/UE4ApyB4OrO8m6EF5/ABL8mEshV+xab2Ik22fAentjpjeFP7QeCBn6q/5aK8+Ch/TXi0pMzNk/8yir4wBptvjf/7o8UsWD/8Go/wdEQ8BAtghH+zVO0798VsNCIos3f12lAxSY1PbAfKXdUPJGNOyQL3YMU6zhoGhFMabZ7kcIf1eGApeVGtrIHhgWfDI6nAFaY1hkeUPIODrWcY0NnCKnGVWA+ctCToAXhtB0iQo2/gxyIUt0VKp5UV/vIThcpcu3bHrRh7oNiIu2O9ra9xIty7NUH9Cm6PYNaLPn3GeWZBZGzY2QYxQclL+hSdcr/1NHFznd2Br4hz5bGCEFQThSPjBMH5wqb63MEUTS0QhN8LKrnJtM/iaDJepRIFdUQorKwfdopDtOD15GQnUzmDmAZSycLIZDhUuvDMiao56HaQY7cjwD5A9TUdEBBnXixuI9Wdm6yZhmWEUd4kBPRs7i61JKUxbxBNk0fEHgBNeroa2kdaAR/muM3Jc4pDQy/G1qcdz+zeYvnXSLAe7e/zlHK0nTRqpHwS27WD4gFH/Y3/T3cylSPKu85K/8K2f+2O4p9z2J6WFGiaMXPXbQit/ZtBiGcJd31kGe5wr7MB4Sno44BEBzczXjTDqnG523Is2OoxI3f20tw0t6ySovLzbyzj6jv5roUe6d4eVYR8zHJaxtlvZ0U+/tn3r91BXraLmFc2HDuyUSHPzxqUJTtuk0fmDYwjG1gy9uGycjs4cdUofJv4MyYEbIEXn1DmDYukP5DMSz9q+VRIUCel9jPqyzKsFN8kOu1vYnV8nbsDJSXkVxtoHMBUJcR36ckeeO/DjGbYiH08RWrCycUEzFC53Bs0TnEeY8KKzS2fnZu3fMHXFjNN4tBizIjb4/l60mLrmBKgNUsb0BcTvEX9d1Tuy7GHNM/b+HppddVyJSJaX8T3R3rtrVtDzMzZ9gRFoIy6QEyHnf+1y+aA5YjO/k6DMquvF8BmVWxHSqorpy5yKgQPp0Sk85jEYvaSpbcXpjrcm2ciWFuyqJz2u/1Df4oNxptjHB1aFUSidDT/CmZjwbbmcl3rr3zvU1LbK/QRMoD6vESodSrUKZIvmgmL+bR4Cwu3tZ+1OeBs5c/osw1h1AsHxCm5ThHQzgsgEVfMiZ8I+lP/YpNPKX9veldQsVorZrP3NOj1eI+VdEYOwZBVNzi60+7CUgjartWRWkBpXaqWolAYqRa+ybf10iIp0i8WqZkCN8caQv8QnTHGuw+kD+FPG9CVh5qZs14GZMyrc9cy3GZqhH5nG4XXmni4yqK63WgRD0QXJvmd9a5sZH+v0na3YyHYgtQsO7WQBhNg4F9KbslOkq34mqVSPN39aXamjff1kKqQpXcR2xnWYXgEwU6Y9R/GNPZtal2f7N/8y5sbNB9dx3sDrEwQ4nN/gs0f4y/bTpuBIeUrnViQWVdNE/bAiEQa2X4hbfi6CddYbwbc1yq2MTY333X3fniIsqSg/t+JXRtBSBEN/wm3mU5Hujv97AYFjaUqG/HbLrad+SAmlCWy2N8Slobh7pmMzyYQxpU/m1fe0vqgeEyHvl6bwfniAyX8j3ClLcTteIpAYdKzYJztlKnFSr+gSvsRLb95V3ndggoioQ7VYAdkhaL6OeWKBv6CkVlL2uWkj0A+7wa9NuQgkkiIVHk8erlD2J5Hs1T/djwgspc27QobjkZGqjT5TDqXYTl06qbeIe4bXq+3kC+JP27GKeOhN832/upik20o4P413r1VW2OrC9zBy65p6gdg1DJshR8cAIRZuWNXy9Cjqm3LECjJ/XfJmkl0F/PtxGZOxW+gpI7D5Bs6hJEqwMeoCbQShsNvjxpLXFcb5l4mUPfUuAB7cXTBKE+7QW7VTNz5T2spyku/skNayCgVxBr+kBkgH2glKSPtGE63d7SccEvBEukHZCfIdCVxa/nyaev8w4tk6xZFLVF3gVeJNK7qePd+PtallE26iHXYd39p5Up8K/I3ui/a/B/rxX5n7ftHqKy0e7SM+KAz+ZSlGe85JJ8Q4/UPFvXhbX/LJ1D7cWeOocaQpY3XZxcXQEwPjbyL2nlScP6kixOLYMsKjktonFlwDcgynayrnkavqrmFNdZqYjSYzSFQixN1lV3+Bua8IN+7mpHTg+2hYgCjz/b3E6oxGaPGBfjeQNl/OnSAyISSEZUa8NP91WADc1LpXrRdP4I4eANue/KJx6W/Kz7F6k84iLqGkcJ1w0rT3DV+5B0YHbHUkEadIm2xyfJ03jWXkiwkqFVNeGe5WgSmpMIIELClcY5Lv3BRgEohOyGeEYnZy4gI5QCwI5xye+cFytAj3+0bsx/m0DXnx1g9kG1lWQJm56DeYaCb9dYQbkH54BDeuL30W5ALo7GTDDMIB9npYceOLxKcXn1kJ1DZt8QRuZ3Ssm+V4BecRD122dseQkqQzXNXQqV/+pshM6gf/kUCk8jGUb2xnjzmidudb/WP3S5T1ztbMrSr/ADD3Fwn8yIsFVmk7Dlk96N7xVIKzxgPUzENSzPo0TfHeBE/JScxAGqkiXvDkh/+xNjLHPJRA+X2dnDoBBriQOOQtnSUjufaljwDSukHskW0CH6OOULAugpDRJzCE6IMDamrfMBNz5GI77biRahnO9YvYvn77cX2zBihjcQ0BLH94CUnyOMTHnVU9mMUq22dGSLDxcMwiW+qwy4kPr4RJZJaNKon9lzOQ6E+qZphGnp34bYmiQZIFyJ6i/VdFabMmUDhzsSGWm/5pDt4PwENJyLvHiClCUsv4b3zWl5pM0qd1SU/tEIF2GExGh/a4hW8vlhORBhcbMpgy7qTofPt7alyB9yU1F1bfoXgApFOLjkluSgFmBweBctjSG+i7yjMZhStubbc8Vsw6aYCyglz5xav9fWeVspteeCzenaChNbZU2jzq6hE0MSP3XLSbtZjWYSJDqNMQ8vUum9P/ShQVenkkqp+bUakVf6PK3+Wil3d15MSGwBkPpmpKu4F88Tm6M72LM7DQBcfO8G/napb5A6tU/Ay4mQlRL/1+AIdCUKhyM/LQlNVJFBSLbKLodpnyTgdIUDFqd9kZgEZmwIiKpAqni1BkTovfR/lmp5MQVrf1xnQ2P9Ck6mD+LBKuwtypa/SZsHTzEgzH+OZZPP3KWdMDGN5D77tJOvczWyIkFBH5qoy0ZLcAUAW3NEdWM+wwTYwXZTLIVISaBAvYTG/5Ab7+O8Ha/VQLujFma65r4lsXbZczdHDTpxIZ7J0iHQb5whFa/Wxnof+msxgHybABBE2JwbW3stoJ4RdvVwVV8LfAbOla1PiuVaV0MNOp3QrSLi+TAI7bfQASOKzJC1NrLnzHNDyEe3auFXH2IQVDRnsu879hyniZHEk4BhkWYrYDl+b06SenM0Xe79M6idk8wqzOIRB7aT1JoBxMT1gLNtG9R7CWYW/hRy4T6Hnp35f2sV7RN7rfP/4g66BBnz6nT2fKx7h9jYlc4rNf3nW2CerKWecoEBbR+DgnoUqmfQJ8U8yfLaCpGrQ8JunF0eigLpM/K9q3n3xoGOg/Vv7pfEndp/Q4KzKnA2Ap6RfXOZLZ8A8YfMsXfeIIPkJH4Ru8n3K4NOlRvd/77RKbl35jvl2IZAYkvSJSuOaf1WkgORfEivFf+etyb7jsdyBfqna6eYHefwLnbcF6r4C7LQCehYZoaFLtE1ZVg5AOALMNBoQlQtfF0fh0rMDaWMUu6sukssiww8FDWmQDbEQnJEMj3tkch/1eqj0S1w+BCYCK9OOvxceXYUy3OJWjwqb0livcNaeNdbyFtIZvR1uT1Hujz86hK5YtruGrLePLAPbLxPeKEOUIwNh8aVrknW5/24Jn6x/RETQukx4ux4VPRWqVmuzIkadr+7VCcDCfCRo78h5AG9KbmEvBy3zJEzLJyJ/ToRVAuayK+yPJFHmvqT5ot7SuVJ6DTd/Bm3+XPtElEvPb0cJGpYBhgt+oxZOxdxE5iX5I5+4nV1NA4rDI+rwFR+I2kh6sQ2DTb/w5B9+EZy6YkfK4TkPG/C9BUee8XtYeT2Ooyyq8izWPMpmr/qypHSJfXoI0ijlmPVOTz99xTy/a+Tpc+UEesMmJkHMs3d+a929Fx191unB+PTIPtUbD68TouO73WwJzpye9JbFx6QBktki61Vng+oJNfrvnwwSH14WhwjqYMH4swsLN1HHlXBKLTqg9a3GaY7xrgdfr30x0z6nhs3SKLZfDKDZ1oUG8/CaWl5psLY59nxfaPvFcZ2nkkOQMBaJUcCqborAfJ37gm+wtHMlxSWOgCdz4oD5AJl61GNgjiYOAPn3CE5Gyy4AEkjgwphm6FC0k3L7YtQXxcdYcakqQABJDg/tfH1f+daWuVyFzzieMw2hyaNxTY+R7mzVpm4gFWOfBTB8HfLPiWZIJ0YAtffg79/V7vX3JJGDtS8BeANVPYQNfOUTY8GnPo4oPTl/mV+j3OmitzNbJjbc+Se664m9nBa8EXESeDCqG54borY721BSTGJ1eJRPGaQvuhXoHzavspE1k9Z3H9Jp2hKsIOpT/7vx97IPsVc+ezmKi5+ps1uEBfWHCE6YyLr0hOFqdTefGzkZurO1eZ837ajUqDTC6MeVEgbJGMlllmJCBtDuHprdGaik6dl4T0kVPnGX9tcQ0A7b9z79Cus+j/7HeUECbzXlRbA5m0FTH1dIOPpw8BET4jE/7y2+eRd72XFmrVtVKYA0pzz9+SZjs9dF5XqwQxP0yci9KtpNOOwwrE4OCu+LGZR1LvoG6fPI0nb0PI3/R+lWf2GvkQMUZjKui3uyNvgO+e3u3GTWIa8F8xQ8dOOw7kJwhEvcQyWbnkKKgRUYMUiEc+Uq0QcytgNLceFl8Ah5zwlOb5CfwYIj2nQC61UQP1TfLpVMZGPuvKkJ5G9yQjaRXAXIfEUOBMTCT+ak6A54wVwgoeR9xIUHJq08P75olF32wLcoDdgO4uHwz7eTt0mR+6nNS8QmO2+QpJKNbyIIwFwYDjR6r0fpHa/RcTFTCeqpXuciZRoC+9VpjF+wb7jY/39NI/j+OfxaDNwLG1soksj2tAFM4D7zyqqBRcuhBQVDwnPwUp5hRbyN+f8bdCdB97SICwa7cMcWABerlSied4UO+888Fd0QrfdYuXXob9jQBaa3ytgqAH8HMyIUj7hy0w8BI1qvunqyb9+eGChF/2LWW4kqmfJ0XrM32UCnD7ur8vueUcAb13EALhesycVk9Tm0bKXngYyjdW49mXpFOo0SlEBkS8RoNOcE7jICSkyctAiHFCGY72VJD6wyYt4q5g7tGUoPuwnHn19cig5BnjP3k8LWc2pSjduFjtDPjRmtW2KGqpZQbCs0Hy/AqEIqGuBQKZqFvALIJF6v8a6GUbgX/cW8LzTqVLeeWfE+wThW16n1fqY/9vdIfvHXhSawkidkjycsFNZZvXlBXqcI+YzK0mT9OESJSrApEgjtGiYx1XhAT4u5cjtp6JMPumYy6vLdahKL8/urkwX1WXFPkqDxhPmvRFGHXLqcyHdO/wxw+GjBYK83d/22MqN6yo4/G1XGnLBCcfNyR42FXa0eYGwbb7uc91NlCnaYjmkF0GJT6n3JjW5n0O+vX5uvOU0wm0IgVmFk8IiQRPDgo2VeYZYfDVI2RORzLXKAB+aURraLOAjfcO/5sfLiCGMPR5NnJb01WO3zXlXvvVbO3uwnrhnYOxpB9otqqG8aHtggknfn/r7iJaeSQrldqdWvkIHWh00szVkcF6j2tfIA6lve6VLQxnnOksAdhNO1MKeF/r5ndDK0obMoIf9F+wsxQ9HbLoHdRRgmljmKjHk4x3h7Bd27qc+ST1TbrL4RuNNmSbObv4zY126u8Jcg8SwqV/8ut0pNEtYFCL8nmspgDhGPUXxrdOxzl7LS7dEoWfzIMY2Vr0HQljr1CJjhTSuTpk4aB+SjzxZNvhTBdXuUD5RzfEU1aGKNTC3WdbubeALN8jXIzcNZLXTmkBii67an23vlNG6SLwOXOOb5SLouSNF2e9FI4vbfyPiFnOqT/EGzJmKviTIX9/J92kIkskJKEoW0xgD0bDjQW5dIeHlH0C2DuGe/V974vBoAryOtdi9AX2BmkUI/yb/gLTwcsfZwQDeR4aqBS+buqTsZqcsiB9DEjYLe4KzfLpZX3I+mvWkTxdEUOwpiBGy3ICMZvOZSh2/AbWR6fiZq8NMMolZlX7L3/DQtCqVYIopGvsJT1DyCLMFknNk5KRRaIOtrYmSsuVn8+UG2NxRS6/AGVFz3UzlsOvE1d1ZwAWZpkXw9/4MllhxgcQKVG+LqE1P0ZDe9XjCPCM5MhypO7Ep618IA1DHD/rYwYZtovP0XAqGtP7BBEXEoAQLec0DlmkCUk5DRZE1LfOZp+pG5T19EMMIOvEYaMOwsu0ovINZHObkiZ7tPz8Y7KjbtCsGTA+vIj44MCB3lbxy0hjRSAy9IzDJIsZjP1lWztcGhi2xNGBFnJhws7SB8XpA2PBjnd8bUS5JwWiE4sADuJkKLg/ErKqRoFzwMC49F0xRVqvwo9Mxe7xrYIVixIbJizHOOIzbk6JMJ9AKq8yfIzlkDK2eoNU+8t8CMajUzvuWbKAMS41ebIP8w2iQctvslSmtdDD6uKIohVgW3TYyOoCnr9/4as0KeuCpLL6GwSxYJgOYrjZL7Y25gFA0VPkMskfIMHUNaVpA4ccPS4kSbaeSBgoZWJoGDOSHYONnVKSxq5NmeUoLKHGAnpXcBODcyjuA/7IBpVAqurB20/GUW0hJ4I0ifMVfg4FLZjtCjU7fl0RI4o1Ns0gPCuVL6JxPjY8h+AOPDOjd19Fuqqc0OaKNJzv26ApCrciXxQ6xdO/7mj9DlQShvaDjI8CsWXjYA/0I7zEXyi5ntl83yegKZwCdMOMBOfwTw6OVgJCMzFL8yFvcTxIxHGxiH3QLAp+3l0cBD+g2VlTPwuVQ4jqcHJIBS0cImLLE+vRT3N+TUP61vzzW9rtugrEQsK0y4DLlwFvCwxzsE5VAY0Mg8wVewzt9G7F29yx2zSB1aiG3oPVksOTJqfTrfPs/lZ/xpWBkviL/U3EhE7Zm9dJ07t7WkXr+OxQKFK4xlgC7O5dBBIxF5EPDK2x2mQeQAcr5UOECwv64FQFwWTrOe6zatAsnuhl+Q7OvZlbdZzgtTmaSvrBpiFBOpPWkhghOY0L3RA6kQZ2zsjRzPyYZB+6htSRKP6yhNmgtnwcwqy/RACtqOul9Lcs0ueqaiPlU90F59Oi2DLQqW0r1kZBq0bRBxDXEru4PGKycAOQN4ou8jylqlp6vGy4SJqaRGU468Wh29zTuQ50K5x/ES/rMHdIODk0W15vlh7ojiTZhoEhiHWQaSB/rDfwbvclcrJCQXNBy6AwkPRoU47JwIKV+McdO+a7x0Xbuat61PUtdCjcvrgmoGz6FmUxUEXrF5qaEZxIpemXngKkwWeijOd7cEUBu51+fbp6XBB+KErDc1NaWswjPkdWNg8PdhcZTgvvLqV8+l7KozuVSh9tbbGq9JAa8L99VLz5pxY3drR4sK0U2w3xYhd3nAdYqaTh3jOP30IrySsAVuqiPXXurEY8DpPy2PWW/nU4b25INYXTtS8MPmbxZSiWk1ERMzItqo/R2FPJuIpeKAdAE3+JiexPlj8bNs4GQ6i6BLtROzTQXgZkWDDNBhyQ8GlcF4QnhbqzUx0eYTOZPZEPlk4ycBfoBlHAIunqAlcTUa0qn0ms1jHAaYaKsuEY+lfTdNvg+33UpVvybKTwZkqR1EworEn2Nk+kR7QkRd62bAdjYgqooymjddNaAWWu/BTidlNfJBbrHukljbPxPTaW+tLEMLn897fKoQTP6NVSyG0QBCYWMHWHTvU73u+exOnfB9QjsGccsabLkTwoZkP6PcaKGPmYZgpOQxz52uanCZzzaSYkpfDSZodPV7Txrwks57NLKiB/39GnEkWx1/QxFILoBSY3DNgQXYyzX4rTdpXPWcKJZnAjMW81DKGf5NnHlXaSQLWHTRkfujgLY5DGCBoWXPy8KaaTA6MB1chQyOejWUAmdz4K6RJ1b4LdDgPa9JzstkKaeOrWLbF+pZu1kpy2ZfaqEkp3jfgqAaX6j2ag4iFALOaUcpF421SwMGkBQWbBBof+FwhxBceq2JjZJ/dJjYa87EkdZ+aDY7PIjEdslcyOxAHM3/Obzvo7U8SNHy5JnkhrbyTbXoimZx59top6XsfISQOxR1bAJOU+VTG3KyHC0Qn+4leV+vSjkG8CgtucEqckKx0sYfqoIhYsZsnZz2lVXEwDskMSS3O+KPTYoBxt5RWVwtE3uJeBEamOzggeYf/D/ANRwto6vjM7w9MV655WQNcA7erLTv7ZJu04opxsmgSV7GgNRWOnXn68XILyEYZmoh3NDfyz+jcViWOM/HjAK3PJDntORNuGRVl4nJXhjigii6wMprvE1h1+JSObfKOk5lCpr5iUiAopTcHc2Ng5iLrBmgB89NX3mlqqGrE9jIC6SSP97xTAzPlzSQkKXUoOvWkiZYcNOhuuPwT9MEpBhCSrRyOg8KatwQDNpPddaT52NRQNs2Y4z6quggfIVZ1B/h9MSkLcfltFYZueUI6Tlaz3XRlfAeJRXHtEnfPdHWxFCDMJOAHIjA+67gQ/pKS6b5A+FrXp2RN+K9ddUst7hFIr4rFZ8V8uv3ta6NcrzYYYnUxLaaMIGM7DsyDNWA8Zux/ZdU/c0MT6sLvMcEJ/+ae56xPM79JXTVoO4OPKa1jU47t7tgr+pvrSZf2ZimVYjabrJfKwm1/LW4CJXwEDuAerSA9glxgbdVSq+FbfTR0OHq3pH3WZB3XpEvXoHlcrOxEMrOX7sPiFCeI8DGgIvQvIm3EDIWoUjPH9sWft60dkiYSapeyg9RI45aLsrsGtbLwYwkCM5IW9sR10kFWDFVPzrGM/gf4sFl4tdLpiUb/M/a2hQ+KLVB2+BnSZ5WzlhIZG3prNbvS85VZX6Dh1i5Dlh98mnnwP7w+gFa1pkT93DKlMUL3ZIDCRIv7qikoV5T5nb2lrp+ldu5pmDXzyt/s19PeZBIetRSEEl8A64ib1dgIBU7J/YilGdSC4iedEzBQIQdKSkKcCAoQ/s6DZacBuhRlVO2ztps=" /><input type="hidden"  id="com.salesforce.visualforce.ViewStateVersion" name="com.salesforce.visualforce.ViewStateVersion" value="201512181626230370" /><input type="hidden"  id="com.salesforce.visualforce.ViewStateMAC" name="com.salesforce.visualforce.ViewStateMAC" value="AK+4JxJpcXCMK6bZxXQw4v5AVxze" /></span></span></span>
+                    </div>                     
+                    
+                    <div class="span9">
+                        
+                        <h1 class="page-title">DAUPH1 V1</h1><span id="j_id0:templatepage:j_id36">                                                            
+                               <div class="well">
+                                   <h3> 
+                                       <strong>
+                                           Le Contenu ici.<br />
+                                           Click<span id="j_id0:templatepage:j_id38"> <a href="https://myowasp.force.com/">here</a></span> 
+                                            to login. 
+                                       </strong>
+                                   </h3> 
+                               </div></span>                        
+                    </div> 
+                    
+                    
+                </div> 
+                
+            </div> 
+            
+        </div>
+    
+<div id="footer">
+    
+    <div class="container">           
+        <hr />
+        <p>&copy; 2015&nbsp;SATI</p>
+    </div> 
+    
+</div>
+            <script type="text/javascript">
+            $(document).ready(function(){
+            
+                $('.carousel').carousel();
+                 
+                // Calendar
+                var date = new Date();
+                var d = date.getDate();
+                var m = date.getMonth();
+                var y = date.getFullYear();
+                
+                
+                $('#calendar').fullCalendar({
+                    theme: false,
+                    header: {
+                        left: 'prev,next',
+                        center: 'title',
+                        right: 'today'
+                    },
+                     
+                    aspectRatio: 2,
+                    editable: false,
+                    events: [
+                        {    
+                            title:"Application Security Education Program for College Students",
+                            start: 'Fri Feb 28 05:00:00 GMT 2014',
+                            end: 'Fri Feb 28 05:00:00 GMT 2014',
+                            fullday: false,
+                            url: '/MN4__mnp_viewevent?id=a2oU0000000LKA0IAO',
+                            backgroundColor: '#444444',
+                            borderColor: '#000000',
+                            textColor: '#ffffff'
+                        },
+                        {    
+                            title:"AppSec EU 2014",
+                            start: 'Mon Jun 23 15:16:00 GMT 2014',
+                            end: 'Thu Jun 26 15:16:00 GMT 2014',
+                            fullday: false,
+                            url: '/MN4__mnp_viewevent?id=a2oU0000000LKRLIA4',
+                            backgroundColor: '#444444',
+                            borderColor: '#000000',
+                            textColor: '#ffffff'
+                        },
+                        {    
+                            title:"Sponsorship-AppSec Israel 2014",
+                            start: 'Tue Sep 02 04:00:00 GMT 2014',
+                            end: 'Tue Sep 02 04:00:00 GMT 2014',
+                            fullday: false,
+                            url: '/MN4__mnp_viewevent?id=a2oU0000000TUjwIAG',
+                            backgroundColor: '#444444',
+                            borderColor: '#000000',
+                            textColor: '#ffffff'
+                        },
+                        {    
+                            title:"AppSec USA 2014",
+                            start: 'Tue Sep 16 07:00:00 GMT 2014',
+                            end: 'Fri Sep 19 16:00:00 GMT 2014',
+                            fullday: false,
+                            url: '/MN4__mnp_viewevent?id=a2oU0000000LJBkIAO',
+                            backgroundColor: '#444444',
+                            borderColor: '#000000',
+                            textColor: '#ffffff'
+                        },
+                        {    
+                            title:"LASCON 2014 - TRAINING",
+                            start: 'Tue Oct 21 07:00:00 GMT 2014',
+                            end: 'Wed Oct 22 16:00:00 GMT 2014',
+                            fullday: false,
+                            url: '/MN4__mnp_viewevent?id=a2oU0000000TUnyIAG',
+                            backgroundColor: '#444444',
+                            borderColor: '#000000',
+                            textColor: '#ffffff'
+                        },
+                        {    
+                            title:"OWASP Dublin Training - Security Boot Camp",
+                            start: 'Thu Jul 16 04:00:00 GMT 2015',
+                            end: 'Thu Jul 16 04:00:00 GMT 2015',
+                            fullday: false,
+                            url: '/MN4__mnp_viewevent?id=a2oU0000000TZAOIA4',
+                            backgroundColor: '#444444',
+                            borderColor: '#000000',
+                            textColor: '#ffffff'
+                        },
+                        {    
+                            title:"OWASP AppSec Rio de la Plata 2015",
+                            start: 'Tue Dec 01 21:58:00 GMT 2015',
+                            end: 'Thu Dec 03 16:44:00 GMT 2015',
+                            fullday: false,
+                            url: '/MN4__mnp_viewevent?id=a2oU0000000TVyOIAW',
+                            backgroundColor: '#444444',
+                            borderColor: '#000000',
+                            textColor: '#ffffff'
+                        },
+                        
+                    ]
+                });
+            
+            $('#calendar2').fullCalendar({
+                    theme: false,
+                    header: {
+                        left: 'prev,next',
+                        center: 'title',
+                        right: 'today'
+                    },
+                     
+                    aspectRatio: 2,
+                    editable: false,
+                    eventMouseover: function(event, jsEvent, view) {
+                        $(jsEvent.target).attr('title', event.title);
+                    },
+                    events: [
+                        {
+                            title:"Application Security Education Program for College Students",
+                            start: "Fri Feb 28 05:00:00 GMT 2014", 
+                            end: "Fri Feb 28 05:00:00 GMT 2014",
+                            allDay: false,
+                            ignoreTimezone: false,
+                            url: "/MN4__mnp_viewevent?id=a2oU0000000LKA0IAO",
+                            backgroundColor: "#444444",
+                            borderColor: "#000000",
+                            textColor: "#ffffff"
+                        },
+                        {
+                            title:"AppSec EU 2014",
+                            start: "Mon Jun 23 15:16:00 GMT 2014", 
+                            end: "Thu Jun 26 15:16:00 GMT 2014",
+                            allDay: false,
+                            ignoreTimezone: false,
+                            url: "/MN4__mnp_viewevent?id=a2oU0000000LKRLIA4",
+                            backgroundColor: "#444444",
+                            borderColor: "#000000",
+                            textColor: "#ffffff"
+                        },
+                        {
+                            title:"Sponsorship-AppSec Israel 2014",
+                            start: "Tue Sep 02 04:00:00 GMT 2014", 
+                            end: "Tue Sep 02 04:00:00 GMT 2014",
+                            allDay: false,
+                            ignoreTimezone: false,
+                            url: "/MN4__mnp_viewevent?id=a2oU0000000TUjwIAG",
+                            backgroundColor: "#444444",
+                            borderColor: "#000000",
+                            textColor: "#ffffff"
+                        },
+                        {
+                            title:"AppSec USA 2014",
+                            start: "Tue Sep 16 07:00:00 GMT 2014", 
+                            end: "Fri Sep 19 16:00:00 GMT 2014",
+                            allDay: false,
+                            ignoreTimezone: false,
+                            url: "/MN4__mnp_viewevent?id=a2oU0000000LJBkIAO",
+                            backgroundColor: "#444444",
+                            borderColor: "#000000",
+                            textColor: "#ffffff"
+                        },
+                        {
+                            title:"LASCON 2014 - TRAINING",
+                            start: "Tue Oct 21 07:00:00 GMT 2014", 
+                            end: "Wed Oct 22 16:00:00 GMT 2014",
+                            allDay: false,
+                            ignoreTimezone: false,
+                            url: "/MN4__mnp_viewevent?id=a2oU0000000TUnyIAG",
+                            backgroundColor: "#444444",
+                            borderColor: "#000000",
+                            textColor: "#ffffff"
+                        },
+                        {
+                            title:"OWASP Dublin Training - Security Boot Camp",
+                            start: "Thu Jul 16 04:00:00 GMT 2015", 
+                            end: "Thu Jul 16 04:00:00 GMT 2015",
+                            allDay: false,
+                            ignoreTimezone: false,
+                            url: "/MN4__mnp_viewevent?id=a2oU0000000TZAOIA4",
+                            backgroundColor: "#444444",
+                            borderColor: "#000000",
+                            textColor: "#ffffff"
+                        },
+                        {
+                            title:"OWASP AppSec Rio de la Plata 2015",
+                            start: "Tue Dec 01 21:58:00 GMT 2015", 
+                            end: "Thu Dec 03 16:44:00 GMT 2015",
+                            allDay: false,
+                            ignoreTimezone: false,
+                            url: "/MN4__mnp_viewevent?id=a2oU0000000TVyOIAW",
+                            backgroundColor: "#444444",
+                            borderColor: "#000000",
+                            textColor: "#ffffff"
+                        },
+                        
+                    ]
+                });
+            });
+            </script>
+
+
+
+
+<!--[if lt IE 9]>
+
+ 
+
+<![endif]-->
+
+</body>
+
+<!-- Mirrored from myowasp.force.com/apex/MN4__mnp_dashboard?sfdc.tabName=01rU00000009a7G by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 21 Dec 2015 17:17:40 GMT -->
+</html><script type="text/javascript">Sfdc.onReady(function(){
+	SfdcApp && SfdcApp.Visualforce && SfdcApp.Visualforce.VSManager && SfdcApp.Visualforce.VSManager.vfPrepareForms(["j_id0:templatepage:j_id79:j_id91","j_id0:templatepage:j_id17:j_id18:j_id19"]);
+
+});</script></body></html>

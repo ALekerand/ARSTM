@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+			<h1 class="page-title">PARAMETRAGE DE SECTION</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+
+				<!-- WIZARD ICI -->
+				<p:wizard id="wiz">
+					<p:tab id="Session" title="Section">
+						<p:panel header="Sesion">
+							<h:panelGrid id="identite_grid" columns="4" cellpadding="6">
+
+								<p:outputLabel for="cb_ecol" value="Ecole" />
+								<p:selectOneMenu id="cb_ecol" required="true"
+									value="#{sectionBean.choosedEcole}"
+									converter="#{entityConverter}">
+									<p:ajax listener="#{sectionBean.chargerFiliere}" event="change"
+										update="filiere, tab_section" process="@this">
+									</p:ajax>
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{sectionBean.listEcole}" var="tata"
+										itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<p:outputLabel />
+								<p:outputLabel />
+
+								<p:outputLabel for="filiere" value="Filière" />
+								<p:selectOneMenu id="filiere"
+									value="#{sectionBean.choosedFiliere}"
+									converter="#{entityConverter}" required="true">
+									<p:ajax listener="#{sectionBean.chargerSection}" event="change"
+										update="tab_section, nom_section" process="@this" />
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{sectionBean.listeFiliere}" var="tata"
+										itemLabel="#{tata.abrevFiliere}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<p:outputLabel />
+								<p:outputLabel />
+
+								<p:outputLabel for="nom_section" value="Section" />
+								<p:inputText id="nom_section"
+									value="#{sectionBean.section.nomSection}" required="true"
+									style="width:300px" />
+
+								<p:outputLabel for="abrev_section" value="Abréviation" />
+								<p:inputText id="abrev_section"
+									value="#{sectionBean.section.abrevSection}" required="true"
+									styleClass="upercase" />
+
+
+
+							</h:panelGrid>
+
+							<hr />
+							<p:dataTable id="tab_section" selectionMode="single" var="tata"
+								value="#{sectionBean.listSection}" rowKey="#{tata.codeSection}"
+								emptyMessage="Aucun enregistrement" scrollable="true"
+								scrollHeight="180">
+								<f:facet name="header">
+            Liste des Sections de la filière #{sectionBean.choosedFiliere.abrevFiliere}
+        </f:facet>
+
+
+								<p:column headerText="Libéllé section"
+									sortBy="#{tata.nomSection}">
+									<h:outputText value="#{tata.nomSection}" />
+								</p:column>
+								<p:column headerText="Abreviation">
+									<h:outputText value="#{tata.abrevSection}" />
+								</p:column>
+
+								<f:facet name="footer">
+								</f:facet>
+							</p:dataTable>
+
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="matiere" title="Matière">
+						<p:panel header="Affectation des matières">
+							<table width="100%">
+								<tr>
+									<td><h:panelGrid id="grid_afect" columns="2"
+											cellpadding="4">
+											<p:outputLabel for="recap_section" value="Section" />
+											<p:outputLabel id="recap_section"
+												value="#{sectionBean.section.nomSection}"
+												style=" font-size:20px;" />
+
+											<p:outputLabel for="cycle" value="Cycle" />
+											<p:selectOneMenu id="cycle"
+												value="#{sectionBean.choosedCycle}"
+												converter="#{entityConverter}" required="true">
+												<f:selectItem itemLabel="Selectionnez" itemValue="" />
+												<f:selectItems value="#{sectionBean.listCycle}" var="tata"
+													itemLabel="#{tata.nomCycle}" itemValue="#{tata}"></f:selectItems>
+											</p:selectOneMenu>
+
+											<p:outputLabel for="sect_exam" value="Section d'examen:" />
+											<p:selectOneRadio id="sect_exam"
+												value="#{sectionBean.sectionExam}">
+												<f:selectItem itemLabel="Oui" itemValue="true" />
+												<f:selectItem itemLabel="Non" itemValue="false" />
+											</p:selectOneRadio>
+										</h:panelGrid> <p:dataTable id="table_selected" selectionMode="single"
+											var="tata" value="#{sectionBean.selectedMatieres}"
+											scrollable="true" scrollHeight="200"
+											rowKey="#{tata.codeMatiere}" emptyMessage=""
+											style="width:300px">
+											<f:facet name="header">Matieres sélectionnées</f:facet>
+									
+											<p:column headerText="Matiere" style="width:60%">#{tata.libMatiere}</p:column>
+										</p:dataTable> <br></br></td>
+
+
+									<td align="center" valign="top">
+										<!-- Ici le tableau pour la liste des matière --> <p:dataTable
+											id="checkboxDT" var="tata"
+											value="#{sectionBean.listeMatieres}"
+											selection="#{sectionBean.selectedMatieres}"
+											rowKey="#{tata.codeMatiere}" style="width:450px"
+											scrollable="true" scrollHeight="200">
+											<f:facet name="header">
+            Matières
+        </f:facet>
+											<p:column selectionMode="multiple"
+												style="width:16px;text-align:center" />
+											
+											<p:column headerText="Libéllé" sortBy="#{tata.libMatiere}">
+												<h:outputText value="#{tata.libMatiere}" />
+											</p:column>
+											<p:column headerText="Abrev" style="width:60px">
+												<h:outputText value="#{tata.abrevMatiere}" />
+											</p:column>
+											<f:facet name="footer">
+												<p:commandButton
+													action="#{sectionBean.chargerListeEditable}" update=":form"
+													value="Valider" />
+											</f:facet>
+										</p:dataTable>
+									</td>
+								</tr>
+
+							</table>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="vh" title="Volume Horaire">
+						<p:panel header="Edition compléments">
+							<!-- Pour le recap ici -->
+							<div class="div">
+								<h:panelGrid id="recap_grid" columns="8" cellpadding="5">
+									<p:outputLabel value="Section:" />
+									<p:outputLabel value="#{sectionBean.section.abrevSection}" styleClass="upercase"/>
+									<p:outputLabel value="Ecole:" styleClass="outputDecalage" />
+									<p:outputLabel value="#{sectionBean.choosedEcole.abrevEcole}" />
+									<p:outputLabel value="Filière:" styleClass="outputDecalage" />
+									<p:outputLabel value="#{sectionBean.choosedFiliere.abrevFiliere}" />
+								</h:panelGrid>
+							</div>
+							<h:panelGrid id="affect_grid" columns="4" cellpadding="4">
+
+
+								<p:dataTable id="editTable" var="toto"
+									value="#{sectionBean.listRattachers}" editable="true"
+									 widgetVar="cellCars" scrollable="true"
+									scrollHeight="200">
+									<f:facet name="header"> EDITION DES MATIERES </f:facet>
+
+									<p:ajax event="cellEdit" listener="#{sectionBean.onCellEdit}" />
+
+									<p:column headerText="Matière">
+										<h:outputText value="#{toto.matiere.libMatiere}" />
+									</p:column>
+
+									<p:column headerText="Code LMD" style="width:110px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{toto.codeMatLmd}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{toto.codeMatLmd}" 
+													label="Coefficient" styleClass="upercase" style="width:119px" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column headerText="Coefficient" style="width:80px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{toto.coefMatiere}"  />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{toto.coefMatiere}" style="width:100px" label="Coefficient" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+
+									<p:column headerText="Volume Horaire" style="width:80px">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{toto.volumeHoraire}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{toto.volumeHoraire}" style="width:100px"
+													label="volumeHoraire" />
+											</f:facet>
+										</p:cellEditor>
+									</p:column>
+									
+									<p:column style="width:32px">
+							           <p:rowEditor />
+							        </p:column>
+								</p:dataTable>
+
+							</h:panelGrid>
+
+							<br />
+							<h:panelGrid columns="3">
+								<p:commandButton value="Enregistrer"
+									action="#{sectionBean.enregistrer}"
+									binding="#{sectionBean.btnValider}" immediate="true"
+									update="@parent, form" oncomplete="document.location.reload(false)">
+								</p:commandButton>
+
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

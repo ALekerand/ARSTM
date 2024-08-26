@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+			<h1 class="page-title">RETRAIT DE MATIERE</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+			
+				<!-- WIZARD ICI -->
+							<h:panelGrid id="section_grid" columns="4" cellpadding="6">
+								<p:outputLabel for="section" value="Section" />
+								<p:selectOneMenu id="section"
+									value="#{retraitMatiereBean.choosedSection}"
+									converter="#{entityConverter}">
+									<p:ajax listener="#{retraitMatiereBean.actualiserList}" event="change"
+										update="tab_mat" process="@this" />
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{retraitMatiereBean.listSection}" var="tata"
+										itemLabel="#{tata.abrevSection}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+							</h:panelGrid>
+
+							<hr />
+							<p:dataTable id="tab_mat" selectionMode="single" var="tata"
+								value="#{retraitMatiereBean.listRattachers}" rowKey="#{tata.id}"
+								emptyMessage="Aucun enregistrement" scrollable="true"
+								scrollHeight="140" selection="#{retraitMatiereBean.selectedRattacher}">
+								<p:ajax listener="#{retraitMatiereBean.selectionner}" event="rowSelect" process="tab_mat" />
+								<f:facet name="header"> Liste des matières de la section #{retraitMatiereBean.choosedSection.abrevSection}</f:facet>
+								<p:column headerText="Code">
+									<h:outputText value="#{tata.codeMatLmd}" />
+								</p:column>
+								<p:column headerText="Libéllé section"
+									sortBy="#{tata.matiere.libMatiere}">
+									<h:outputText value="#{tata.matiere.libMatiere}" />
+								</p:column>
+								<p:column headerText="Abreviation">
+									<h:outputText value="#{tata.matiere.abrevMatiere}" />
+								</p:column>
+								
+								<p:column style="width:80px;text-align: center">
+						             <p:commandButton  action="#{retraitMatiereBean.retirer}" value="Retirer" title="Retirer matiere" update=":form">
+						             <p:confirm header="Confirmation"
+								     	message="Confirmez-vous le retait?" icon="ui-icon-alert" />
+						            </p:commandButton>
+					        	</p:column>
+
+								<f:facet name="footer">
+								</f:facet>
+							</p:dataTable>
+
+					
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

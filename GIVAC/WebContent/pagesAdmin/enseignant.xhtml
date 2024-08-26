@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">ENSEIGNANT</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<p:wizard id="wiz">
+					<p:tab id="identite" title="Identification">
+						<p:panel header="Enseignant">
+							<h:panelGrid id="ensg_grid" columns="4" cellpadding="5" >
+								<h:outputLabel for="matric" value="Matricule" />
+								<p:inputText id="matric" 
+									value="#{enseignantBean.maxMatricule}" required="true" />
+								<h:outputLabel />
+								<h:outputLabel />
+
+								<h:outputLabel for="nom_enseig" value="Nom" />
+								<p:inputText id="nom_enseig"
+									value="#{enseignantBean.enseignant.nom}" required="true" />
+
+								<h:outputLabel for="prenom_enseig" value="Prénoms" />
+								<p:inputText id="prenom_enseig"
+									value="#{enseignantBean.enseignant.prenoms}" required="true" />
+
+								<h:outputLabel for="dateNais_enseig" value="Date naissance"/>
+       						    <p:calendar id="dateNais_enseig" value="#{enseignantBean.enseignant.dateNais}" 
+       						    locale="fr" navigator="true" pattern="dd/MM/yyyy" required="true"/>
+
+								<h:outputLabel for="lieuNais_enseig" value="Lieu naissance" />
+								<p:inputText id="lieuNais_enseig"
+									value="#{enseignantBean.enseignant.lieuNais}" required="true" />
+
+
+								<h:outputLabel for="sexe_ens" value="Genre" />
+								<p:selectOneMenu id="sexe_ens"
+									value="#{enseignantBean.chooseedSexe}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{enseignantBean.listeSexe}" var="tata"
+										itemLabel="#{tata.libSexe}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+
+
+
+
+								<h:outputLabel for="phone_enseig" value="Télephone1" />
+								<p:inputText id="phone_enseig"
+									value="#{enseignantBean.enseignant.phone1}" required="true" />
+
+								<h:outputLabel for="phone_enseig2" value="Télephone2" />
+								<p:inputText id="phone_enseig2"
+									value="#{enseignantBean.enseignant.phone2}" />
+
+								<h:outputLabel for="mail_enseig" value="mail" />
+								<p:inputText id="mail_enseig"
+									value="#{enseignantBean.enseignant.email}"/>
+							</h:panelGrid>
+
+							<br></br>
+
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="complements" title="Complements">
+						<p:panel header="Informations complémentaires">
+							<h:panelGrid id="cplt_grid" columns="4" cellpadding="10">
+								<h:outputLabel for="specialite_ens" value="Spécialité" />
+								<p:selectOneMenu id="specialite_ens"
+									value="#{enseignantBean.choosedSpecialite}"
+									converter="#{entityConverter}">
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{enseignantBean.listSpecialite}"
+										var="tata" itemLabel="#{tata.libelleSpecial}"
+										itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+
+								<h:outputLabel for="statut_ens" value="Statut" />
+								<p:selectOneMenu id="statut_ens"
+									value="#{enseignantBean.choosedStatut}"
+									converter="#{entityConverter}">
+									
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{enseignantBean.listStatut}" var="tata"
+										itemLabel="#{tata.libelleStatut}" itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+
+								<p:outputLabel for="vh_oblig" value="VH obligatoire"
+									binding="#{enseignantBean.outputVhOblig}" />
+								<p:inputText id="vh_oblig"
+									value="#{enseignantBean.enseignant.vhObligatoireSemaine}" style="width:60px"
+									binding="#{enseignantBean.inputVhOblig}" />
+							</h:panelGrid>
+
+							
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="cpt" title="Compte">
+						<p:panel header="Compte utilisateur">
+						
+						<table>
+						<tr valign="top">
+						<td>
+							<h:panelGrid columns="2" id="compte_Grid" cellpadding="5">
+								<h:outputLabel for="user_login" value="Nom utilisateur:" />
+								<p:inputText id="user_login"
+									value="#{enseignantBean.enseignant.username}" required="true" />
+
+								<h:outputLabel for="pwd1" value="Mot de passe:" />
+								<p:password id="pwd1"
+									value="#{enseignantBean.enseignant.password}"
+									validatorMessage="Mot de passe non confirmé" match="pwd2"
+									label="Password" required="true" />
+
+								<h:outputLabel for="pwd2" value="Mot de passe(confimation):" />
+								<p:password id="pwd2"
+									value="#{enseignantBean.enseignant.password}"
+									label="Password confirmmation. Veuillez le reprendre SVP!"
+									required="true">
+									<p:ajax event="blur" process=":form:compte_Grid" />
+								</p:password>
+							</h:panelGrid>
+							
+							</td>
+							<td>
+								
+								<p:fileUpload
+									fileUploadListener="#{enseignantBean.upload}" uploadLabel="Transferer" cancelLabel="Annuler" 
+									allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="1000000"
+									description="Select Images">
+								</p:fileUpload>
+							
+							</td>
+							</tr>
+					</table>
+
+							<hr />
+							<h:panelGrid columns="3" id="button_grid">
+								<p:commandButton value="Enregistrer"
+									action="#{enseignantBean.enregistrer}" immediate="true" update="@parent, :form"
+									binding="#{enseignantBean.btnValider}"
+									oncomplete="document.location.reload(false)">
+								</p:commandButton>
+
+								<p:commandButton value="Annuler"
+									action="#{enseignantBean.annuler}" update="form">
+								</p:commandButton>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+
+				<br />
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{enseignantBean.listEnseignant}"
+					selection="#{enseignantBean.selectedEnseignant}"
+					rowKey="#{tata.userId}" emptyMessage="Aucun enregistrement">
+					<f:facet name="header">LISTE DES ENSEIGNANTS</f:facet>
+					<p:column headerText="Matricule" style="width:10%">#{tata.matriculeEns}</p:column>
+					<p:column headerText="Nom" style="width:20%">#{tata.nom}</p:column>
+					<p:column headerText="Prénoms" style="width:30%">#{tata.prenoms}</p:column>
+					<p:column headerText="Téléphone" style="width:20%">#{tata.phone1}  #{tata.phone2}</p:column>
+					<p:column headerText="mail" style="width:20%">#{tata.email}</p:column>
+				</p:dataTable>
+
+
+			</div>
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

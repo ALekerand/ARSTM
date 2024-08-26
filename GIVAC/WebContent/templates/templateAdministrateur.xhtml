@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>GIVAC</title>
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/bootstrap.min.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/bootstrap-responsive.min.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/adminia.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/adminia-responsive.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/font-awesome.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/app.css" rel="stylesheet"
+		type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/css/dashboard.css"
+		rel="stylesheet" type="text/css" />
+	<link class="user"
+		href="../resource/1430457373000/mn4__MNP/plugins/fullcalendar/fullcalendar.css"
+		rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resource/cssFolder/owaspSecond.css"></link>
+
+	<!-- CSS ALekerand -->
+	<link rel="stylesheet" type="text/css"
+		href="../resource/cssFolder/theme.css"></link>
+	<link rel="stylesheet" type="text/css"
+		href="../resource/cssFolder/secondStyle.css"></link>
+	<link rel="stylesheet" type="text/css"
+		href="../resource/cssFolder/spinner.css"></link>
+	<link rel="stylesheet" type="text/css"
+		href="../resource/cssFolder/fileupload.css"></link>
+
+</h:head>
+<h:body>
+
+	 <div class="navbar">
+
+		<div class="navbar-inner">
+
+		 <div class="container">
+
+				 <a class="brand" >GESTION INTEGREE DES ENSEIGNEMENTS</a>
+				<a class="brand" >
+				 <p:outputLabel id="annesco" value="#{managedInitialisation.anneeScolaireEncours.libAnneeScolaire}" required="true" />
+				 </a>
+			 </div>
+
+		</div>
+
+	 </div>
+
+
+	<div id="content">
+
+		<div class="container">
+
+			<div class="row">
+
+				<div class="span3">
+					<span id="j_id0:templatepage:j_id17"> 
+					<!-- PARTIE MENU (GAUCHE) -->
+
+						<h:form>
+							
+							<div class="account-container">
+
+								<div class="account-avatar">
+									<span id="j_id0:templatepage:j_id17:j_id18:j_id19:j_id26"><img
+										src="../resource/1430457373000/mn4__MNP/img/user.png"
+										style="padding-bottom: 15px;" /></span>
+
+								</div>
+
+								<div class="account-details">
+
+									<span class="account-name">&nbsp;</span> 
+									<span
+										class="account-actions"> <a
+										href="#">Profile</a>
+										| <a href="../logout.jsp"
+						                  style="color: red">Se Déconnecter</a>
+									</span>
+
+								</div>
+
+							</div>
+
+							<hr />
+					
+						<!-- Menu ici -->
+						
+	<p:panelMenu style="width:220px" >
+        <p:submenu label="PARAMETRAGE">
+            <p:menuitem value="Année scolaire" outcome="/pagesAdmin/annee_scolaire.xhtml" icon="ui-icon-disk"/>
+            <p:menuitem value="Semestre" outcome="/pagesAdmin/semestre.xhtml"   icon=" ui-icon-calendar" />
+            <p:menuitem value="Semestre LMD" outcome="/pagesAdmin/semestre_lmd.xhtml"   icon=" ui-icon-calendar" />
+            <p:menuitem value="Statut" outcome="/pagesAdmin/statut.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Spécialité" outcome="/pagesAdmin/specialite.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Sexe" outcome="/pagesAdmin/sexe.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Nationalité" outcome="/pagesAdmin/nationalite.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Pays" outcome="/pagesAdmin/pays.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Niveau Etude" outcome="/pagesAdmin/niveau.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Diplôme Obtenu" outcome="/pagesAdmin/diplome.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Matrimoniale" outcome="/pagesAdmin/sit_matrimoniale.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Santé" outcome="/pagesAdmin/sante.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Regime" outcome="/pagesAdmin/regime.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Cycle" outcome="/pagesAdmin/cycle.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Fonction" outcome="/pagesAdmin/fonction.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+     		<p:menuitem value="Type formation" outcome="/pagesAdmin/type_formation.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+     		<p:menuitem value="Domaine" outcome="/pagesAdmin/domaine.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+     		<p:menuitem value="Type nationalité" outcome="/pagesAdmin/typenationalite.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+     		<p:menuitem value="Frais Ecolage" outcome="/pagesAdmin/frais_ecolage.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+     		<p:menuitem value="Frais annexes" outcome="/pagesAdmin/fraisannexe.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+     		<p:menuitem value="Type logement" outcome="/pagesAdmin/typelogement.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+     		<p:menuitem value="Logement" outcome="/pagesAdmin/logement.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+     		<p:menuitem value="Frais type logement" outcome="/pagesAdmin/frais_logement.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+     		<p:menuitem value="Mode" outcome="/pagesAdmin/mode.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+     		<p:menuitem value="Origine" outcome="/pagesAdmin/origine.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+        </p:submenu>
+        
+        <p:submenu label="ECOLES ET FILIERES">
+        <p:menuitem value="Ecole" outcome="/pagesAdmin/ecole.xhtml"   icon="ui-icon-home" />
+        <p:menuitem value="Filière" outcome="/pagesAdmin/filiere.xhtml"   icon="ui-icon-note" />
+        <p:menuitem value="Mention" outcome="/pagesAdmin/mention.xhtml"   icon="ui-icon-note" />
+        <p:menuitem value="Option" outcome="/pagesAdmin/options.xhtml"   icon="ui-icon-note" />
+        </p:submenu>
+        
+         <p:submenu label="PARCOURS ET SECTIONS">
+           <p:menuitem value="Parcours" outcome="/pagesAdmin/parcours.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+           <p:menuitem value="Section" outcome="/pagesAdmin/parcoursection.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+       	   <p:menuitem value="Modification de section" icon="ui-icon-arrowrefresh-1-w"/>
+           <p:menuitem value="Ajout de matière" outcome="/pagesAdmin/ajout_matieres.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+           <p:menuitem value="Retrait de matière" outcome="/pagesAdmin/retrait_matiere.xhtml" icon="ui-icon-close"/>
+        </p:submenu>
+        
+         <p:submenu label="GESTION MATIERES ET UES">
+         	<p:menuitem value="Des Types UE" outcome="/pagesAdmin/typeue.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+         	<p:menuitem value="Des UE" outcome="/pagesAdmin/ue_parcours.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+         	<p:menuitem value="Des ECUES" outcome="/pagesAdmin/ecue.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Par Section" outcome="/pagesAdmin/etat_matiere.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Enregistrer Matière" outcome="/pagesAdmin/matiere.xhtml" icon=" ui-icon-documen"/>
+        </p:submenu>
+        
+            <p:submenu label="CALENDRIER PEDAGOGIQUE">
+            <p:menuitem value="Jour semaine" outcome="/pagesAdmin/jour_semaine.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Semaine" outcome="/pagesAdmin/semaine.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Jour non ouvré" outcome="/pagesAdmin/jour_non_ouvre.xhtml"   icon="ui-icon-arrowrefresh-1-w" />
+        </p:submenu>
+        
+        <p:submenu label="GESTION DES ENSEIGNANTS">
+            <p:menuitem value="Enregistrer enseignant"  outcome="/pagesAdmin/enseignant.xhtml" icon="ui-icon-close"/>
+            <p:menuitem value="Attribuer des Ecues"  outcome="/pagesAdmin/attributionecue.xhtml" icon="ui-icon-close"/>
+            <p:menuitem value="Attribuer des matières"  outcome="/pagesAdmin/attributionMatieres.xhtml" icon="ui-icon-close"/>
+           	<p:menuitem value="Attribuer jours de cours LMD" outcome="/pagesAdmin/disponibilite_cours.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+           	<p:menuitem value="Attribuer jours de cours Classic" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Consulter emplois de temps" icon="ui-icon-arrowrefresh-1-w"/>
+        </p:submenu>
+        
+        <p:submenu label="GESTION DES ETUDIANTS">
+           	<p:menuitem value="Inscription" outcome="/pagesAdmin/inscription.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Réinscription" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Complement" outcome="/pagesAdmin/complement.xhtml" icon="ui-icon-arrowrefresh-1-w"/>
+            <p:menuitem value="Historique" outcome="/pagesAdmin/historique.xhtml" icon="ui-icon-disk"/>
+        </p:submenu>
+        
+          <p:submenu label="GESTION DE LA SCOLARITE">
+            <p:menuitem value="Etablissement Scolarité" outcome="/pagesAdmin/etablissement_scolarite.xhtml" icon="ui-icon-disk"/>
+             <p:menuitem value="Versement Scolarité" outcome="/pagesAdmin/versement_scolarite.xhtml" icon="ui-icon-disk"/>
+             <p:menuitem value="Versement Arriéré Scolarité" icon="ui-icon-disk"/>
+             <p:menuitem value="Position" icon="ui-icon-disk"/>
+        </p:submenu>
+        
+        <p:submenu label="GESTION DES COURS" >
+           <p:menuitem value="Edition de seances" outcome="/pagesAdmin/edition_seances.xhtml" icon="ui-icon-document" />
+           <p:menuitem value="Validation de Cours" outcome="/pagesAdmin/validation_admin.xhtml" icon="ui-icon-close"/>
+           <p:menuitem value="Plannifier les séances" outcome="/pagesAdmin/planning_seance.xhtml" icon="ui-icon-document" />
+        </p:submenu>
+        
+        <p:submenu label="ETATS" >
+            <p:submenu label="MARTIERE" icon="ui-icon-heart">
+            <p:menuitem value="Par Enseignant" url="#" icon="ui-icon-document" />
+          </p:submenu>
+        </p:submenu>
+        
+        
+        <p:submenu label="GESTION CONCOURS" >
+            <p:submenu label="Paramétrage Concours" icon="ui-icon-heart">
+            <p:menuitem value="Inscription Concours" url="#" icon="ui-icon-document" />
+          </p:submenu>
+        </p:submenu>
+        
+        
+        <p:submenu label="ETATS">
+            <p:submenu label="Fiche de notes" icon="ui-icon-heart">
+          </p:submenu>
+        </p:submenu>
+        
+        <p:submenu label="PERSONNEL UTILISATEUR">
+            <p:menuitem value="Enregistrer Personnel"  outcome="/pagesAdmin/personnel_utilisateur.xhtml" icon="ui-icon-close"/>
+        </p:submenu>
+        
+        <p:separator />
+        
+        <p:submenu label="GESTION DES DROITS">
+            <p:menuitem value="Attribution de droits"  outcome="/pagesAdmin/attribuer_droit.xhtml" icon="ui-icon-close"/>
+        
+        </p:submenu>
+    </p:panelMenu>
+
+						</h:form>
+					</span>
+				</div>
+				<div class="span9">
+					<!-- Insertion du contenu ici -->
+					<ui:insert name="body">
+					</ui:insert>
+
+				</div>
+			</div>
+
+
+		</div>
+
+	</div>
+
+	<!--         </div> -->
+
+	<div id="footer">
+
+		<div class="container">
+			<hr />
+			<p>&copy; 2020&nbsp;SATI (Société Africaine des Technologies de
+				l'Information)</p>
+		</div>
+
+	</div>
+	
+	
+	<script>
+			PrimeFaces.locales['fr'] = {
+				closeText : 'Fermer',
+				prevText : 'Précédent',
+				nextText : 'Suivant',
+				monthNames : [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai',
+						'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre',
+						'Novembre', 'Décembre' ],
+				monthNamesShort : [ 'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun',
+						'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc' ],
+				dayNames : [ 'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi',
+						'Vendredi', 'Samedi' ],
+				dayNamesShort : [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven',
+						'Sam' ],
+				dayNamesMin : [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+				weekHeader : 'Semaine',
+				firstDay : 1,
+				isRTL : false,
+				showMonthAfterYear : false,
+				yearSuffix : '',
+				timeOnlyTitle : 'Choisir l\'heure',
+				timeText : 'Heure',
+				hourText : 'Heures',
+				minuteText : 'Minutes',
+				secondText : 'Secondes',
+				currentText : 'Maintenant',
+				ampm : false,
+				month : 'Mois',
+				week : 'Semaine',
+				day : 'Jour',
+				allDayText : 'Toute la journée'
+			};
+		</script>
+</h:body>
+</html>

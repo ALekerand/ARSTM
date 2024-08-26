@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+
+			<h1 class="page-title">SITUATION MATRIMONIALE</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="widget-content">
+				<!-- <h:form id="form"> -->
+					<p:panel header="Enregistrement">
+					<br />
+							<h:panelGrid id="matri_grid" columns="4" cellpadding="10">
+								<p:outputLabel for="sit_mat" value="Stuation matrimoniale"/>
+								<p:inputText id="sit_mat" value="#{matrimonialeBean.matrimoniale.libmatrimoniale}"
+									styleClass="inputStyle" required="true" />
+							</h:panelGrid>
+						
+						<br></br>
+						<h:panelGrid columns="3">
+							<p:commandButton value="Enregistrer"
+								action="#{matrimonialeBean.enregistrer}" 
+								update="table, matri_grid"  binding="#{matrimonialeBean.btnValider}">
+									<p:confirm header="Confirmation"
+							message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
+								</p:commandButton>
+								
+							<p:commandButton value="Annuler"
+								action="#{matrimonialeBean.annuler}" update="form" >
+								</p:commandButton>
+								
+						<p:commandButton value="Supprimer" action="#{matrimonialeBean.supprimer}"
+						update="form" binding="#{matrimonialeBean.btnSuprimer}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+					</p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+					
+					<br />
+
+					<p:dataTable id="table" selectionMode="single" var="tata"
+						value="#{matrimonialeBean.listMatrimoniale}" selection="#{matrimonialeBean.selectedMatrimoniale
+						}"
+						rowKey="#{tata.codematrimoniale}" emptyMessage="Aucun enregistrement">
+						<p:ajax event="rowSelect" listener="#{matrimonialeBean.selectionner}"
+							update=":form" />
+						<f:facet name="header">LISTE SITUATION MATRIMONIALE</f:facet>
+						<p:column headerText="Code" style="width:40%">#{tata.codematrimoniale}</p:column>
+						<p:column headerText="Sitution matrimoniale" style="width:60%">#{tata.libmatrimoniale}</p:column>
+					</p:dataTable>
+				<!-- </h:form> -->
+
+			</div>
+		<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
