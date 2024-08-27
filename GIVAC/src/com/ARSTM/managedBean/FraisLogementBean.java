@@ -35,9 +35,11 @@ public class FraisLogementBean {
 	private List listTypeLogement = new ArrayList<>();
 	private List listTypeLogementNationalite = new ArrayList<>();
 	
+	private TypeLogementNationalite selectedIns = new TypeLogementNationalite();
+	
 	private TypeLogementNationalite typeLogementNation = new TypeLogementNationalite();
 	private TypeLogementNationalite typeLogementNonNation = new TypeLogementNationalite();
-	private TypeLogementNationalite typeLogementNationalite= new TypeLogementNationalite();
+	private TypeLogementNationalite SelectedTypeLogementNationalite = new TypeLogementNationalite();
 	private Typenationalite typenationalite = new Typenationalite();
 	
 	private AnneesScolaire anneEncoure = new AnneesScolaire();
@@ -50,7 +52,7 @@ public class FraisLogementBean {
 	
 	public String enregistrer(){		
 		enregistrerTypeLogement();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 		return "frais_logement.xhtml";
 	}
 	
@@ -96,15 +98,7 @@ public class FraisLogementBean {
 		this.listTypeLogement = listTypeLogement;
 	}
 
-	public TypeLogementNationalite getTypeLogementNationalite() {
-		return typeLogementNationalite;
-	}
-
-	public void setTypeLogementNationalite(TypeLogementNationalite typeLogementNationalite) {
-		this.typeLogementNationalite = typeLogementNationalite;
-	}
-
-
+	
 	public Typenationalite getTypenationalite() {
 		return typenationalite;
 	}

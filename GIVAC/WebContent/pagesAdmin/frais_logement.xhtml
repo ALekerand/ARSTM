@@ -77,7 +77,7 @@
 							</h:panelGrid>
 						</p:panel>
 						
-						 <p:commandButton value="ENREGISTRER" action="#{fraisLogementBean.enregistrer}"  />
+						 <h:commandButton value="ENREGISTRER" action="#{fraisLogementBean.enregistrer}"  />
 
 					</p:tab> 
 					
@@ -85,7 +85,7 @@
 				
 				
 				<p:dataTable id="table"  var="tata"
-						value="#{fraisLogementBean.listTypeLogementNationalite}" selection="#{fraisLogementBean.selectedInscription}"
+						value="#{fraisLogementBean.listTypeLogementNationalite}" selection="#{fraisLogementBean.SelectedTypeLogementNationalite}"
 						rowKey="#{tata.idTypeLogNation}" emptyMessage="Aucun enregistrement">
 						<f:facet name="header">LISTE DES FRAIS DE LOGEMENT</f:facet>
 					<p:column headerText="Tpe logement" style="width:25%">#{tata.typeLogement.libtypeLogement}</p:column>
