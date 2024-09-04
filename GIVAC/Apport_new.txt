@@ -47,17 +47,13 @@
 	=================================== 24/03/2024 ============================
 	Tous les ic (code) des tables sont passé en seqenciel dans la modélisation
 	
+	============================ 03/09/2024 =====================================
 	
+	Page UE: vider les champs après enregistrement
 	
-
-
-
-
-
-
-
-		
-		
+	page ECUE : la tabulation après le champs TP, le libellé et abreviation sont reinitialisé
+	
+	page disponibilite_cours: Ajouter les jours de la disponiblilité dans le tableau recap
 		
 
 
