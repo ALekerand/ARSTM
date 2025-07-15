@@ -16,13 +16,19 @@
 					<br />
 					
 							<h:panelGrid id="ecole_grid" columns="4" cellpadding="8">
-								<p:outputLabel for="nom_ecole" value="Ecole"/>
-								<p:inputText id="nom_ecole" value="#{ecoleBean.ecole.nomEcole}"
-								required="true" style="width:350px" />
+							
+							<p:outputLabel for="pol" value="Pôle"/>
+							<p:selectOneMenu id="pol" value="#{ecoleBean.idPole}" converter="#{entityConverter}" style="width:50px">
+							<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+							<f:selectItems value="#{ecoleBean.listPole}" var="tata" itemLabel="#{tata.libellePole}" itemValue="#{tata.idPole}"></f:selectItems>
+						    </p:selectOneMenu>
+							
+							<p:outputLabel for="nom_ecole" value="Ecole"/>
+							<p:inputText id="nom_ecole" value="#{ecoleBean.ecole.nomEcole}"
+							required="true" style="width:350px" />
 								
 						<p:outputLabel for="abrev_ecole" value="Abréviation école"/>
 						<p:inputText id="abrev_ecole" value="#{ecoleBean.ecole.abrevEcole}" required="true" style="width: 100px" styleClass="upercase"/>
-						
 						
 						</h:panelGrid>
 						

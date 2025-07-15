@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Filieres;
+import com.ARSTM.model.Pole;
 import com.ARSTM.service.Iservice;
 
 @Component
@@ -24,29 +25,30 @@ public class EcoleBean {
 	private Ecole ecole = new Ecole();
 	private Ecole selectedEcole = new Ecole();
 	private List listEcole = new ArrayList<>();
+	private int idPole;
 	private Filieres choosedFiliere = new Filieres();
 	private List listFiliere = new ArrayList<>();
+	private List<Pole> listPole = new ArrayList<Pole>();
 	
-	// Contrôle de coposant
+	// ContrÃ´le de coposant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
 	
 	@PostConstruct
-public void initialiser(){
-	//btnValider.setDisabled(false);
-	btnSuprimer.setDisabled(true);
-	btnModifier.setDisabled(true);
-	
+	public void initialiser(){
+		btnSuprimer.setDisabled(true);
+		btnModifier.setDisabled(true);
 }
 		
 	public void enregistrer(){
 		ecole.setAbrevEcole(getEcole().getAbrevEcole().toUpperCase());
+		ecole.setPole((Pole) service.getObjectById(idPole, "Pole"));
 		getService().addObject(ecole);
 		actualiserList();
 		vider(ecole);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 	}
 	
 	public void modifier(){
@@ -54,13 +56,14 @@ public void initialiser(){
 		vider(ecole);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuï¿½e!", null));
 	}
 
 	public void annuler() {
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
+		idPole = 0;
 		vider(ecole);
 		actualiserList();
 	}
@@ -97,7 +100,7 @@ public void initialiser(){
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuï¿½e!", null));
 	}
 	
 	
@@ -179,5 +182,22 @@ public void initialiser(){
 
 	public void setBtnModifier(CommandButton btnModifier) {
 		this.btnModifier = btnModifier;
+	}
+
+
+	public List<Pole> getListPole() {
+		return listPole = service.getObjects("Pole");
+	}
+
+	public void setListPole(List<Pole> listPole) {
+		this.listPole = listPole;
+	}
+
+	public int getIdPole() {
+		return idPole;
+	}
+
+	public void setIdPole(int idPole) {
+		this.idPole = idPole;
 	}
 }

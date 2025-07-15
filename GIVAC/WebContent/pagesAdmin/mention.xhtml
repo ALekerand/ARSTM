@@ -14,7 +14,17 @@
 				<!-- <h:form id="form"> -->
 				<p:panel header="Enregistrement">
 					<br />
-					<h:panelGrid id="mention_grid" columns="4" cellpadding="10">
+			<h:panelGrid id="mention_grid" columns="4" cellpadding="10">
+					
+			<p:outputLabel for="pol" value="Pôle"/>
+			<p:selectOneMenu id="pol" value="#{filiereBean.idPole}" style="width:50px">
+			<p:ajax listener="#{mentionBean.chargerEcole}" event="change" process="@this" update="ecol"/>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{mentionBean.listPole}" var="tata" itemLabel="#{tata.libellePole}" itemValue="#{tata.idPole}"></f:selectItems>
+		    </p:selectOneMenu>
+		    
+		    <p:outputLabel />
+		    <p:outputLabel />
 						
 			<p:outputLabel for="ecol" value="Ecole"/>
 			<p:selectOneMenu id="ecol" value="#{mentionBean.choosedEcole}" converter="#{entityConverter}">
@@ -24,7 +34,7 @@
 		    </p:selectOneMenu>
 		    
 		     <p:outputLabel />
-		      <p:outputLabel />
+		     <p:outputLabel />
 		    
 		    <p:outputLabel for="fil" value="Filière"/>
 			<p:selectOneMenu id="fil" value="#{mentionBean.choosedFiliere}" converter="#{entityConverter}">
@@ -34,7 +44,7 @@
 		    </p:selectOneMenu>		    
 		    
 		     <p:outputLabel />
-		      <p:outputLabel />
+		     <p:outputLabel />
 		    
 			<p:outputLabel for="nom_ment" value="Mention" />
 			<p:inputText id="nom_ment"
@@ -72,7 +82,6 @@
 							binding="#{mentionBean.btnValider}">
 							
 						</p:commandButton>
-
 						<p:commandButton value="Annuler" action="#{mentionBean.annuler}"
 							update="form">
 						</p:commandButton>
@@ -90,8 +99,6 @@
 							<p:confirm header="Confirmation"
 								message="Confirmez-vous la supression?" icon="ui-icon-alert" />
 						</p:commandButton>
-						
-					
 					</h:panelGrid>
 				</p:panel>
 

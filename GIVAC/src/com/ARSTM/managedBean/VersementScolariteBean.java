@@ -16,7 +16,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import org.hibernate.cfg.beanvalidation.BeanValidationIntegrator;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -26,25 +25,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.ARSTM.model.AnneesScolaire;
-import com.ARSTM.model.Diplomes;
-import com.ARSTM.model.Ecolages;
 import com.ARSTM.model.EtablScolarite;
 import com.ARSTM.model.Etudiants;
-import com.ARSTM.model.FraisAnnexe;
 import com.ARSTM.model.Inscriptions;
-import com.ARSTM.model.Matrimoniales;
-import com.ARSTM.model.Mention;
 import com.ARSTM.model.Mode;
-import com.ARSTM.model.Nationalites;
-import com.ARSTM.model.Niveaux;
-import com.ARSTM.model.Regime;
-import com.ARSTM.model.Santes;
 import com.ARSTM.model.VersementScolarite;
 import com.ARSTM.requetes.ReqAnneeScolaire;
-import com.ARSTM.requetes.ReqEcolage;
 import com.ARSTM.requetes.ReqEtablissementScolarite;
 import com.ARSTM.requetes.ReqEtudiant;
-import com.ARSTM.requetes.ReqFraisAnnexes;
 import com.ARSTM.requetes.ReqOrigine;
 import com.ARSTM.requetes.ReqVersemtscolarite;
 import com.ARSTM.requetes.RequeteInscription;
@@ -91,15 +79,15 @@ public class VersementScolariteBean {
 	//private List listEtudiant = new ArrayList<>();
 	private List listInscription = new ArrayList<>();
 	
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 	private CommandButton btnValider = new CommandButton();
 	private CommandButton btnAnuler = new CommandButton();
 	private List listeEtudiant = new ArrayList<>();
 	
-	// Méthodes
+	// Mï¿½thodes
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
-		//Charger l'année scolaire en cours
+		//Charger l'annï¿½e scolaire en cours
 	anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
 		return anneEncoure;
 	}
@@ -111,7 +99,7 @@ public class VersementScolariteBean {
 			etudiants = reqEtudiant.recupererEtudiantByMlle(matriculeRecherche).get(0);
 		} catch (IndexOutOfBoundsException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Recherche infructueuse. Veuillez vérifier le matricule", null));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Recherche infructueuse. Veuillez vï¿½rifier le matricule", null));
 		}
 		
 		if (etudiants.getMle()!= null) {
@@ -126,7 +114,7 @@ public class VersementScolariteBean {
 	
 	
 	public void chargerMontant() {
-			//Calculet le total de la scolarité
+			//Calculet le total de la scolaritï¿½
 		if (inscriptions.getRegime().getCodeRegime() == 1) {
 			//setTotalScolarite(new BigDecimal(etablScolarite.getMtEchance1Sco()));
 			setTotalScolarite(etablScolarite.getMtEchance1Sco());
@@ -134,12 +122,12 @@ public class VersementScolariteBean {
 			setTotalScolarite(etablScolarite.getMtEchance1Sco().add((etablScolarite.getMtEchance2Eco()).add(etablScolarite.getMtEchance3Sco()).add(etablScolarite.getMtEchance4Eco())));
 		}
 
-		//Calculer les montants déja versés
+		//Calculer les montants dï¿½ja versï¿½s
 		List<VersementScolarite> listeVersement = reqVersemtscolarite.recupVersemtbyEtudiantAnne(etudiants.getNumetudiant(), anneEncoure.getCodeAnnees());
 			System.out.println("==================Taille liste versement"+listeVersement.size());
 			double monTo = 0;
 			for (VersementScolarite var : listeVersement){
-			System.out.println("============ Montant de la scolarité"+var.getMontantVersementScolarite());
+			System.out.println("============ Montant de la scolaritï¿½"+var.getMontantVersementScolarite());
 			 monTo += var.getMontantVersementScolarite().doubleValue(); 
 			//totalVersement.add(var.getMontantVersementScolarite());
 		}
@@ -149,7 +137,7 @@ public class VersementScolariteBean {
 		//setTotalScolarite(new BigDecimal(monTo));
 		System.out.println("=========Total versement:"+totalVersement);
 		
-		//Calculer le reste à payer
+		//Calculer le reste ï¿½ payer
 		setResteVersement(totalScolarite.subtract(new BigDecimal(monTo)));
 		
 	}
@@ -161,7 +149,7 @@ public class VersementScolariteBean {
 		etudiants = selectedInscription.getEtudiants();
 		chargerPhoto();
 		
-		//Charger les informations sur l'établissement
+		//Charger les informations sur l'ï¿½tablissement
 		etablScolarite =  reqEtablissementScolarite.recupEtablisScolarite(etudiants.getNumetudiant(),anneEncoure.getCodeAnnees());
 		System.out.println("======= Etablissement"+etablScolarite.getMtEchance1Sco());
 		//Charger les montants
@@ -174,7 +162,7 @@ public class VersementScolariteBean {
 		int mtPositif = versementScolarite.getMontantVersementScolarite().compareTo(BigDecimal.ZERO);
 		int mtpayeExact = versementScolarite.getMontantVersementScolarite().compareTo(resteVersement);
 		
-		//Vérifier si le montant n'est pas null ou superieur aureste à payer
+		//Vï¿½rifier si le montant n'est pas null ou superieur aureste ï¿½ payer
 		if ((mtPositif == 1) && (mtpayeExact != 1)){
 			//Faire l'enregistrement
 			//Enregistrement du versement
@@ -184,7 +172,7 @@ public class VersementScolariteBean {
 			versementScolarite.setOrigine(reqOrigine.recupOrigineById(1));
 			versementScolarite.setDateVersementSco(new Date());
 			service.addObject(versementScolarite);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Réglement effectué!", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Rï¿½glement effectuï¿½!", null));
 
 			//Vider le champs
 			annuler();
@@ -192,7 +180,7 @@ public class VersementScolariteBean {
 			
 		
 		}else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuillez vérifier le montant du versement!", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuillez vï¿½rifier le montant du versement!", null));
 
 			
 		}
@@ -201,7 +189,7 @@ public class VersementScolariteBean {
 	
 	
 	public void annuler() throws FileNotFoundException {
-		//Info personnelle étudiant
+		//Info personnelle ï¿½tudiant
 		etudiants.setNomEtudiant(null);
 		etudiants.setPrenomEtudiant(null);
 		etudiants.setTelEtudiant(null);
@@ -234,7 +222,7 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 //************************Pour le traitement de la photo
 	
 	public void upload(FileUploadEvent event) {
-        FacesMessage msg = new FacesMessage("Photo validée!");
+        FacesMessage msg = new FacesMessage("Photo validï¿½e!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         // Do what you want with the file
         try {
@@ -347,17 +335,6 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 	}
 
 	
-	/*
-	 * public Nationalites getNationalites() { return nationalites; }
-	 * 
-	 * public void setNationalites(Nationalites nationalites) { this.nationalites =
-	 * nationalites; }
-	 * 
-	 * public Regime getRegime() { return regime; }
-	 * 
-	 * public void setRegime(Regime regime) { this.regime = regime; }
-	 */
-
 	public String getMatriculeRecherche() {
 		return matriculeRecherche;
 	}

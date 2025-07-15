@@ -67,7 +67,6 @@ public class reportTestController {
 		
 		Map<String, Object> parametres= new HashMap<String, Object>();
 		
-		
 		File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/fiche_inscription.jasper"));
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametres, new JREmptyDataSource());
 		
@@ -82,7 +81,7 @@ public class reportTestController {
 		
 		FacesContext.getCurrentInstance().getResponseComplete();
 		 
-	     System.out.println("======= FIN METHODE =========");
+	    System.out.println("======= FIN METHODE =========");
 	}
 
 	//**************************ACCESSEURS*************************//*

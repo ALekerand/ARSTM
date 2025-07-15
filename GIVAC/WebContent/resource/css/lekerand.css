@@ -1,0 +1,40 @@
+
+fieldset{
+  background-color:#DCEDFF;
+  padding:16px;
+  
+  border:1px solid green;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;	
+    border-radius:8px;
+}
+
+legend{
+	color:green;
+}
+
+panel{
+	color: blue;
+	
+}
+
+
+.page-title i {
+		margin-right: .4em;
+	}
+
+.div_fond
+{
+    margin: 0;
+    padding: 0;
+    background: url(resource/images/examen.jpg);
+    font-family: sans-serif;
+
+}
+
+
+.arrondie {
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border-radius:7px;
+}

@@ -26,7 +26,7 @@ public class CycleBean {
 	private Cycle cycle = new Cycle();
 	private Cycle selectedCycle = new Cycle();
 	private List listeCycle = new ArrayList<>();
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
@@ -37,7 +37,7 @@ public class CycleBean {
 		actualiserList();
 		vider(cycle);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 	}
 
 	public void annuler() {
@@ -78,7 +78,7 @@ public class CycleBean {
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuï¿½e!", null));
 	}
 	
 	public void modifier(){
@@ -86,7 +86,7 @@ public class CycleBean {
 		vider(cycle);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuï¿½e!", null));
 	}
 	
 	

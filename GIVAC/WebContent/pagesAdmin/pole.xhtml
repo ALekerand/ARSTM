@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/templateAdministrateur.xhtml">
+	<ui:define name="body">
+		<h:form id="form_gnl">
+
+			<h1 class="page-title">POLE DE FORMATION</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<div class="well">
+				<legend class="legend">Enregistrement</legend>
+				
+				<h:panelGrid id="grid_pole" columns="4" cellpadding="10">
+					<h:outputLabel value="Pôle" for="lib_pole"/>
+					<h:inputText id="lib_pole"  value="#{poleBean.pole.libellePole}" required="true" />
+				
+					<h:outputLabel value="Telephone" for="tel_pole"/>
+					<h:inputText id="tel_pole"  value="#{poleBean.pole.telephonePole}"/>
+			
+					<h:outputLabel value="Mail" for="mail_pole"/>
+					<h:inputText id="mail_pole"  value="#{poleBean.pole.mailPole}"/>
+			
+				</h:panelGrid>
+				<br />
+				
+				
+				
+				<p:toolbar>
+	    	<f:facet name="left">
+	    	<p:commandButton value="Valider"
+						action="#{poleBean.enregistrerSexe}" update="form_gnl" binding="#{poleBean.btnValider}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous l'enregistrement" icon="ui-icon-alert" />
+					</p:commandButton>
+					
+					<p:commandButton value="Annuler"
+						update="form_gnl:grid_pole" process="@this"
+						action="#{poleBean.annuler}" />
+						
+				<p:commandButton value="Supprimer" action="#{poleBean.supprimer}"
+						update="form_gnl" binding="#{poleBean.btnSuprimer}">
+						<p:confirm header="Confirmation"
+							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
+					</p:commandButton>
+	    	</f:facet>
+	    
+	    </p:toolbar>
+				
+				<br />
+				<p:dataTable id="table" selectionMode="single" var="tata"
+					value="#{poleBean.listPole}" selection="#{poleBean.selectedPole}"
+					rowKey="#{tata.idPole}" emptyMessage="Aucun enregistrement">
+					<p:ajax event="rowSelect" listener="#{poleBean.selectionner}" update=":form_gnl"/>
+					<f:facet name="header">LISTE DES POLES</f:facet>
+					<p:column headerText="Code" style="width:20%">#{tata.codePole}</p:column>
+					<p:column headerText="Pôle" style="width:40%">#{tata.libellePole}</p:column>
+					<p:column headerText="Telephone" style="width:20%">#{tata.telephonePole}</p:column>
+					<p:column headerText="Mail" style="width:20%">#{tata.mailPole}</p:column>
+				</p:dataTable>
+			</div>
+
+			<!-- Boite de confirmation -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

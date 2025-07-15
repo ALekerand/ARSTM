@@ -17,6 +17,8 @@ import com.ARSTM.model.Cycle;
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Filieres;
 import com.ARSTM.model.Mention;
+import com.ARSTM.model.Pole;
+import com.ARSTM.requetes.ReqEcole;
 import com.ARSTM.requetes.RequeteFiliere;
 import com.ARSTM.requetes.RequeteFiliere2;
 import com.ARSTM.requetes.RequeteMention;
@@ -34,6 +36,8 @@ public class MentionBean {
 	RequeteMention requeteMention;
 	@Autowired
 	RequeteFiliere2 requeteFiliere2;
+	@Autowired
+	ReqEcole reqEcole;
 	
 	
 	
@@ -42,17 +46,15 @@ public class MentionBean {
 	private Ecole choosedEcole = new Ecole();
 	private Filieres choosedFiliere = new Filieres();
 	private Cycle choosedCycle = new Cycle();
-	
-	
-	
 	private List listMention = new ArrayList<>();
 	private List listEcole = new ArrayList<>();
 	private List listFiliere = new ArrayList<>();
 	private List listCycle = new ArrayList<>();
-	
+	private List<Pole> listPole = new ArrayList<Pole>();
+	private int idPole;
 	private String cb_niveau ;
 	
-	// Contrôle de composant
+	// Contrï¿½le de composant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
@@ -63,11 +65,8 @@ public class MentionBean {
 	
 	@PostConstruct
 public void initialiser(){
-	//btnValider.setDisabled(false);
 	btnSuprimer.setDisabled(true);
 	btnModifier.setDisabled(true);
-	/*inputOption.setDisabled(true);
-	inputAbrevOption.setDisabled(true);*/
 }
 	
 	public void activerChamps(){
@@ -76,25 +75,28 @@ public void initialiser(){
 				{
 			inputOption.setDisabled(false);
 			inputAbrevOption.setDisabled(false);
-			//chargerFiliere2();
-			//chargerListFilbyEcole();
 			chargerMention();
 		}
 		
 	}
 	
+	
+	public void chargerEcole(){
+		listEcole.clear();
+		listFiliere.clear();
+		
+		listEcole = reqEcole.recupEcoleByPole(idPole);
+	}
+	
+	
 public void chargerFiliere(){
 	listFiliere.clear();
 	listFiliere = requeteFiliere.recupFiliereByEcole2(choosedEcole.getCodeEcole());
-	
-	
 }
 
 public void chargerFiliere2(){
 	listFiliere.clear();
 	listFiliere = requeteFiliere2.recupFiliere2ByEcole(choosedEcole.getCodeEcole());
-	
-	
 }
 
 public void chargerMention(){
@@ -113,7 +115,7 @@ public void chargerMention(){
 		actualiserList();
 		vider(mention);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 	}
 	
 	public void enregistrer2(){
@@ -126,47 +128,47 @@ public void chargerMention(){
 		actualiserList();
 		vider(mention);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 	}
 	
 		public void choisirAnne(){
 		switch (cb_niveau) {
 		case "Licence 1":
-			mention.setAnneeMention("1ère Année");
+			mention.setAnneeMention("1ï¿½re Annï¿½e");
 			
 			break;
 			
 		case "Licence 2":
-			mention.setAnneeMention("2ème Année");
+			mention.setAnneeMention("2ï¿½me Annï¿½e");
 			
 			break;
 			
 		case "Licence 3":
-			mention.setAnneeMention("3ème Année");
+			mention.setAnneeMention("3ï¿½me Annï¿½e");
 			
 			break;
 			
 		case "Master 1":
-			mention.setAnneeMention("4ème Année");
+			mention.setAnneeMention("4ï¿½me Annï¿½e");
 			
 			break;
 			
 		case "Master 2":
-			mention.setAnneeMention("5ème Année");
+			mention.setAnneeMention("5ï¿½me Annï¿½e");
 			
 			break;
 			
 		case "Doctorat 1":
-			mention.setAnneeMention("6ème Année");
+			mention.setAnneeMention("6ï¿½me Annï¿½e");
 			
 			break;
 			
 		case "Doctorat 2":
-			mention.setAnneeMention("7ème Année");
+			mention.setAnneeMention("7ï¿½me Annï¿½e");
 			
 			break;
 		case "Doctorat 3":
-			mention.setAnneeMention("8ème Année");
+			mention.setAnneeMention("8ï¿½me Annï¿½e");
 			
 			break;
 
@@ -179,7 +181,7 @@ public void chargerMention(){
 		vider(mention);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuï¿½e!", null));
 	}
 	
 	
@@ -225,7 +227,7 @@ public void chargerMention(){
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuï¿½e!", null));
 	}
 	
 	
@@ -299,9 +301,6 @@ public void chargerMention(){
 	}
 
 	public List getListEcole() {
-		if (listEcole.isEmpty()) {
-			listEcole = getService().getObjects("Ecole");
-		}
 		return listEcole;
 	}
 
@@ -369,5 +368,21 @@ public void chargerMention(){
 
 	public void setInputAbrevOption(InputText inputAbrevOption) {
 		this.inputAbrevOption = inputAbrevOption;
+	}
+
+	public int getIdPole() {
+		return idPole;
+	}
+
+	public void setIdPole(int idPole) {
+		this.idPole = idPole;
+	}
+
+	public List<Pole> getListPole() {
+		return listPole = service.getObjects("Pole");
+	}
+
+	public void setListPole(List<Pole> listPole) {
+		this.listPole = listPole;
 	}
 }

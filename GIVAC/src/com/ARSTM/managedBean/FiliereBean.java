@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
 import com.ARSTM.model.Domaine;
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Filieres;
+import com.ARSTM.model.Pole;
 import com.ARSTM.model.Tformation;
+import com.ARSTM.requetes.ReqEcole;
 import com.ARSTM.requetes.RequeteFiliere;
 import com.ARSTM.service.Iservice;
 
@@ -27,16 +29,21 @@ public class FiliereBean {
 	Iservice service;
 	@Autowired
 	RequeteFiliere requeteFiliere;
+	@Autowired
+	ReqEcole reqEcole;
 	
 	private Filieres filieres = new Filieres();
 	private Filieres selectedFiliere = new Filieres();
 	private List listFiliere = new ArrayList<>();
 	private List listeFiliereByEcole = new ArrayList<>();
 	private Ecole choosedEcole = new Ecole();
+	private Pole pole = new Pole();
 	private List listEcole = new ArrayList<>();
 	private int codeDomaine;
+	private int idPole;
 	private Domaine choosedDoamine = new Domaine();
 	private List listeDomaine = new ArrayList<>();
+	private List<Pole> listPole = new ArrayList<Pole>();
 	
 	private Tformation choosedTformation = new Tformation();
 	private List listTformation = new ArrayList<>();
@@ -55,32 +62,28 @@ public class FiliereBean {
 	
 		@PostConstruct
 	public void initiate(){
-		/*
-		 * inputFiliere.setDisabled(true); inputAbrevFiliere.setDisabled(true);
-		 * inputFiliere2.setDisabled(true); inputAbrevFiliere2.setDisabled(true);
-		 */
 			btnSuprimer.setDisabled(true);
 			btnModifier.setDisabled(true);
 	}
 		
-/*
-	  public void activerChamps(){ 
-		if ((!(choosedEcole.getNomEcole().equals(null)))&& (!(choosedDoamine.getLibDomaine().equals(null))) &&(!(choosedTformation.getAbrevTformation().equals(null)))) {
-		  	inputFiliere.setDisabled(false); 
-		  	inputAbrevFiliere.setDisabled(false);
-		  	inputFiliere2.setDisabled(false); 
-		  	inputAbrevFiliere2.setDisabled(false);
-		  	chargerListFilbyEcole(); 
-		  	}
-		} */
-		
-		
+
 		public List<Filieres> chargerListFilbyEcole(){
 			listeFiliereByEcole.clear();
 			for (Filieres filObject : requeteFiliere.recupFiliereByEcole(choosedEcole.getCodeEcole(), choosedTformation.getCodeTformation())){
 				listeFiliereByEcole.add(filObject);
 			}
 			return listeFiliereByEcole;
+		}
+		
+		
+		public void chargerEcole(){
+			listEcole.clear();
+			listEcole = reqEcole.recupEcoleByPole(idPole);
+		}
+		
+		public void chargerFiliere(){
+			listFiliere.clear();
+			listFiliere = requeteFiliere.recupFiliereByEcole2(choosedEcole.getCodeEcole());
 		}
 	
 	public void enregistrer(){
@@ -89,7 +92,6 @@ public class FiliereBean {
 		filieres.setEcole(choosedEcole);
 		filieres.setTformation(choosedTformation);
 		filieres.setDomaine((Domaine) getService().getObjectById(codeDomaine, "Domaine"));
-		//filieres.setDomaine(choosedDoamine);
 		getService().addObject(filieres);
 		actualiserList();
 		vider(filieres);
@@ -219,9 +221,6 @@ public class FiliereBean {
 	}
 
 	public List getListEcole() {
-		if (listEcole.isEmpty()) {
-			listEcole = getService().getObjects("Ecole");
-		}
 		return listEcole;
 	}
 
@@ -267,19 +266,9 @@ public class FiliereBean {
 		return inputAbrevFiliere2;
 	}
 
-
-
-
-
-
 	public void setInputAbrevFiliere2(InputText inputAbrevFiliere2) {
 		this.inputAbrevFiliere2 = inputAbrevFiliere2;
 	}
-
-
-
-
-
 
 	public List getListeFiliereByEcole() {
 		return listeFiliereByEcole;
@@ -334,19 +323,9 @@ public class FiliereBean {
 		return listeDomaine;
 	}
 
-
-
-
-
-
 	public void setListeDomaine(List listeDomaine) {
 		this.listeDomaine = listeDomaine;
 	}
-
-
-
-
-
 
 	public Tformation getChoosedTformation() {
 		return choosedTformation;
@@ -375,6 +354,24 @@ public class FiliereBean {
 
 	public void setCodeDomaine(int codeDomaine) {
 		this.codeDomaine = codeDomaine;
+	}
+
+	public List<Pole> getListPole() {
+		return listPole = service.getObjects("Pole");
+	}
+
+	public void setListPole(List<Pole> listPole) {
+		this.listPole = listPole;
+	}
+
+
+	public int getIdPole() {
+		return idPole;
+	}
+
+
+	public void setIdPole(int idPole) {
+		this.idPole = idPole;
 	}
 
 }

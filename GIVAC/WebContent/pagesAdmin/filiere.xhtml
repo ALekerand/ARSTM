@@ -15,6 +15,16 @@
 				<p:panel header="Enregistrement">
 					<br />
 			<h:panelGrid id="filiere_grid" columns="4" cellpadding="10">
+			
+			<p:outputLabel for="pol" value="Pôle"/>
+			<p:selectOneMenu id="pol" value="#{filiereBean.idPole}" converter="#{entityConverter}" style="width:50px">
+			<p:ajax listener="#{filiereBean.chargerEcole}" event="change" process="@this" update="ecol"/>
+			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+			<f:selectItems value="#{filiereBean.listPole}" var="tata" itemLabel="#{tata.libellePole}" itemValue="#{tata.idPole}"></f:selectItems>
+		    </p:selectOneMenu>
+		    
+		    <p:outputLabel />
+		    <p:outputLabel />
 						
 			<p:outputLabel for="ecol" value="Ecole"/>
 			<p:selectOneMenu id="ecol" value="#{filiereBean.choosedEcole}" converter="#{entityConverter}" required="true">
@@ -25,9 +35,6 @@
 		    
 		    <p:outputLabel />
 		    <p:outputLabel />
-		    
-		    
-		    
 		    
 		    <p:outputLabel for="dom" value="Domaine"/>
 			<p:selectOneMenu id="dom" value="#{filiereBean.codeDomaine}" required="true">
