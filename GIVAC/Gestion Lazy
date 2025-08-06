@@ -1,7 +1,7 @@
 
 
 ETUDIANT: Nationalite
-INSCRIPTION: Etudiant, Nationalité, Section, Regime
+INSCRIPTION: Etudiant, Nationalitï¿½, Section, Regime
 Etablisseent: Etudiant,
 type_logement_nationalite: typeLogement
 FILIERE: ECOLE
@@ -9,4 +9,5 @@ MENTION: CYCLE, FILIERES
 SECTION --------- Mention
 ECOLAGE: MENTION
 ECOLAGE: TypeNationalite;
-ENSEIGNANT: Specialité;UserAuthentication; Enseigner(Set)
+ENSEIGNANT: Specialitï¿½;UserAuthentication; Enseigner(Set)
+ECOLE: POLE 

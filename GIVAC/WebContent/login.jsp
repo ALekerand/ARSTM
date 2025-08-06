@@ -5,8 +5,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>GIVAC</title>
 		
-		<link rel="stylesheet" type="text/css" href="resource/static/css/bootstrap.css"></link>
-		<link rel="stylesheet" type="text/css" href="resource/static/css/app.css"></link>
+		<link rel="stylesheet" type="text/css" href="resources/static/css/bootstrap.css"></link>
+		<link rel="stylesheet" type="text/css" href="resources/static/css/app.css"></link>
 		
 		 <link href="<c:url value='/static/css/bootstrap.css' />"  rel="stylesheet"></link>
 		 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>

@@ -7,40 +7,48 @@
 <ui:composition template="/templates/templateAdministrateur.xhtml">
 	<ui:define name="body">
 		<h:form id="form">
-			<h1 class="page-title">COMPLEMENT</h1>
+			<h1 class="page-title" >COMPLEMENT</h1>
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
 			<p:panel header="Enregistrement">
 			
-			<table>
-  <tr>
-    <td>
-    <h:panelGrid columns="2" cellpadding="1">
-    <p:inputText id="matricule" value="#{complementBean.matriculeRecherche}" placeholder="Recherche par le matricule" />
-			<p:commandButton actionListener="#{complementBean.rechercher}" partialSubmit="true" process="@this,matricule" update="form" icon="ui-icon-search"></p:commandButton>
-    </h:panelGrid>
-    </td>
-    <td>
     <p:dataTable id="table" selectionMode="single" var="tata"
 	value="#{complementBean.listInscription}" selection="#{complementBean.selectedInscription}"
-	rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement">
+	rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement" rows="5" paginatorPosition="bottom" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
 	<p:ajax event="rowSelect" listener="#{complementBean.selectionner}" update=":form" />
 	<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
-	<p:column headerText="Nom" style="width:20%">#{tata.etudiants.nomEtudiant}</p:column>
-	<p:column headerText="Prenoms" style="width:50%">#{tata.etudiants.prenomEtudiant}</p:column>
-	<p:column headerText="Date Naissance" style="width:30%">#{tata.etudiants.datenais}</p:column>
-	<p:column headerText="Nationalité" style="width:30%">#{tata.etudiants.nationalites.libnationalite}</p:column>
+	
+	<p:column headerText="Matricule" sortBy="#{tata.etudiants.mle}" filterBy="#{tata.etudiants.mle}" filterMatchMode="contains" filterPlaceholder="Recherche">
+	    <h:outputText value="#{tata.etudiants.mle}"/>
+	</p:column>
+	
+	<p:column headerText="Nom">
+	<h:outputText value="#{tata.etudiants.nomEtudiant}"/>
+	</p:column>
+	<p:column headerText="Prenoms">
+	<h:outputText value="#{tata.etudiants.prenomEtudiant}"/>
+	</p:column>
+	<p:column headerText="Date Naissance">
+	<h:outputText value="#{tata.etudiants.datenais}">
+		<f:convertDateTime pattern="dd/MM/yyyy"/>
+		</h:outputText>
+	</p:column>
+	<p:column headerText="Nationalité">
+	<h:outputText value="#{tata.etudiants.nationalites.libnationalite}"/>
+	</p:column>
 	</p:dataTable>
-    </td>
-  </tr>
-</table>
+    
+    <br></br>
 
 	<fieldset>
 				<legend>Informations de base</legend>		
 					<table>
 					  <tr valign="top">
 					    <td>
-					    <h:panelGrid id="annee_grid" columns="4" cellpadding="6">
+					    <h:panelGrid id="annee_grid" columns="6" cellpadding="6">
 						<p:outputLabel for="name" value="Nom:" />
 						<p:inputText id="name" value="#{complementBean.etudiants.nomEtudiant}" readonly="true"  />
 						
@@ -48,19 +56,19 @@
 						<p:inputText id="pren" value="#{complementBean.etudiants.prenomEtudiant}" readonly="true" />
 						
 						<p:outputLabel for="dat_nais" value="Date naissance" />
-						<p:inputText id="dat_nais" value="#{complementBean.etudiants.datenais}" pattern="dd/MM/yyyy">
+						<p:inputText id="dat_nais" value="#{complementBean.etudiants.datenais}" >
 						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 						</p:inputText>
 						
 						<p:outputLabel for="ses" value="Session" styleClass="outputDecalage"/>
-						<p:inputText id="ses" value="#{complementBean.inscriptions.section.abrevSection}"/>
+						<p:inputText id="ses" value="#{complementBean.inscriptions.section.abrevSection}" readonly="true"/>
 						
 						<p:outputLabel for="tel" value="Téléphone:"/>
-<p:inputText id="tel" value="#{complementBean.etudiants.telEtudiant}" />
+						<p:inputText id="tel" value="#{complementBean.etudiants.telEtudiant}" readonly="true" />
 
-<p:outputLabel for="email" value="E-mail:" styleClass="outputDecalage" />
-<p:inputText id="email" value="#{complementBean.etudiants.mailEtudiant}" />
-</h:panelGrid>
+						<p:outputLabel for="email" value="E-mail:" styleClass="outputDecalage" />
+						<p:inputText id="email" value="#{complementBean.etudiants.mailEtudiant}" readonly="true"/>
+			</h:panelGrid>
 
 <p:fileUpload fileUploadListener="#{complementBean.upload}" mode="advanced" dragDropSupport="false" cancelLabel="Annuler"
 	uploadLabel="Valider" label="Jouindre une photo" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpg|png)$/" update="graphIm" />
@@ -75,20 +83,18 @@
 			<fieldset>
 				<legend>Informations complémentaires</legend>
 				
-							<h:panelGrid id="complement_etud" columns="4" cellpadding="8">
+			<h:panelGrid id="complement_etud" columns="6" cellpadding="6">
 				
 				<p:outputLabel for="cni" value="Numéro CNI/PASS:" />
 				<p:inputText id="cni" value="#{complementBean.etudiants.numcni}" required="true" />
 				
-						<p:outputLabel for="ecol_p" value="Etablis précédent:" styleClass="outputDecalage" />
-						<p:inputText id="ecol_p" value="#{complementBean.etudiants.ecoleAncienneEtudiant}" required="true" />
-			</h:panelGrid>
-			</fieldset>
-			
-<legend>Informations parents</legend>
-				<h:panelGrid id="parent_grid" columns="4" cellpadding="6">
+				<p:outputLabel for="ecol_p" value="Etablis précédent:" styleClass="outputDecalage" />
+				<p:inputText id="ecol_p" value="#{complementBean.etudiants.ecoleAncienneEtudiant}" required="true" />
 				
-				<p:outputLabel for="pere" value="Nom père:" />
+				<p:outputLabel/>
+				<p:outputLabel/>
+				
+				<p:outputLabel for="pere" value="Nom prénoms père:" />
 				<p:inputText id="pere" value="#{complementBean.etudiants.nomPrenomsPere}" required="true" />
 				
 				<p:outputLabel for="profes" value="Profession" styleClass="outputDecalage"/>
@@ -97,7 +103,7 @@
 				<p:outputLabel for="tel_pere" value="Telephone:" />
 				<p:inputText id="tel_pere" value="#{complementBean.etudiants.telPere}" required="true" />
 				
-				<p:outputLabel for="mere" value="Nom mère:" styleClass="outputDecalage" />
+				<p:outputLabel for="mere" value="Nom prénoms mère:" styleClass="outputDecalage" />
 				<p:inputText id="mere" value="#{complementBean.etudiants.nomPrenomsMere}" required="true"/>
 				
 				<p:outputLabel for="profmere" value="Prefession " />
@@ -112,22 +118,29 @@
 				<p:outputLabel for="tel_cor" value="Téléphone" styleClass="outputDecalage"/>
 				<p:inputText id="tel_cor" value="#{complementBean.etudiants.telTuteur}" required="true" />
 				
+				<p:outputLabel/>
+				<p:outputLabel/>
+				
 				<p:outputLabel for="nom_med" value="Nom médecin:" />
 				<p:inputText id="nom_med" value="#{complementBean.etudiants.nomPrenomsDocteur}" required="true"/>
 				
 				<p:outputLabel for="tel_med" value="Télephone:" styleClass="outputDecalage" />
 				<p:inputText id="tel_med" value="#{complementBean.etudiants.telDocteur}" required="true"/>
-			</h:panelGrid>			
+			</h:panelGrid>	
+			
+			</fieldset>		
 					<p:toolbar >
 			<f:facet name="right">
 				<p:commandButton value="Enregistrer"
-							action="#{complementBean.enregistrer}" 
+							actionListener="#{complementBean.enregistrer}" 
 							binding="#{complementBean.btnValider}" update="form">
+							<p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm>
 						</p:commandButton>
 						
 				<p:commandButton value="Annuler" action="#{complementBean.annuler}"
 				binding="#{complementBean.btnAnuler}"
 							update="form" process="@this">
+				<p:confirm header="Confirmation" message="confirmez-vous l'annulation?"></p:confirm>
 						</p:commandButton>
 				
 			</f:facet>

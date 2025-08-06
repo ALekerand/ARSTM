@@ -8,26 +8,22 @@
 	<ui:define name="body">
 		<h:form id="form">
 
-			<h1 class="page-title">ETUDIANT</h1>
-			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<h1 class="page-title">INSCRIPTION</h1>
+			<p:messages autoUpdate="true" closable="true" showDetail="true" />
 			<div class="widget-content">
-				<p:wizard id="wiz">
-					<p:tab id="identite" title="Identification">
-						<p:panel header="ELEVE">
-							<h:panelGrid id="eleve_grid" columns="4" cellpadding="5">
+
+						<div style="background-color: #f0f0f0;">
+				<legend>Etudiant</legend>
+							<h:panelGrid id="eleve_grid" columns="6" cellpadding="5">
 								<h:outputLabel for="matricule" value="Matricule" />
 								<p:inputText id="matricule" 
 									value="#{inscriptionBean.matricule}" readonly="true" />
-								<h:outputLabel />
-								<h:outputLabel />
-
+								
 								<h:outputLabel for="nom_eleve" value="Nom" />
-								<p:inputText id="nom_eleve"
-									value="#{inscriptionBean.etudiants.nomEtudiant}" required="true" styleClass="upercase"/>
+								<p:inputText id="nom_eleve" value="#{inscriptionBean.etudiants.nomEtudiant}" required="true" styleClass="upercase"/>
 
 								<h:outputLabel for="prenom_eleve" value="Prénoms" styleClass="outputDecalage"/>
-								<p:inputText id="prenom_eleve"
-									value="#{inscriptionBean.etudiants.prenomEtudiant}" required="true" />
+								<p:inputText id="prenom_eleve" value="#{inscriptionBean.etudiants.prenomEtudiant}" required="true" />
 
 								<h:outputLabel for="dateNais_eleve" value="Date naissance"/>
        						    <p:calendar id="dateNais_eleve" value="#{inscriptionBean.etudiants.datenais}" 
@@ -55,8 +51,6 @@
 										itemLabel="#{tata.libpays}" itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
 								
-								
-
 								<h:outputLabel for="pays_eleve" value="Pays d'origine" />
 								<p:selectOneMenu id="pays_eleve"
 									value="#{inscriptionBean.choosedPays}"
@@ -136,15 +130,11 @@
 								<p:inputText id="nbr_enf"
 									value="#{inscriptionBean.etudiants.nbenfants}"/>
 							</h:panelGrid>
-
-							<br></br>
-
-						</p:panel>
-					</p:tab>
-
-					<p:tab id="filiere" title="Filière">
-						<p:panel header="Choix Filière">
-							<h:panelGrid id="cplt_grid" columns="4" cellpadding="10">
+							
+		</div>		
+		<div style="background-color: #f0f0f0;">
+				<legend>Filière / Section/ Parcours</legend>		
+							<h:panelGrid id="cplt_grid" columns="6" cellpadding="10">
 								
 								<h:outputLabel for="ecole_eleve" value="Ecole" />
 								<p:selectOneMenu id="ecole_eleve"
@@ -179,21 +169,14 @@
 								<p:selectOneMenu id="option_eleve"
 									value="#{inscriptionBean.choosedMention}"
 									converter="#{entityConverter}">
-									<p:ajax listener="#{inscriptionBean.chargerSection}" event="change" update="section_eleve" process="@this"></p:ajax>
+									<p:ajax listener="#{inscriptionBean.chargerSection}" event="change" update="parcours_eleve" process="@this"></p:ajax>
 									<f:selectItem itemLabel="Selectionnez" itemValue="" />
 									<f:selectItems value="#{inscriptionBean.listeMention}"
 										var="tata" itemLabel="#{tata.abrevMention}"
 										itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
-							</h:panelGrid>
-						</p:panel>
-						
-					</p:tab>
-					<p:tab id="section_eleve" title="Section/Parcours">
-						<p:panel header="Choix Section/Parcours">
-						<h:panelGrid id="section_grid" columns="4" cellpadding="5">
-						
-						<h:outputLabel for="parcours_eleve" value="Section/Parcours" />
+								
+								<h:outputLabel for="parcours_eleve" value="Section/Parcours" />
 								<p:selectOneMenu id="parcours_eleve"
 									value="#{inscriptionBean.choosedSection}"
 									converter="#{entityConverter}">
@@ -201,6 +184,17 @@
 									<f:selectItem itemLabel="Selectionnez" itemValue="" />
 									<f:selectItems value="#{inscriptionBean.listeSection}"
 										var="tata" itemLabel="#{tata.abrevSection}"
+										itemValue="#{tata}"></f:selectItems>
+								</p:selectOneMenu>
+								
+							
+							<h:outputLabel for="typelog_eleve" value="Hébergement" />
+								<p:selectOneMenu id="typelog_eleve" value="#{inscriptionBean.choosedTypeLogement}" 
+								converter="#{entityConverter}">
+								<p:ajax event="change" process="@this"></p:ajax>
+									<f:selectItem itemLabel="Selectionnez" itemValue="" />
+									<f:selectItems value="#{inscriptionBean.listeTypeLogement}"
+										var="tata" itemLabel="#{tata.libtypeLogement}"
 										itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
 								
@@ -214,47 +208,95 @@
 										var="tata" itemLabel="#{tata.libRegime}"
 										itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
-								
-
-								<h:outputLabel for="typelog_eleve" value="Hébergement" />
-								<p:selectOneMenu id="typelog_eleve" value="#{inscriptionBean.choosedTypeLogement}" 
-								converter="#{entityConverter}">
-								<p:ajax event="change" process="@this"></p:ajax>
-									<f:selectItem itemLabel="Selectionnez" itemValue="" />
-									<f:selectItems value="#{inscriptionBean.listeTypeLogement}"
-										var="tata" itemLabel="#{tata.libtypeLogement}"
-										itemValue="#{tata}"></f:selectItems>
-								</p:selectOneMenu>
-							</h:panelGrid>
-							
-							
-							<p:toolbar >
-			<f:facet name="left">
-				<p:commandButton value="Enregistrer"
-								
-								actionListener="#{inscriptionBean.enregistrerTout}" immediate="true" update="@parent, :form"
-								binding="#{inscriptionBean.btnValider}"
-								oncomplete="document.location.reload(false)" ajax="false" >
-								<p:confirm header="Confirmation"
-								message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
-								</p:commandButton>
-								
-								<h:commandButton value="Enregistrer"
-								
-								actionListener="#{inscriptionBean.enregistrerTout}" immediate="true" update="@parent, :form"
-								 oncomplete="document.location.reload(false)">
-								</h:commandButton>
-								
-				<p:commandButton value="Annuler"
-									action="#{enseignantBean.annuler}" update="form">
-								</p:commandButton>
-			</f:facet>
-		</p:toolbar>
-							
-						</p:panel>
-					</p:tab>
-				</p:wizard>
+							</h:panelGrid>		
 			</div>
+						
+		<p:toolbar >
+			<f:facet name="right">
+			
+				<p:commandButton value="Enregistrer" action="#{inscriptionBean.enregistrerTout}" update=":form" binding="#{inscriptionBean.btnValider}" >
+				  <p:confirm header="Confirmation" message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" 
+				  oncomplete="if (args &amp;&amp; !args.validationFailed) window.open('#{inscriptionBean.pdfUrl}', '_blank');" ajax="true"/>
+				</p:commandButton>
+								
+				<p:commandButton value="Annuler" action="#{inscriptionBean.annuler}" update="form" process="@this"></p:commandButton>
+				
+				<p:commandButton value="Test" action="#{inscriptionBean.selectionnerLigne}" process="@this"></p:commandButton>
+			</f:facet>
+		</p:toolbar>		
+
+			
+<br></br>
+
+								<h:outputLabel for="test" value="Matricule" />
+								<p:inputText id="test"  value="#{inscriptionBean.selectedObject.etudiants.mle}" readonly="true" />
+			
+			<p:dataTable id="table_nat" selectionMode="single" var="tata" value="#{inscriptionBean.listInscription}" selection="#{inscriptionBean.selectedObject}" 
+						rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement">
+					<p:ajax event="rowSelect" listener="#{inscriptionBean.selectionnerLigne}" update=":form:test"/>
+					<f:facet name="header">LISTE DES INSCRIPTIONS</f:facet>
+					<p:column headerText="Matricule" style="width:5%">
+        	<h:outputText value="#{tata.etudiants.mle}"/>
+        </p:column>
+        
+        <p:column headerText="Nom Prénoms" style="width:20%">
+        	<h:outputText value="#{tata.etudiants.nomEtudiant} #{tata.etudiants.prenomEtudiant}" />
+        </p:column>
+        
+   		<p:column headerText="Date naissance" >
+        	<h:outputText value="#{tata.etudiants.datenais}"/>
+        </p:column>
+        
+        <p:column headerText="Section" >
+        	<h:outputText value="#{tata.section.abrevSection}"/>
+        </p:column>
+        
+        <p:column headerText="Regime" >
+        	<h:outputText value="#{tata.regime.libRegime}"/>
+        </p:column>
+        
+        <p:column>
+         <p:commandButton value="Imprimer reçu" action="#{inscriptionBean.ouvrirPDF}" ajax="true" process="@this"
+                          oncomplete="if (args &amp;&amp; !args.validationFailed) window.open('#{inscriptionBean.pdfUrl}', '_blank');"/>
+        </p:column>
+			</p:dataTable>
+
+
+	<p:dataTable  var="tata" value="#{inscriptionBean.listInscription}"  selection="#{inscriptionBean.selectedObject}" selectionMode="single" rowKey="#{tata.codeInscription}" paginator="true" paginatorPosition="bottom" rows="5" >
+ 	<p:ajax event="rowSelect" process="@this"  listener="#{inscriptionBean.selectionnerLigne}"></p:ajax>
+ 	<f:facet name="header">Liste inscription</f:facet>
+     
+   		<!-- <p:column selectionMode="single" style="width:16px;text-align:center"/>     -->   
+        
+        <p:column headerText="Matricule" style="width:5%">
+        	<h:outputText value="#{tata.etudiants.mle}"/>
+        </p:column>
+        
+        <p:column headerText="Nom Prénoms" style="width:20%">
+        	<h:outputText value="#{tata.etudiants.nomEtudiant} #{tata.etudiants.prenomEtudiant}" />
+        </p:column>
+        
+   		<p:column headerText="Date naissance" >
+        	<h:outputText value="#{tata.etudiants.datenais}"/>
+        </p:column>
+        
+        <p:column headerText="Section" >
+        	<h:outputText value="#{tata.section.abrevSection}"/>
+        </p:column>
+        
+        <p:column headerText="Regime" >
+        	<h:outputText value="#{tata.regime.libRegime}"/>
+        </p:column>
+        
+        <p:column>
+         <p:commandButton value="Imprimer reçu" action="#{inscriptionBean.ouvrirPDF}" ajax="true" process="@this"
+                          oncomplete="if (args &amp;&amp; !args.validationFailed) window.open('#{inscriptionBean.pdfUrl}', '_blank');"/>
+        </p:column>
+             </p:dataTable>			
+
+
+</div>
+			
 			<!-- Boite de confirmation -->
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 				<p:commandButton value="Oui" type="button"

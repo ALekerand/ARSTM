@@ -56,13 +56,10 @@ public class ComplementBean {
 	private Inscriptions inscriptions = new Inscriptions();
 	private Inscriptions selectedInscription = new Inscriptions();
 
-	
-	
 	// Pour l'upload
-	private String destination = "C:/photo/";
+	private String destination = "C:/GIVAC/photos/";
 	private String cheminFinal ="";
 	private	StreamedContent content = new DefaultStreamedContent();
-	
 	
 	private List listMatrimonale = new ArrayList<>();
 	private List listeSante = new ArrayList<>();
@@ -76,9 +73,6 @@ public class ComplementBean {
 	private CommandButton btnAnuler = new CommandButton();
 	private List listeEtudiant = new ArrayList<>();
 	
-	
-	
-	
 	// M�thodes
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
@@ -87,19 +81,7 @@ public class ComplementBean {
 		return anneEncoure;
 	}
 	
-	public void rechercher() throws FileNotFoundException {
-		//annuler();
-		try {
-			etudiants = reqEtudiant.recupererEtudiantByMlle(matriculeRecherche).get(0);
-		} catch (IndexOutOfBoundsException e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Recherche infructueuse. Veuillez v�rifier le matricule", null));
-		}
-		
-		if (etudiants.getMle()!= null) {
-			inscriptions = requeteInscription.recupInscriptionByNumEtudiant(etudiants.getNumetudiant(), anneEncoure.getCodeAnnees()).get(0);
-		}
-	}
+	
 	
 	
 	public void selectionner() {
@@ -109,7 +91,7 @@ public class ComplementBean {
 	}
 	
 	public void enregistrer() throws FileNotFoundException {
-		if (cheminFinal.equalsIgnoreCase("C:/photo/avatar.jpg")) {
+		if (cheminFinal.equalsIgnoreCase("C:/GIVAC/photos/avatar.jpg")) {
 			//Message � l'utilisateur
 			FacesContext.getCurrentInstance().addMessage(null,
 			new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuillez joindre une photo de l'�tudiant", null));
@@ -130,11 +112,6 @@ public class ComplementBean {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Complement �ffectu�", null));
 	}
-	
-	
-	
-	
-	
 	
 	public void annuler() throws FileNotFoundException {
 		etudiants.setNomEtudiant(null);

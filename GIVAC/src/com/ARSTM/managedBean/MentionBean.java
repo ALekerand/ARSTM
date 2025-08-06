@@ -29,7 +29,6 @@ import com.ARSTM.service.Iservice;
 public class MentionBean {
 	@Autowired
 	Iservice service;
-	
 	@Autowired
 	RequeteFiliere requeteFiliere;
 	@Autowired
@@ -38,8 +37,6 @@ public class MentionBean {
 	RequeteFiliere2 requeteFiliere2;
 	@Autowired
 	ReqEcole reqEcole;
-	
-	
 	
 	private Mention mention = new Mention();
 	private Mention selectedMention = new Mention();
@@ -72,7 +69,7 @@ public void initialiser(){
 	public void activerChamps(){
 		
 		if ((!(choosedEcole.getNomEcole().equals(null))) && (!(choosedFiliere.getNomFiliere().equals(null))))
-				{
+		{
 			inputOption.setDisabled(false);
 			inputAbrevOption.setDisabled(false);
 			chargerMention();
@@ -80,11 +77,9 @@ public void initialiser(){
 		
 	}
 	
-	
 	public void chargerEcole(){
 		listEcole.clear();
 		listFiliere.clear();
-		
 		listEcole = reqEcole.recupEcoleByPole(idPole);
 	}
 	

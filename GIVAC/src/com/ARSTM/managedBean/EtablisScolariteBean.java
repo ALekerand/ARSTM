@@ -52,9 +52,13 @@ import com.ARSTM.service.Iservice;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 @Component
 @Scope("session")
@@ -88,14 +92,14 @@ public class EtablisScolariteBean {
 	
 	
 	// Pour l'upload
-	private String destination = "C:/photo/";
+	private String destination = "C:/GIVAC/photos/";
 	private String cheminFinal ="";
 	private	StreamedContent content = new DefaultStreamedContent();
 	private List listEtudiant = new ArrayList<>();
 	private List listInscription = new ArrayList<>();
 	private List listeEtudiant = new ArrayList<>();
 	
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 	private CommandButton btnValider = new CommandButton();
 	private CommandButton btnAnuler = new CommandButton();
 	private InputText imputTaux = new InputText();
@@ -104,10 +108,10 @@ public class EtablisScolariteBean {
 	private InputText imputTReduction = new InputText();
 	private SelectBooleanCheckbox checkBox = new SelectBooleanCheckbox();
 	
-	// Méthodes
+	// Mï¿½thodes
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
-		//Charger l'année scolaire en cours
+		//Charger l'annï¿½e scolaire en cours
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
 		imputMontant.setDisabled(true);
 		imputTaux.setDisabled(true);
@@ -115,30 +119,9 @@ public class EtablisScolariteBean {
 		return anneEncoure;
 	}
 	
-	public void rechercher() throws FileNotFoundException {
-		annuler();
-		try {
-			etudiants = reqEtudiant.recupererEtudiantByMlle(matriculeRecherche).get(0);
-		} catch (IndexOutOfBoundsException e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Recherche infructueuse. Veuillez vérifier le matricule", null));
-		}
-		
-		if (etudiants.getMle()!= null) {
-			inscriptions = requeteInscription.recupInscriptionCompletByEtudiant(etudiants.getNumetudiant(),anneEncoure.getCodeAnnees()).get(0);
-			//mention = inscriptions.getSection().getMention();
-			
-			// Charger la photo
-			chargerPhoto();
-			
-			//Charger les frais
-			chargerfrais();
-		}
-	}
-	
 	
 	public void chargerfrais() {
-		//Frais annexes concernés
+		//Frais annexes concernï¿½s
 		fraisAnnexe = reqFraisAnnexes.recupFraisAnexByTypeNation(anneEncoure.getCodeAnnees(), 1);
 		etablScolarite.setFraisInscriptionSco(fraisAnnexe.getFraisInscription());    
 		etablScolarite.setFraisAssuranceSco(new BigDecimal(fraisAnnexe.getFraisAssurance()));
@@ -163,7 +146,7 @@ public class EtablisScolariteBean {
 			imputTaux.setDisabled(true);
 			inputMontantEcolage.setDisabled(false);
 			
-			//Ecolage concerné en fonction du type de Nationalité
+			//Ecolage concernï¿½ en fonction du type de Nationalitï¿½
 			ecolage = reqEcolage.recupEcolage(inscriptions.getSection().getMention().getCodeMention(), anneEncoure.getCodeAnnees(), etudiants.getTypenationalite().getCodeTypenationalite());
 			etablScolarite.setMontantEcolageSco(ecolage.getMontantEcolage());
 			
@@ -260,14 +243,13 @@ public class EtablisScolariteBean {
 			imputMontant.setDisabled(true);
 			imputTaux.setDisabled(true);
 			imputTReduction.setDisabled(true);
-			//vider la réduction
+			//vider la rï¿½duction
 			
 		}
 		
 	}
 	
 	public void enregistrer() throws JRException, IOException {
-
 		etablScolarite.setEtudiants(etudiants);
 		etablScolarite.setAnneesScolaire(anneEncoure);
 		etablScolarite.setSection(inscriptions.getSection());
@@ -278,53 +260,75 @@ public class EtablisScolariteBean {
 		
 		getService().updateObject(inscriptions);
 		getService().addObject(etablScolarite);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Scolarité de l'étudiant établi!", null));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Scolaritï¿½ de l'ï¿½tudiant ï¿½tabli!", null));
 		
 		//Generer Facture
 				genererFacture();
 		annuler();
 		viderPhoto();
-		
-		
-		
-		//
 	}
 	
 	
 public void genererFacture() throws JRException, IOException {
-		
-		System.out.println("======= DEBUT METHODE POUR ETAT =========");  
-		Map<String, Object> parametres= new HashMap<String, Object>();
-		//parametres.put("ecole",choosedEcole.getAbrevEcole());
-		//parametres.put("annee_academique",anneEncoure.getLibAnneeScolaire());
-		//parametres.put("non_prenoms",etudiants.getNomEtudiant()+" "+etudiants.getPrenomEtudiant());
-		//parametres.put("filiere",choosedFiliere.getAbrevFiliere());
-		//parametres.put("niveau",choosedNiveau.getAbrevNiveau());
-		
-		
-		//parametres.put("section",choosedSection.getAbrevSection() );
-		
-		File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("resource/reports/facture_scolarite.jasper"));
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametres, new JREmptyDataSource());
-		
-		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-		response.addHeader("Content-disposition","attachment; filename=fiche_inscription.pdf");
-		ServletOutputStream outputStream = response.getOutputStream();
-		
-		JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
-		
-		response.getOutputStream().flush();
-		response.getOutputStream().close();
-		
-		FacesContext.getCurrentInstance().getResponseComplete();
-		
-		 System.out.println("======= FIN METHODE POUR ETAT =========");
-	}
 	
-	
+		
+		String nom_fichier = "Fact_"+etudiants.getMle()+".pdf";
+		
+		//GÃ©nÃ©ration du rapport	
+		JasperDesign jasperDesign = JRXmlLoader.load("C:/GIVAC/etats/facture_scolarite.jrxml");
+		
+		//Compilation du fichier
+		JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+		
+		//InputStream is = new FileInputStream("C:/GIVAC/"+nom_fichier);
+		Map<String,Object> parameters = new HashMap<String,Object>();		
+		//Map<String, Object> parametres= new HashMap<String, Object>();
+		/*
+		 * parameters.put("ecole",choosedEcole.getAbrevEcole());
+		 * parameters.put("annee_academique",anneEncoure.getLibAnneeScolaire());
+		 * parameters.put("non_prenoms",etudiants.getNomEtudiant()+" "+etudiants.
+		 * getPrenomEtudiant());
+		 * parameters.put("filiere",choosedFiliere.getAbrevFiliere());
+		 * parameters.put("niveau",choosedNiveau.getAbrevNiveau());
+		 * parameters.put("section",choosedSection.getAbrevSection() );
+		 */
+		
+		// Remplissage du rapport compilÃ©
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameters, new JREmptyDataSource());
+		
+		// Visualisation, exportation ou impression 
+	    JasperExportManager.exportReportToPdfFile(jasperPrint, "C:/GIVAC/etats/"+nom_fichier);
+	    
+	    //Ouverture du fichier
+	    try {
+			String pdfFilePath = "C:\\GIVAC\\etats\\"+nom_fichier;
+			File pdfFile = new File(pdfFilePath);
+			
+			// Configuration de la rÃ©ponse
+			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+			response.setContentType("application/pdf");
+			response.setContentLength((int) pdfFile.length());
+			response.setHeader("Content-Disposition", "inline; filename=\"" + pdfFile.getName() + "\"");
+
+			// Lecture et envoi du fichier PDF
+			FileInputStream fis = new FileInputStream(pdfFile);
+			OutputStream os = response.getOutputStream(); 
+			byte[] buffer = new byte[1024];
+			int bytesRead;
+			while ((bytesRead = fis.read(buffer)) != -1) {
+			        os.write(buffer, 0, bytesRead);
+			    }
+			
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			//error("Veuillez selectionner le matÃ©riel avnt l'impression du QR CODE");
+		} 
+		 	}
+		
+
 	public void annuler() throws FileNotFoundException {
 		
-		//Info personnelle étudiant
+		//Info personnelle ï¿½tudiant
 		etudiants.setNomEtudiant(null);
 		etudiants.setPrenomEtudiant(null);
 		etudiants.setDatenais(null);
@@ -362,7 +366,7 @@ public void genererFacture() throws JRException, IOException {
 		etablScolarite.setMontantLogementSco(null);
 		etablScolarite.setCautionLogementSco(null);
 		
-		//les échéances
+		//les ï¿½chï¿½ances
 		etablScolarite.setMtEchance1Sco(null);
 		etablScolarite.setMtEchance2Eco(null);
 		etablScolarite.setMtEchance3Sco(null);
@@ -391,7 +395,7 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 //************************Pour le traitement de la photo*********************************
 	
 	public void upload(FileUploadEvent event) {
-        FacesMessage msg = new FacesMessage("Photo validée!");
+        FacesMessage msg = new FacesMessage("Photo validï¿½e!");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         // Do what you want with the file
         try {

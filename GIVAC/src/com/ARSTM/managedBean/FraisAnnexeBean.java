@@ -37,14 +37,14 @@ public class FraisAnnexeBean {
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
-		System.out.println("Année:"+anneEncoure.getLibAnneeScolaire());
+		System.out.println("Annï¿½e:"+anneEncoure.getLibAnneeScolaire());
 		return anneEncoure;
 		
 	}
 	
 	public String enregistrer(){
 		enregistrerFraisAnnexe();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 		return "fraisannexe.xhtml";
 	}
 	
@@ -58,6 +58,35 @@ public class FraisAnnexeBean {
 		//Faire l'enregistrement
 		service.addObject(fraisAnnexeNation);
 		service.addObject(fraisAnnexeNonNation);
+		vider();
+	}
+	
+	public void vider() {
+		fraisAnnexeNation.setAnneesScolaire(null);
+		fraisAnnexeNation.setAutreFrais(null);
+		fraisAnnexeNation.setCodeScolarite(0);
+		fraisAnnexeNation.setFraisAssurance(null);
+		fraisAnnexeNation.setFraisElearning(null);
+		fraisAnnexeNation.setFraisInscription(null);
+		fraisAnnexeNation.setFraisOrdinateur(null);
+		fraisAnnexeNation.setFraisRestauration(null);
+		fraisAnnexeNation.setFraisTenueComplet(null);
+		fraisAnnexeNation.setFraisTenueSport(null);
+		fraisAnnexeNation.setFraisVisiteMedic(null);
+		fraisAnnexeNation.setTypenationalite(null);
+		
+		fraisAnnexeNonNation.setAnneesScolaire(null);
+		fraisAnnexeNonNation.setAutreFrais(null);
+		fraisAnnexeNonNation.setCodeScolarite(0);
+		fraisAnnexeNonNation.setFraisAssurance(null);
+		fraisAnnexeNonNation.setFraisElearning(null);
+		fraisAnnexeNonNation.setFraisInscription(null);
+		fraisAnnexeNonNation.setFraisOrdinateur(null);
+		fraisAnnexeNonNation.setFraisRestauration(null);
+		fraisAnnexeNonNation.setFraisTenueComplet(null);
+		fraisAnnexeNonNation.setFraisTenueSport(null);
+		fraisAnnexeNonNation.setFraisVisiteMedic(null);
+		fraisAnnexeNonNation.setTypenationalite(null);
 	}
 	
 		public Iservice getService() {

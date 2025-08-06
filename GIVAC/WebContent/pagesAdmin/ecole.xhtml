@@ -14,7 +14,6 @@
 				<!-- <h:form id="form"> -->
 					<p:panel header="Enregistrement">
 					<br />
-					
 							<h:panelGrid id="ecole_grid" columns="4" cellpadding="8">
 							
 							<p:outputLabel for="pol" value="Pôle"/>
@@ -50,8 +49,6 @@
 							message="Confirmez-vous la modification" icon="ui-icon-alert" />
 								</p:commandButton>
 								
-							
-								
 						<p:commandButton value="Supprimer" action="#{ecoleBean.supprimer}"
 						update="form" binding="#{ecoleBean.btnSuprimer}">
 						<p:confirm header="Confirmation"
@@ -68,8 +65,9 @@
 						<p:ajax event="rowSelect" listener="#{ecoleBean.selectionner}"
 							update=":form" />
 						<f:facet name="header">LISTE DES ECOLES</f:facet>
-						<p:column headerText="Libellé Ecole" style="width:60%">#{tata.nomEcole}</p:column>
-						<p:column headerText="Abréviation Ecole" style="width:40%">#{tata.abrevEcole}</p:column>
+						<p:column headerText="Libellé Ecole" style="width:40%">#{tata.nomEcole}</p:column>
+						<p:column headerText="Abréviation Ecole" style="width:30%">#{tata.abrevEcole}</p:column>
+						<p:column headerText="Pôle" style="width:30%">#{tata.pole.libellePole}</p:column>
 					</p:dataTable>
 
 			</div>

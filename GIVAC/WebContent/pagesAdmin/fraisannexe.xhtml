@@ -15,7 +15,7 @@
 				<p:wizard id="wiz" flowListener="#{fraisAnnexeBean.onFlowProcess}">
 						<p:tab id="nationaux" title="Nationaux">
 						<p:panel header="Frais Annexes Nationaux">
-							<h:panelGrid id="nfrais_grid" columns="4" cellpadding="6">
+							<h:panelGrid id="nfrais_grid" columns="6" cellpadding="6">
 							
 							<p:outputLabel value="Droit Inscription:" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNation.fraisInscription}">
@@ -77,7 +77,7 @@
 
 					  <p:tab id="non_nationaux" title="Non nationaux">
 						<p:panel header="Frais Annexes Non Nationaux">
-							<h:panelGrid id="nnfrais_grid" columns="4" cellpadding="6">
+							<h:panelGrid id="nnfrais_grid" columns="6" cellpadding="6">
 														
 							<p:outputLabel value="Droit Inscription:" />
 							<p:inputText value="#{fraisAnnexeBean.fraisAnnexeNonNation.fraisInscription}" >

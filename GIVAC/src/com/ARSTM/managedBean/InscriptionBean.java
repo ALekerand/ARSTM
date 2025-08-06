@@ -1,8 +1,11 @@
 package com.ARSTM.managedBean;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,7 +15,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.component.commandbutton.CommandButton;
@@ -48,13 +50,15 @@ import com.ARSTM.requetes.RequeteLogement;
 import com.ARSTM.requetes.RequeteMention;
 import com.ARSTM.requetes.RequeteSection;
 import com.ARSTM.service.Iservice;
-
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 @Component
 @Scope("session")
@@ -69,19 +73,16 @@ public class InscriptionBean {
 	RequeteMention requeteMention;
 	@Autowired
 	RequeteSection requeteSection;
-	
 	@Autowired
 	ReqAnneeScolaire reqAnneeScolaire;
-	
 	@Autowired
 	ReqTypeNationalite  reqTypeNationalite;
-	
 	@Autowired
 	RequeteLogement requeteLogement;
 	
 	
 	private Etudiants etudiants = new Etudiants();
-	private Enseignant selectedEnseignant = new Enseignant();
+	//private Enseignant selectedEnseignant = new Enseignant();
 	private Diplomes choosedDiplome = new Diplomes();
 	private Sexe chooseedSexe = new Sexe();
 	private Pays choosedPays =  new Pays();
@@ -99,6 +100,12 @@ public class InscriptionBean {
 	private Nationalites choosedNationalites = new Nationalites();
 	private Inscriptions inscriptions = new Inscriptions();
 	private Residence residence = new Residence();
+	private List listInscription = new ArrayList<>();
+	private Inscriptions selectedObject = new Inscriptions();
+	private Etudiants notreEtudiant = new Etudiants();
+	
+	private String pdfUrl;
+	private String nom_fichier;
 	
 	
 	public Matrimoniales getChoosedMatrimoniale() {
@@ -131,9 +138,9 @@ public class InscriptionBean {
 	
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
-		//Charger l'année scolaire en cours
+		//Charger l'annï¿½e scolaire en cours
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
-		//générer le matricule de l'étudiant
+		//gï¿½nï¿½rer le matricule de l'ï¿½tudiant
 		genererMatricule();
 		return anneEncoure;
 	}
@@ -142,9 +149,9 @@ public class InscriptionBean {
 public String genererMatricule() {
 		try {
 			maxNumeEtudiant = requeteInscription.recupMaxNumetudiant().get(0).getNumetudiant();
-			matricule = ((maxNumeEtudiant+1) +" - "+anneEncoure.getAnneesDebut());
+			matricule = ((maxNumeEtudiant+1) +"-"+anneEncoure.getAnneesDebut());
 		} catch (IndexOutOfBoundsException e) {
-			// Cas ou la base de donnée est vide allors comencer la numérotation par 1
+			// Cas ou la base de donnï¿½e est vide allors comencer la numï¿½rotation par 1
 			matricule = ((1) +"-"+anneEncoure.getAnneesDebut());
 		}
 		
@@ -152,7 +159,7 @@ public String genererMatricule() {
 	}
 	
 
-	// Contrôle de composant
+	// ContrÃ´le de composant
 	private CommandButton btnValider = new CommandButton();
 	
 	
@@ -160,10 +167,11 @@ public String genererMatricule() {
 		enregistrerEtudiant();
 		enregistrerInscription();
 		enregistrerResidence();
-		
-		//Effectuer l'enregistrement
-		  genererFicheInscription();
-		vider(etudiants);
+		genererFicheInscription();
+		annuler();
+		FacesContext.getCurrentInstance().addMessage(null,
+			new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©s!", null));
+		//ouvrirPDF();
 	}
 	
 	public void enregistrerInscription() {
@@ -191,10 +199,19 @@ public String genererMatricule() {
 	}
 	
 	
+	  public void selectionnerLigne() {
+	  System.out.println("==== Methode Selecgtion call");
+	  notreEtudiant = selectedObject.getEtudiants();
+	  System.out.println("==== "+notreEtudiant.getMle());
+	  	 System.out.println("==== Fin Methode Selecgtion call");
+	  }
+	 
+	
+	
 	public void enregistrerEtudiant(){
 		//enregistrer das la table Etudiants
 		  etudiants.setMle(genererMatricule());
-		  etudiants.setNomEtudiant(getEtudiants().getNomEtudiant().toUpperCase());
+		 // etudiants.setNomEtudiant(getEtudiants().getNomEtudiant().toUpperCase());
 		  etudiants.setMatrimoniales(choosedMatrimoniale);
 		  etudiants.setNationalites(choosedNationalites);
 		  etudiants.setSexe(chooseedSexe);
@@ -205,7 +222,7 @@ public String genererMatricule() {
 		  etudiants.setSantes(choosedSante);
 		  etudiants.setDiplomes(choosedDiplome);
 		  
-		//Si la nationalité est ivoirienne alors faire migner Typetionalité Lacal dans l'etudiant
+		//Si la nationalitï¿½ est ivoirienne alors faire migner Typetionalitï¿½ Lacal dans l'etudiant
 			if (choosedNationalites.getCodenationalite()==1) {
 				etudiants.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1));
 			}else {
@@ -218,19 +235,32 @@ public String genererMatricule() {
 		  //Recharger le Matricule pour un nouvel enregistrement
 		  genererMatricule();
 		
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		//FacesContext.getCurrentInstance().addMessage(null,
+			//	new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 	}
-	
-	
 	
 	public void annuler() {
 		btnValider.setDisabled(false);
+		setChooseedSexe(null);
+		setChoosedPaysNaiss(null);
+		setChoosedPays(null);
+		setChoosedNationalites(null);
+		setChoosedNiveau(null);
+		setChoosedDiplome(null);
+		setChoosedMatrimoniale(null);
+		setChoosedSante(null);
+		setChoosedEcole(null);
+		setChoosedTformation(null);
+		setChoosedFiliere(null);
+		setChoosedMention(null);
+		setChoosedSection(null);
+		setChoosedTypeLogement(null);
+		setChoosedRegime(null);
+		
 		vider(etudiants);
 	}
 
 	public void vider(Etudiants objEtudiants) {
-		
 		  objEtudiants.setDatenais(null);
 		  objEtudiants.setLieunais(null);
 		  objEtudiants.setPrenomEtudiant(null);
@@ -239,13 +269,16 @@ public String genererMatricule() {
 		  objEtudiants.setMatrimoniales(null);
 		  objEtudiants.setNbfreres(null);
 		  objEtudiants.setNbsoeurs(null);
+		  objEtudiants.setNbenfants(null);
 		  objEtudiants.setSantes(null);
 		  objEtudiants.setSexe(null);
 		  objEtudiants.setTelEtudiant(null);
+		  objEtudiants.setMailEtudiant(null);
 		  objEtudiants.setNationalites(null);
 		  objEtudiants.setNiveaux(null);
-		 
 	}
+	
+	
 	
 	public void chargerFiliere(){
 		listeFiliere.clear();
@@ -266,34 +299,64 @@ public String genererMatricule() {
 	
 	public void genererFicheInscription() throws JRException, IOException {
 		
-		System.out.println("======= DEBUT METHODE POUR ETAT =========");  
-		Map<String, Object> parametres= new HashMap<String, Object>();
-		parametres.put("ecole",choosedEcole.getAbrevEcole());
-		parametres.put("annee_academique",anneEncoure.getLibAnneeScolaire());
-		parametres.put("non_prenoms",etudiants.getNomEtudiant()+" "+etudiants.getPrenomEtudiant());
-		parametres.put("filiere",choosedFiliere.getAbrevFiliere());
-		parametres.put("niveau",choosedNiveau.getAbrevNiveau());
+		nom_fichier = "Ins_"+etudiants.getMle()+".pdf";
 		
+		//GÃ©nÃ©ration du rapport	
+		JasperDesign jasperDesign = JRXmlLoader.load("C:/GIVAC/etats/Fiche_incription.jrxml");
 		
-		parametres.put("section",choosedSection.getAbrevSection() );
+		//Compilation du fichier
+		JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 		
-		File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reports/fiche_inscription.jasper"));
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametres, new JREmptyDataSource());
+		//InputStream is = new FileInputStream("C:/GIVAC/"+nom_fichier);
+		Map<String,Object> parameters = new HashMap<String,Object>();		
+		//Map<String, Object> parametres= new HashMap<String, Object>();
+		parameters.put("ecole",choosedEcole.getAbrevEcole());
+		parameters.put("annee_academique",anneEncoure.getLibAnneeScolaire());
+		parameters.put("non_prenoms",etudiants.getNomEtudiant()+" "+etudiants.getPrenomEtudiant());
+		parameters.put("filiere",choosedFiliere.getAbrevFiliere());
+		parameters.put("niveau",choosedNiveau.getAbrevNiveau());
+		parameters.put("section",choosedSection.getAbrevSection());
 		
-		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-		response.addHeader("Content-disposition","attachment; filename=fiche_inscription.pdf");
-		ServletOutputStream outputStream = response.getOutputStream();
-		
-		JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
-		
-		response.getOutputStream().flush();
-		response.getOutputStream().close();
-		
-		FacesContext.getCurrentInstance().getResponseComplete();
-		
-		 System.out.println("======= FIN METHODE POUR ETAT =========");
-	}
+		// Remplissage du rapport compilÃ©
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameters, new JREmptyDataSource());
 
+		// Visualisation, exportation ou impression 
+	    JasperExportManager.exportReportToPdfFile(jasperPrint, "C:/GIVAC/etats/"+nom_fichier);
+	}
+	
+	
+	
+	public void ouvrirPDF() throws IOException {
+		
+	    try {
+	    	System.out.println("==== DEBUT DE LA METHODE OUVERTURE PDF ==============");
+			String code =  "Ins_"+selectedObject.getEtudiants().getMle();
+	    	
+	        File source = new File("C:/GIVAC/etats/" + code + ".pdf");
+
+	        //On copie vers un dossier du projet web accessible via HTTP
+	        String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+	        File destDir = new File(contextPath + "resources/pdf/");
+	        if (!destDir.exists()) destDir.mkdirs();
+
+	        File destFile = new File(destDir, code + ".pdf");
+
+	        // Copie physique
+	        Files.copy(source.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+	     // Stocker l'URL pour l'ouvrir cÃ´tÃ© JSF
+	        String webPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+	        pdfUrl = webPath + "/resources/pdf/" + code + ".pdf";
+	        
+	    } catch (IOException e) {
+	    	System.out.println("==== Je suis dans l'exeption ==============");
+	        e.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Impossible d'ouvrir le fichier PDF."));
+	    }
+	    
+	    System.out.println("==== FIN DE LA METHODE OUVERTURE PDF ==============");
+	}
+	
 	//**************************ACCESSEURS*************************//*
 
 	public Iservice getService() {
@@ -319,13 +382,7 @@ public String genererMatricule() {
 		this.etudiants = etudiants;
 	}
 
-	public Enseignant getSelectedEnseignant() {
-		return selectedEnseignant;
-	}
-
-	public void setSelectedEnseignant(Enseignant selectedEnseignant) {
-		this.selectedEnseignant = selectedEnseignant;
-	}
+	
 
 	public List getListeSexe() {
 		if (listeSexe.isEmpty()) {
@@ -609,5 +666,26 @@ public String genererMatricule() {
 
 	public void setChoosedPaysNaiss(Pays choosedPaysNaiss) {
 		this.choosedPaysNaiss = choosedPaysNaiss;
+	}
+
+	public String getPdfUrl() {
+		return pdfUrl;
+	}
+
+	public List getListInscription() {
+		return listInscription = service.getObjects("Inscriptions");
+	}
+
+	/*
+	 * public void setListInscription(List listInscription) { this.listInscription =
+	 * listInscription; }
+	 */
+
+	public Inscriptions getSelectedObject() {
+		return selectedObject;
+	}
+
+	public void setSelectedObject(Inscriptions selectedObject) {
+		this.selectedObject = selectedObject;
 	}
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="template" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e138a687-6075-495c-80dd-1d441a183138">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="non_prenoms" class="java.lang.String">
@@ -51,10 +51,6 @@
 				<reportElement x="450" y="34" width="100" height="14" uuid="fef7d51f-701d-423a-bd45-ee1eff55f349"/>
 				<text><![CDATA[E-mail: info@arstm.ci]]></text>
 			</staticText>
-			<image>
-				<reportElement x="-1" y="18" width="61" height="53" uuid="f5adcbd3-cfbe-43f2-9441-7fd7023a0e53"/>
-				<imageExpression><![CDATA["/WebContent/resource/images/logo_artm.jpg"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="332" y="58" width="100" height="13" uuid="65c0dc37-b5a5-44e1-be5f-3be3102bb678"/>
 				<text><![CDATA[Année académique:]]></text>

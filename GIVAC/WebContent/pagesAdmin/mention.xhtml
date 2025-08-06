@@ -17,7 +17,7 @@
 			<h:panelGrid id="mention_grid" columns="4" cellpadding="10">
 					
 			<p:outputLabel for="pol" value="Pôle"/>
-			<p:selectOneMenu id="pol" value="#{filiereBean.idPole}" style="width:50px">
+			<p:selectOneMenu id="pol" value="#{mentionBean.idPole}" style="width:50px">
 			<p:ajax listener="#{mentionBean.chargerEcole}" event="change" process="@this" update="ecol"/>
 			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
 			<f:selectItems value="#{mentionBean.listPole}" var="tata" itemLabel="#{tata.libellePole}" itemValue="#{tata.idPole}"></f:selectItems>

@@ -10,41 +10,32 @@
 			<h1 class="page-title">ETABLISSEMENT SCOLARITE</h1>
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
-			<p:panel header="Enregistrement">
-			<table>
-  <tr>
-    <td>
-    <h:panelGrid columns="2" cellpadding="1">
-    <p:inputText id="matricule" value="#{etablisScolariteBean.matriculeRecherche}" placeholder="Recherche par le matricule" />
-			<p:commandButton actionListener="#{etablisScolariteBean.rechercher}" partialSubmit="true" process="@this,matricule" update="form" icon="ui-icon-search"></p:commandButton>
-    </h:panelGrid>
-    </td>
-    <td>
-    <p:dataTable id="table" selectionMode="single" var="tata"
+			<p:panel>
+			
+    	<p:dataTable id="table" selectionMode="single" var="tata"
 						value="#{etablisScolariteBean.listInscription}" selection="#{etablisScolariteBean.selectedInscription}"
-						rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement">
-						<p:ajax event="rowSelect" listener="#{etablisScolariteBean.selectionner}" update=":form" />
-						<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
-						<p:column headerText="Mle" style="width:25%">#{tata.etudiants.mle}</p:column>
-						<p:column headerText="Nom" style="width:20%">#{tata.etudiants.nomEtudiant}</p:column>
-						<p:column headerText="Prenoms" style="width:40%">#{tata.etudiants.prenomEtudiant}</p:column>
-						<p:column headerText="Date Naissance" style="width:25%">
-						<p:outputLabel id="dat_nais" value="#{tata.etudiants.datenais}" pattern="dd/MM/yyyy">
-						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
-						</p:outputLabel></p:column>
-						<p:column headerText="Nationalité" style="width:20%">#{tata.etudiants.nationalites.libnationalite}</p:column>
-					</p:dataTable>
-    </td>
-  </tr>
-</table>
-
+						rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement" rows="5" paginatorPosition="bottom" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records" rowsPerPageTemplate="5,10,15">
+		<p:ajax event="rowSelect" listener="#{etablisScolariteBean.selectionner}" update=":form" />
+		<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
+		<p:column headerText="Mle" style="width:25%" sortBy="#{tata.etudiants.mle}" filterBy="#{tata.etudiants.mle}" filterMatchMode="contains" filterPlaceholder="Recherche">#{tata.etudiants.mle}</p:column>
+		<p:column headerText="Nom" style="width:20%">#{tata.etudiants.nomEtudiant}</p:column>
+		<p:column headerText="Prenoms" style="width:40%">#{tata.etudiants.prenomEtudiant}</p:column>
+		<p:column headerText="Date Naissance" style="width:25%">
+		<p:outputLabel id="dat_nais" value="#{tata.etudiants.datenais}" pattern="dd/MM/yyyy">
+		<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+		</p:outputLabel></p:column>
+		<p:column headerText="Nationalité" style="width:20%">#{tata.etudiants.nationalites.libnationalite}</p:column>
+		</p:dataTable>
+    <br></br>
+    
 	<fieldset>
 	
 				<legend>Informations de base</legend>		
 					<table>
 					  <tr valign="top">
 					    <td>
-			<h:panelGrid id="annee_grid" columns="4" cellpadding="6">
+			<h:panelGrid id="annee_grid" columns="6" cellpadding="6">
 						<p:outputLabel for="name" value="Nom:" />
 						<p:inputText id="name" value="#{etablisScolariteBean.etudiants.nomEtudiant}" readonly="true"  />
 						
@@ -68,10 +59,12 @@
 					 </td>
 					  </tr>
 			</table>	
-	</fieldset>				
-			<fieldset>
+	</fieldset>	
+
+	<br />			
+			<div style="background-color: #f0f0f0;">
 				<legend>Frais ecolage</legend>
-					<h:panelGrid id="ecolage_gid" columns="4" cellpadding="8">
+					<h:panelGrid id="ecolage_gid" columns="6" cellpadding="8">
 					<p:outputLabel for="fr_ecol" value="Montant écolage:" />
 					<p:inputText id="fr_ecol" value="#{etablisScolariteBean.etablScolarite.montantEcolageSco}" binding="#{etablisScolariteBean.inputMontantEcolage}" readonly="true">
 					<f:convertNumber pattern="##,###.###"></f:convertNumber>
@@ -82,12 +75,10 @@
 					<p:ajax listener="#{etablisScolariteBean.activerChamp}" update="ecolage_gid"></p:ajax>
               		</p:selectBooleanCheckbox>
               
-            <legend>Réduction</legend>
+             <p:outputLabel/>
             <p:outputLabel/>
-            <p:outputLabel/>
-            <p:outputLabel/>
-            
-            <p:outputLabel for="p_reduc" value="Taux (en %):"  />
+             
+            <p:outputLabel for="p_reduc" value="Taux réduction (en %):"  />
 			<p:inputText id="p_reduc" value="#{etablisScolariteBean.etablScolarite.tauxReduction}" binding="#{etablisScolariteBean.imputTaux}" >
 			<p:ajax event="keyup" listener="#{etablisScolariteBean.calculerMtreduction}" update="mt_reduct"></p:ajax>
 			<f:convertNumber pattern="##,###.###"></f:convertNumber>
@@ -104,10 +95,14 @@
 
 			</p:inputText>
 			</h:panelGrid>
-			</fieldset>
+		</div>
+	
+	<br />
 			
+	<fieldset>
 	<legend>Frais annexes</legend>
-				<h:panelGrid id="annex_grid" columns="4" cellpadding="6">
+	
+				<h:panelGrid id="annex_grid" columns="6" cellpadding="6">
 				<p:outputLabel for="f_ins" value="Inscription:" />
 				<p:inputText id="f_ins" value="#{etablisScolariteBean.etablScolarite.fraisInscriptionSco}" readonly="true">
 				<f:convertNumber pattern="##,###.###"></f:convertNumber>
@@ -153,26 +148,31 @@
 				<f:convertNumber pattern="##,###.###"></f:convertNumber>
 				</p:inputText>
 			
-			<p:outputLabel/>
-			<p:outputLabel/>
+			
 			
 			<legend>Frais logement</legend>
 			<p:outputLabel/>
 			<p:outputLabel/>
 			<p:outputLabel/>
+			<p:outputLabel/>
+			<p:outputLabel/>
 			
 			<p:outputLabel for="mt_logem" value="Montant:"/>
-				<p:inputText id="mt_logem" value="#{etablisScolariteBean.etablScolarite.montantLogementSco}" >
+				<p:inputText id="mt_logem" value="#{etablisScolariteBean.etablScolarite.montantLogementSco}" readonly="true">
 				<f:convertNumber pattern="##,###.###"></f:convertNumber>
 				</p:inputText>
 				
 				<p:outputLabel for="mt_caution" value="coaution:" styleClass="outputDecalage" />
-				<p:inputText id="mt_caution" value="#{etablisScolariteBean.etablScolarite.cautionLogementSco}" >
+				<p:inputText id="mt_caution" value="#{etablisScolariteBean.etablScolarite.cautionLogementSco}" readonly="true" >
 				<f:convertNumber pattern="##,###.###"></f:convertNumber>
 				</p:inputText>
 			
+			<p:outputLabel/>
+			<p:outputLabel/>
 			
 			<legend>Montants et échéances </legend>
+			<p:outputLabel/>
+			<p:outputLabel/>
 			<p:outputLabel/>
 			<p:outputLabel/>
 			<p:outputLabel/>
@@ -185,6 +185,9 @@
 			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance1Sco}"
 			locale="fr" navigator="true" pattern="dd/MM/yyyy" readonly="true"/>
 			
+			<p:outputLabel/>
+			<p:outputLabel/>
+			
 			<p:outputLabel value="2e versement:" />
 			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance2Eco}" readonly="true">
 			<f:convertNumber pattern="##,###.###"></f:convertNumber>
@@ -192,6 +195,9 @@
 			<p:outputLabel value="Date:" />
 			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance2Eco}"
 			locale="fr" navigator="true" pattern="dd/MM/yyyy" readonly="true"/>
+			
+			<p:outputLabel/>
+			<p:outputLabel/>
 			
 			<p:outputLabel value="3e versement:" />
 			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance3Sco}" readonly="true">
@@ -201,6 +207,9 @@
 			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance3Sco}"
 			locale="fr" navigator="true" pattern="dd/MM/yyyy" readonly="true"/>
 			
+			<p:outputLabel/>
+			<p:outputLabel/>
+			
 			<p:outputLabel value="4e versement:" />
 			<p:inputText value="#{etablisScolariteBean.etablScolarite.mtEchance4Eco}" readonly="true">
 			<f:convertNumber pattern="##,###.###"></f:convertNumber>
@@ -208,12 +217,14 @@
 			<p:outputLabel value="Date:" />
 			<p:calendar value="#{etablisScolariteBean.etablScolarite.dateEchance4Eco}"
 			locale="fr" navigator="true" pattern="dd/MM/yyyy" readonly="true"/> 
-			
-				</h:panelGrid>
+		
+			</h:panelGrid>
+
+		</fieldset>
 			<p:toolbar >
 			<f:facet name="right">
-				<p:commandButton value="Enregistrer" action="#{etablisScolariteBean.enregistrer}"  binding="#{etablisScolariteBean.btnValider}" update="form" ajax="false"></p:commandButton>
-				<p:commandButton value="Annuler" action="#{etablisScolariteBean.annuler}" binding="#{etablisScolariteBean.btnAnuler}" update="form" process="@this"> </p:commandButton>
+				<p:commandButton value="Enregistrer" action="#{etablisScolariteBean.enregistrer}"  binding="#{etablisScolariteBean.btnValider}" update="form" ><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" action="#{etablisScolariteBean.annuler}" binding="#{etablisScolariteBean.btnAnuler}" update="form" process="@this"> <p:confirm header="Confirmation" message="confirmez-vous l'annulation?"></p:confirm> </p:commandButton>
 			</f:facet>
 		</p:toolbar>
 				</p:panel>

@@ -10,31 +10,21 @@
 			<h1 class="page-title">VERSEMENT SCOLARITE</h1>
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
-			<p:panel header="Versement">
-			
-			<table>
-  <tr>
-    <td>
-    
-    <h:panelGrid columns="2" cellpadding="1">
-    <p:inputText id="matricule" value="#{versementScolariteBean.matriculeRecherche}" placeholder="Recherche par le matricule" />
-			<p:commandButton actionListener="#{versementScolariteBean.rechercher}" partialSubmit="true" process="@this,matricule" update="form" icon="ui-icon-search"></p:commandButton>
-    </h:panelGrid>
-    </td>
-    <td>
+			<p:panel>
+	
     <p:dataTable id="table" selectionMode="single" var="tata"
 						value="#{versementScolariteBean.listInscription}" selection="#{versementScolariteBean.selectedInscription}"
-						rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement">
-						<p:ajax event="rowSelect" listener="#{versementScolariteBean.selectionner}" update=":form" />
-						<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
-						<p:column headerText="Nom" style="width:20%" sortBy="#{tata.etudiants.nomEtudiant}" >#{tata.etudiants.nomEtudiant}</p:column>
-						<p:column headerText="Prenoms" style="width:50%">#{tata.etudiants.prenomEtudiant}</p:column>
-						<p:column headerText="Date Naissance" style="width:30%">#{tata.etudiants.datenais}</p:column>
-						<p:column headerText="Nationalité" style="width:30%">#{tata.etudiants.nationalites.libnationalite}</p:column>
-					</p:dataTable>
-    </td>
-  </tr>
-</table>
+						rowKey="#{tata.codeInscription}" emptyMessage="Aucun enregistrement" rows="10" paginatorPosition="bottom" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records" rowsPerPageTemplate="5,10,15">
+		<p:ajax event="rowSelect" listener="#{versementScolariteBean.selectionner}" update=":form" />
+		<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
+		<p:column headerText="Mle" style="width:10%" sortBy="#{tata.etudiants.mle}" filterBy="#{tata.etudiants.mle}" filterMatchMode="contains" filterPlaceholder="Recherche">#{tata.etudiants.mle}</p:column>
+		<p:column headerText="Nom" style="width:20%" sortBy="#{tata.etudiants.nomEtudiant}" >#{tata.etudiants.nomEtudiant}</p:column>
+		<p:column headerText="Prenoms" style="width:40%">#{tata.etudiants.prenomEtudiant}</p:column>
+		<p:column headerText="Date Naissance" style="width:15%">#{tata.etudiants.datenais}</p:column>
+		<p:column headerText="Nationalité" style="width:15%">#{tata.etudiants.nationalites.libnationalite}</p:column>
+	</p:dataTable>
+   
 
 	<fieldset>
 	
@@ -42,7 +32,7 @@
 					<table>
 					  <tr valign="top">
 					    <td>
-					    <h:panelGrid id="annee_grid" columns="4" cellpadding="6">
+					    <h:panelGrid id="annee_grid" columns="6" cellpadding="6">
 						<p:outputLabel for="name" value="Nom:" />
 						<p:inputText id="name" value="#{versementScolariteBean.etudiants.nomEtudiant}" readonly="true"  />
 						
@@ -54,14 +44,23 @@
 						</p:inputText>
 						
 						<p:outputLabel for="ses" value="Section/Parcours" styleClass="outputDecalage"/>
-						<p:inputText id="ses" value="#{versementScolariteBean.inscriptions.section.abrevSection}" />
+						<p:inputText id="ses" value="#{versementScolariteBean.inscriptions.section.abrevSection}" readonly="true"/>
 						
 						<p:outputLabel for="nas" value="Nationalité"/>
-						<p:inputText id="nas" value="#{versementScolariteBean.etudiants.nationalites.libnationalite}" />
+						<p:inputText id="nas" value="#{versementScolariteBean.etudiants.nationalites.libnationalite}" readonly="true"/>
 						
 						<p:outputLabel for="reg" value="Regime" styleClass="outputDecalage"/>
-						<p:inputText id="reg" value="#{versementScolariteBean.inscriptions.regime.libRegime}" />
-</h:panelGrid>
+						<p:inputText id="reg" value="#{versementScolariteBean.inscriptions.regime.libRegime}" readonly="true"/>
+						
+						<p:outputLabel for="mt_scolarite" value="Montant scolarité:" />
+						<p:inputText id="mt_scolarite" value="#{versementScolariteBean.totalScolarite}" />
+                         
+			            <p:outputLabel for="p_vers" value="Versement antérieur"/>
+						<p:inputText id="p_vers" value="#{versementScolariteBean.totalVersement}"/>
+					
+						<p:outputLabel for="mt_rest" value="Reste à verser"/>
+						<p:inputText id="mt_rest" value="#{versementScolariteBean.resteVersement}"/>
+			</h:panelGrid>
 			 </td>
 			<td align="right">
 					<p:graphicImage id="graphIm" value="#{versementScolariteBean.content}" height="110" width="110"></p:graphicImage>	
@@ -70,31 +69,23 @@
 			</table>	
 	</fieldset>				
 			<fieldset>
-				<legend>Frais Scolarité</legend>
+				<legend>Versement</legend>
 				
 					<h:panelGrid id="e_grid" columns="4" cellpadding="8">
-					<p:outputLabel for="mt_scolarite" value="Montant scolarité:" />
-					<p:inputText id="mt_scolarite" value="#{versementScolariteBean.totalScolarite}" />
-                         
-            <p:outputLabel for="p_vers" value="Montant déjà versé"/>
-			<p:inputText id="p_vers" value="#{versementScolariteBean.totalVersement}"/>
-					
-			<p:outputLabel for="mt_rest" value="Reste à verser"/>
-			<p:inputText id="mt_rest" value="#{versementScolariteBean.resteVersement}"/>
 			
-			<p:outputLabel for="lib_vers" value="Libellé versement"/>
-			<p:inputText id="lib_vers" value=" " />
-			
-			<p:outputLabel for="mt_vers" value="Montant versement"  />
-			<p:inputText id="mt_vers" value="#{versementScolariteBean.versementScolarite.montantVersementScolarite}"/>
+			<p:outputLabel for="mt_vers" value="Montant"  />
+			<p:inputText id="mt_vers" value="#{versementScolariteBean.versementScolarite.montantVersementScolarite}" required="true"/>
 			
 			<h:outputLabel for="mod" value="Mode"/>
-			 <p:selectOneMenu id="mod" value="#{versementScolariteBean.codeMode}">
+			 <p:selectOneMenu id="mod" value="#{versementScolariteBean.codeMode}" required="true">
 			 <p:ajax event="change" process="@this"/>
 				<f:selectItem itemLabel="Selectionnez" itemValue="" />
 				<f:selectItems value="#{versementScolariteBean.listMode}" var="tata"
 					itemLabel="#{tata.libMode}" itemValue="#{tata.codeMode}"></f:selectItems>
 			</p:selectOneMenu>
+			
+			<p:outputLabel for="lib_vers" value="Libellé"/>
+			<p:inputText id="lib_vers" value=" " />
        
 			</h:panelGrid>
 			</fieldset>
