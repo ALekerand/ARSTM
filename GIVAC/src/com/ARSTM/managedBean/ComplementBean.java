@@ -110,7 +110,7 @@ public class ComplementBean {
 		}
 		
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Complement �ffectu�", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès", "Complement éffectuée"));
 	}
 	
 	public void annuler() throws FileNotFoundException {

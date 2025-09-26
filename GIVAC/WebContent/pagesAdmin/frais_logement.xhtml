@@ -8,13 +8,9 @@
 	<ui:define name="body">
 		<h:form id="form">
 			<h1 class="page-title">PARAMETRAGE DES FRAIS TYPES LOGEMENTS</h1>
-			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<p:messages autoUpdate="true" closable="true" showDetail="true" />
 			<div class="widget-content">
 
-				<!-- WIZARD ICI -->
-				<p:wizard id="wiz" flowListener="#{fraisLogementBean.onFlowProcess}">
-					<p:tab id="tab_type_logement" title="Logement">
-						<p:panel header="Type Logement">
 							<h:panelGrid id="type_logement_grid" columns="2" cellpadding="6">
 
 								<p:outputLabel for="cb_type_logement" value="Type Logement" />
@@ -26,65 +22,60 @@
 									itemLabel="#{tata.libtypeLogement}" itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>								
 							</h:panelGrid>
-						</p:panel>
-					</p:tab>
-
-					<p:tab id="nationaux" title="Nationaux">
-						<p:panel header="Frais Type Logements Nationaux">
-						<br/>
-						<p:outputLabel value="#{fraisLogementBean.choosedTypeLogement.libtypeLogement}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
-						<br/>
+						
+						<legend>Nationaux</legend>
+						
 							<h:panelGrid id="lognfrais_grid" columns="4" cellpadding="6">
-							<p:outputLabel value="Montant Type Logement:" />
-							<p:inputText value="#{fraisLogementBean.typeLogementNation.montantTypeLogement}" styleClass="upercase">
+							<p:outputLabel for="log_nat" value="Montant logement:" />
+							<p:inputText id="log_nat" value="#{fraisLogementBean.typeLogementNation.montantTypeLogement}" styleClass="upercase" required="true">
 							<p:ajax event="blur" update="@this" />
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							
-							<p:outputLabel/>
-							<p:outputLabel/>
 							
-							<p:outputLabel value="Montant Caution Type Logement:" />
-							<p:inputText value="#{fraisLogementBean.typeLogementNation.cautionTypeLogement}" styleClass="upercase">
+							<p:outputLabel for="caut_nat" value="Montant Caution:" />
+							<p:inputText id="caut_nat" value="#{fraisLogementBean.typeLogementNation.cautionTypeLogement}" styleClass="upercase" required="true">
 							<p:ajax event="blur" update="@this" />
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>
 							</h:panelGrid>
-						</p:panel>
-					</p:tab>
-
-					 <p:tab id="non_nationaux" title="Non nationaux">
-						<p:panel header="Frais Type Logement Non Nationaux">
-						<br/>
-						<p:outputLabel value="#{fraisLogementBean.choosedTypeLogement.libtypeLogement}" style="font-size:20px; font-weight: bold; color: #FF0000;"></p:outputLabel>
-						<br/>
+						
+					
+						<legend>Non nationaux</legend>
+						
 							<h:panelGrid id="lognnfrais_grid" columns="4" cellpadding="6">
 							
-							<p:outputLabel value="Montant Type Logement:" />
-							<p:inputText value="#{fraisLogementBean.typeLogementNonNation.montantTypeLogement}" styleClass="upercase">
+							<p:outputLabel for="log_nonnat" value="Montant logement:"/>
+							<p:inputText id="log_nonnat" value="#{fraisLogementBean.typeLogementNonNation.montantTypeLogement}" styleClass="upercase" required="true">
 							<p:ajax event="blur" update="@this" />
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>		
 									
-							<p:outputLabel/>
-							<p:outputLabel/>
 							
-							<p:outputLabel value="Montant Caution Type Logement:" />
-							<p:inputText value="#{fraisLogementBean.typeLogementNonNation.cautionTypeLogement}" styleClass="upercase">
+							<p:outputLabel for="caut_nonnat" value="Montant caution:"/>
+							<p:inputText id="caut_nonnat" value="#{fraisLogementBean.typeLogementNonNation.cautionTypeLogement}" styleClass="upercase" required="true">
 							<p:ajax event="blur" update="@this" />
 							<f:convertNumber pattern="##,###.###"></f:convertNumber>
 							</p:inputText>	
 							</h:panelGrid>
-						</p:panel>
 						
-						 <h:commandButton value="ENREGISTRER" action="#{fraisLogementBean.enregistrer}"  />
+						
+						<p:toolbar >
+				<f:facet name="right">
+						 <p:commandButton value="Enregistrer" action="#{fraisLogementBean.enregistrer}" update="form">
+						 	<p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm>
+						 </p:commandButton>
+						 
+						 <p:commandButton value="Annuler" action="#{fraisLogementBean.annuler}" process="@this" update="form">
+						 	<p:confirm header="Confirmation" message="confirmez-vous l'annulation?"></p:confirm>
+						 </p:commandButton>
+					</f:facet>
+				</p:toolbar>
 
-					</p:tab> 
 					
-				</p:wizard>
 				
 				<p:dataTable id="table"  var="tata"
-						value="#{fraisLogementBean.listTypeLogementNationalite}" selection="#{fraisLogementBean.SelectedTypeLogementNationalite}"
+						value="#{fraisLogementBean.listTypeLogementNationalite}" selection="#{fraisLogementBean.selectedTypeLogementNationalite}"
 						rowKey="#{tata.idTypeLogNation}" emptyMessage="Aucun enregistrement">
 						<f:facet name="header">LISTE DES FRAIS DE LOGEMENT</f:facet>
 					<p:column headerText="Tpe logement" style="width:25%">#{tata.typeLogement.libtypeLogement}</p:column>

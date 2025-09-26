@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,12 +19,11 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -31,16 +32,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.ARSTM.model.AnneesScolaire;
-import com.ARSTM.model.Diplomes;
 import com.ARSTM.model.Ecolages;
 import com.ARSTM.model.EtablScolarite;
 import com.ARSTM.model.Etudiants;
 import com.ARSTM.model.FraisAnnexe;
 import com.ARSTM.model.Inscriptions;
-import com.ARSTM.model.Matrimoniales;
 import com.ARSTM.model.Mention;
-import com.ARSTM.model.Niveaux;
-import com.ARSTM.model.Santes;
 import com.ARSTM.model.TypeLogementNationalite;
 import com.ARSTM.requetes.ReqAnneeScolaire;
 import com.ARSTM.requetes.ReqEcolage;
@@ -52,13 +49,11 @@ import com.ARSTM.service.Iservice;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @Component
 @Scope("session")
@@ -89,8 +84,11 @@ public class EtablisScolariteBean {
 	private EtablScolarite etablScolarite = new EtablScolarite();
 	private boolean etatReduction;
 	private BigDecimal totalfrais;
+	private String pdfUrl;
 	
 	
+	
+
 	// Pour l'upload
 	private String destination = "C:/GIVAC/photos/";
 	private String cheminFinal ="";
@@ -98,6 +96,7 @@ public class EtablisScolariteBean {
 	private List listEtudiant = new ArrayList<>();
 	private List listInscription = new ArrayList<>();
 	private List listeEtudiant = new ArrayList<>();
+	private String nom_fichier;
 	
 	// Contr�le de coposant
 	private CommandButton btnValider = new CommandButton();
@@ -107,12 +106,14 @@ public class EtablisScolariteBean {
 	private InputText inputMontantEcolage = new InputText();
 	private InputText imputTReduction = new InputText();
 	private SelectBooleanCheckbox checkBox = new SelectBooleanCheckbox();
+	private SelectBooleanCheckbox checkBoxExho = new SelectBooleanCheckbox();
 	
 	// M�thodes
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
 		//Charger l'ann�e scolaire en cours
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
+		fraisAnnexe = reqFraisAnnexes.recupFraisAnexByTypeNation(anneEncoure.getCodeAnnees(), 1);
 		imputMontant.setDisabled(true);
 		imputTaux.setDisabled(true);
 		imputTReduction.setDisabled(true);
@@ -121,8 +122,7 @@ public class EtablisScolariteBean {
 	
 	
 	public void chargerfrais() {
-		//Frais annexes concern�s
-		fraisAnnexe = reqFraisAnnexes.recupFraisAnexByTypeNation(anneEncoure.getCodeAnnees(), 1);
+		//Frais annexes concernés
 		etablScolarite.setFraisInscriptionSco(fraisAnnexe.getFraisInscription());    
 		etablScolarite.setFraisAssuranceSco(new BigDecimal(fraisAnnexe.getFraisAssurance()));
 		etablScolarite.setFraisElearningSco(new BigDecimal(fraisAnnexe.getFraisElearning()));
@@ -173,7 +173,6 @@ public class EtablisScolariteBean {
 			desactiverEcolage();
 			
 			//Pour l'ecolage et echeance
-			//etablScolarite.setMtEchance1Sco(null);
 			etablScolarite.setMtEchance1Sco(totalfrais);
 			etablScolarite.setMtEchance2Eco(null);
 			etablScolarite.setMtEchance3Sco(null);
@@ -184,9 +183,6 @@ public class EtablisScolariteBean {
 			etablScolarite.setDateEchance4Eco(ecolage.getDateEchance4());
 			etablScolarite.setDateEtablissementSco(new Date());
 		}
-		
-	
-		
 		chargerMontantLogement();
 	}
 	
@@ -197,7 +193,6 @@ public class EtablisScolariteBean {
 				TypeLogementNationalite typeLogementNationalite = reqTypelogemTypeNation.recupTypelogeTypenation(inscriptions.getTypeLogement().getCodetypeLogement(), etudiants.getTypenationalite().getCodeTypenationalite(), anneEncoure.getCodeAnnees());
 				
 				//Pour le logemment
-				System.out.println("=========== Montant du logement"+typeLogementNationalite.getMontantTypeLogement());
 				etablScolarite.setMontantLogementSco(typeLogementNationalite.getMontantTypeLogement());
 				etablScolarite.setCautionLogementSco(typeLogementNationalite.getCautionTypeLogement());
 		
@@ -244,10 +239,40 @@ public class EtablisScolariteBean {
 			imputTaux.setDisabled(true);
 			imputTReduction.setDisabled(true);
 			//vider la r�duction
-			
 		}
-		
 	}
+	
+	
+	public void exhonererFrais() {
+		if(checkBoxExho.isSelected()){
+			etablScolarite.setFraisInscriptionSco(new BigDecimal(0));    
+			etablScolarite.setFraisAssuranceSco(new BigDecimal(0));
+			etablScolarite.setFraisElearningSco(new BigDecimal(0));
+			etablScolarite.setFraisTenueCompletSco(new BigDecimal(0));
+			etablScolarite.setFraisTenueSportSco(new BigDecimal(0));
+			etablScolarite.setFraisVisiteMedicSco(new BigDecimal(0));
+			etablScolarite.setFraisRestaurationSco(new BigDecimal(0));
+			etablScolarite.setFraisOrdinateurSco(new BigDecimal(0));
+			etablScolarite.setAutreFraisSco(new BigDecimal(0));
+			
+			//Pour l'ecolage et echeance
+			etablScolarite.setMtEchance1Sco(new BigDecimal(0));
+			etablScolarite.setMtEchance2Eco(new BigDecimal(0));
+			etablScolarite.setMtEchance3Sco(new BigDecimal(0));
+			etablScolarite.setMtEchance4Eco(new BigDecimal(0));
+			
+			viderEcheance();
+			
+			//Pour le logemment
+			etablScolarite.setMontantLogementSco(new BigDecimal(0));
+			etablScolarite.setCautionLogementSco(new BigDecimal(0));
+			
+		}else {
+			chargerfrais();
+		}
+	}
+	
+	
 	
 	public void enregistrer() throws JRException, IOException {
 		etablScolarite.setEtudiants(etudiants);
@@ -260,112 +285,134 @@ public class EtablisScolariteBean {
 		
 		getService().updateObject(inscriptions);
 		getService().addObject(etablScolarite);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Scolarit� de l'�tudiant �tabli!", null));
+		checkBoxExho.setSelected(false);
 		
 		//Generer Facture
-				genererFacture();
+		genererFacture();
+		ouvrirPDF();
 		annuler();
-		viderPhoto();
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès!", "Scolarité de l'étudiant établie."));
+		//viderPhoto();
 	}
 	
 	
 public void genererFacture() throws JRException, IOException {
 	
+		String numeroFacture = "fact_"+etudiants.getMle()+"_"+anneEncoure.getAnneesFin();
+		nom_fichier = numeroFacture+".pdf";
 		
-		String nom_fichier = "Fact_"+etudiants.getMle()+".pdf";
+		// ✅ 1. Charger le fichier .jasper déjà compilé
+        File reportFile = new File("C:GIVAC/etats/facture_scolarite.jasper");
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(reportFile);
 		
-		//Génération du rapport	
-		JasperDesign jasperDesign = JRXmlLoader.load("C:/GIVAC/etats/facture_scolarite.jrxml");
-		
-		//Compilation du fichier
-		JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-		
-		//InputStream is = new FileInputStream("C:/GIVAC/"+nom_fichier);
 		Map<String,Object> parameters = new HashMap<String,Object>();		
-		//Map<String, Object> parametres= new HashMap<String, Object>();
-		/*
-		 * parameters.put("ecole",choosedEcole.getAbrevEcole());
-		 * parameters.put("annee_academique",anneEncoure.getLibAnneeScolaire());
-		 * parameters.put("non_prenoms",etudiants.getNomEtudiant()+" "+etudiants.
-		 * getPrenomEtudiant());
-		 * parameters.put("filiere",choosedFiliere.getAbrevFiliere());
-		 * parameters.put("niveau",choosedNiveau.getAbrevNiveau());
-		 * parameters.put("section",choosedSection.getAbrevSection() );
-		 */
+		  parameters.put("num_facture",numeroFacture);
+		  //parameters.put("annee_academique",anneEncoure.getLibAnneeScolaire());
+		  parameters.put("nom",etudiants.getNomEtudiant()+" "+etudiants.getPrenomEtudiant());
+		  parameters.put("prenoms",etudiants.getPrenomEtudiant());
+		  parameters.put("filiere","");
+		  parameters.put("section",selectedInscription.getSection().getAbrevSection());
+		 
+		  parameters.put("versement_1",ecolage.getMtEchance1());
+		  parameters.put("versement_2",ecolage.getMtEchance1() );
+		  parameters.put("versement_3",ecolage.getMtEchance1());
+		  parameters.put("versement_4",ecolage.getMtEchance1());
+		
+		  parameters.put("date_1",ecolage.getDateEchance1());
+		  parameters.put("date_2",ecolage.getDateEchance2());
+		  parameters.put("date_3",ecolage.getDateEchance3());
+		  parameters.put("date_4",ecolage.getDateEchance4());
+		 
 		
 		// Remplissage du rapport compilé
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameters, new JREmptyDataSource());
 		
 		// Visualisation, exportation ou impression 
 	    JasperExportManager.exportReportToPdfFile(jasperPrint, "C:/GIVAC/etats/"+nom_fichier);
-	    
-	    //Ouverture du fichier
-	    try {
-			String pdfFilePath = "C:\\GIVAC\\etats\\"+nom_fichier;
-			File pdfFile = new File(pdfFilePath);
-			
-			// Configuration de la réponse
-			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength((int) pdfFile.length());
-			response.setHeader("Content-Disposition", "inline; filename=\"" + pdfFile.getName() + "\"");
-
-			// Lecture et envoi du fichier PDF
-			FileInputStream fis = new FileInputStream(pdfFile);
-			OutputStream os = response.getOutputStream(); 
-			byte[] buffer = new byte[1024];
-			int bytesRead;
-			while ((bytesRead = fis.read(buffer)) != -1) {
-			        os.write(buffer, 0, bytesRead);
-			    }
-			
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			//error("Veuillez selectionner le matériel avnt l'impression du QR CODE");
-		} 
 		 	}
-		
 
-	public void annuler() throws FileNotFoundException {
-		
+
+public void ouvrirPDF() throws IOException {
+    try {
+		//String code = nom_fichier  ;
+    	
+        File source = new File("C:/GIVAC/etats/"+nom_fichier);
+
+        //On copie vers un dossier du projet web accessible via HTTP
+        String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+        File destDir = new File(contextPath + "resources/pdf/");
+        if (!destDir.exists()) destDir.mkdirs();
+
+        File destFile = new File(destDir, nom_fichier);
+
+        // Copie physique
+        Files.copy(source.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+     // Stocker l'URL pour l'ouvrir côté JSF
+        String webPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+        pdfUrl = webPath + "/resources/pdf/" + nom_fichier;
+        
+     
+     // ✅ Utiliser RequestContext pour exécuter JavaScript dans PrimeFaces 6.x
+        RequestContext.getCurrentInstance().execute("window.open('" + pdfUrl + "', '_blank');");
+       
+        
+    } catch (IOException e) {
+        e.printStackTrace();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Impossible d'ouvrir le fichier PDF."));
+    }catch (NullPointerException e) {
+    	 e.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Veuillez selectionner la ligne puis ouvrir le fichier."));
+	}
+}
+
+
+
+
+	public void viderEtudiant() {
 		//Info personnelle �tudiant
-		etudiants.setNomEtudiant(null);
-		etudiants.setPrenomEtudiant(null);
-		etudiants.setDatenais(null);
-		etudiants.setLieunais(null);
-		etudiants.setMailEtudiant(null);
-		etudiants.setTelEtudiant(null);
-		etudiants.setNumcni(null);
-		etudiants.setEcoleAncienneEtudiant(null);
-		etudiants.setNomPrenomsPere(null);
-		etudiants.setFonctionPere(null);
-		etudiants.setTelPere(null);
-		etudiants.setNomPrenomsMere(null);
-		etudiants.setFonctionMere(null);
-		etudiants.setTelMere(null);
-		etudiants.setNomPrenomsTuteur(null);
-		etudiants.setTelTuteur(null);
-		etudiants.setNomPrenomsDocteur(null);
-		etudiants.setTelDocteur(null);
-		inscriptions.setSection(null);
-		inscriptions.setRegime(null);
-		matriculeRecherche = "";
-		
+				etudiants.setNomEtudiant(null);
+				etudiants.setPrenomEtudiant(null);
+				etudiants.setDatenais(null);
+				etudiants.setLieunais(null);
+				etudiants.setMailEtudiant(null);
+				etudiants.setTelEtudiant(null);
+				etudiants.setNumcni(null);
+				etudiants.setEcoleAncienneEtudiant(null);
+				etudiants.setNomPrenomsPere(null);
+				etudiants.setFonctionPere(null);
+				etudiants.setTelPere(null);
+				etudiants.setNomPrenomsMere(null);
+				etudiants.setFonctionMere(null);
+				etudiants.setTelMere(null);
+				etudiants.setNomPrenomsTuteur(null);
+				etudiants.setTelTuteur(null);
+				etudiants.setNomPrenomsDocteur(null);
+				etudiants.setTelDocteur(null);
+				inscriptions.setSection(null);
+				inscriptions.setRegime(null);
+				matriculeRecherche = "";
+	}
+	
+	public void viderFrais() {
 		//Les frais
-		etablScolarite.setMontantEcolageSco(null);
-		etablScolarite.setTauxReduction(null);
-		etablScolarite.setFraisInscriptionSco(null);
-		etablScolarite.setFraisAssuranceSco(null);
-		etablScolarite.setFraisElearningSco(null);
-		etablScolarite.setFraisOrdinateurSco(null);
-		etablScolarite.setFraisRestaurationSco(null);
-		etablScolarite.setFraisTenueCompletSco(null);
-		etablScolarite.setFraisTenueSportSco(null);
-		etablScolarite.setFraisVisiteMedicSco(null);
-		etablScolarite.setAutreFraisSco(null);
-		etablScolarite.setMontantLogementSco(null);
-		etablScolarite.setCautionLogementSco(null);
-		
+				etablScolarite.setMontantEcolageSco(null);
+				etablScolarite.setTauxReduction(null);
+				etablScolarite.setFraisInscriptionSco(null);
+				etablScolarite.setFraisAssuranceSco(null);
+				etablScolarite.setFraisElearningSco(null);
+				etablScolarite.setFraisOrdinateurSco(null);
+				etablScolarite.setFraisRestaurationSco(null);
+				etablScolarite.setFraisTenueCompletSco(null);
+				etablScolarite.setFraisTenueSportSco(null);
+				etablScolarite.setFraisVisiteMedicSco(null);
+				etablScolarite.setAutreFraisSco(null);
+				etablScolarite.setMontantLogementSco(null);
+				etablScolarite.setCautionLogementSco(null);
+				viderEcheance();
+	}
+	
+	public void viderEcheance() {
 		//les �ch�ances
 		etablScolarite.setMtEchance1Sco(null);
 		etablScolarite.setMtEchance2Eco(null);
@@ -376,7 +423,12 @@ public void genererFacture() throws JRException, IOException {
 		etablScolarite.setDateEchance3Sco(null);
 		etablScolarite.setDateEchance4Eco(null);
 		etablScolarite.setDateEtablissementSco(null);
+	}
 		
+
+	public void annuler() throws FileNotFoundException {
+		viderEtudiant();
+		viderFrais();
 		viderPhoto();
 	}
 	
@@ -620,5 +672,19 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 
 	public void setInputMontantEcolage(InputText inputMontantEcolage) {
 		this.inputMontantEcolage = inputMontantEcolage;
+	}
+	
+	public String getPdfUrl() {
+		return pdfUrl;
+	}
+
+
+	public SelectBooleanCheckbox getCheckBoxExho() {
+		return checkBoxExho;
+	}
+
+
+	public void setCheckBoxExho(SelectBooleanCheckbox checkBoxExho) {
+		this.checkBoxExho = checkBoxExho;
 	}
 }

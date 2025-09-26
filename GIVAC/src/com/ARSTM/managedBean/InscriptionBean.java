@@ -1,12 +1,12 @@
+
 package com.ARSTM.managedBean;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +15,9 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,6 @@ import org.springframework.stereotype.Component;
 import com.ARSTM.model.AnneesScolaire;
 import com.ARSTM.model.Diplomes;
 import com.ARSTM.model.Ecole;
-import com.ARSTM.model.Enseignant;
 import com.ARSTM.model.Etudiants;
 import com.ARSTM.model.Filieres;
 import com.ARSTM.model.Inscriptions;
@@ -50,19 +49,19 @@ import com.ARSTM.requetes.RequeteLogement;
 import com.ARSTM.requetes.RequeteMention;
 import com.ARSTM.requetes.RequeteSection;
 import com.ARSTM.service.Iservice;
+
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @Component
 @Scope("session")
-public class InscriptionBean {
+public class InscriptionBean{
+
 	@Autowired
 	Iservice service;
 	@Autowired
@@ -102,7 +101,7 @@ public class InscriptionBean {
 	private Residence residence = new Residence();
 	private List listInscription = new ArrayList<>();
 	private Inscriptions selectedObject = new Inscriptions();
-	private Etudiants notreEtudiant = new Etudiants();
+	//private Etudiants notreEtudiant = new Etudiants();
 	
 	private String pdfUrl;
 	private String nom_fichier;
@@ -141,7 +140,7 @@ public class InscriptionBean {
 		//Charger l'ann�e scolaire en cours
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
 		//g�n�rer le matricule de l'�tudiant
-		genererMatricule();
+	//	genererMatricule();
 		return anneEncoure;
 	}
 	
@@ -170,7 +169,7 @@ public String genererMatricule() {
 		genererFicheInscription();
 		annuler();
 		FacesContext.getCurrentInstance().addMessage(null,
-			new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetués!", null));
+			new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucès!","Enregistrement effcetué."));
 		//ouvrirPDF();
 	}
 	
@@ -200,17 +199,14 @@ public String genererMatricule() {
 	
 	
 	  public void selectionnerLigne() {
-	  System.out.println("==== Methode Selecgtion call");
-	  notreEtudiant = selectedObject.getEtudiants();
-	  System.out.println("==== "+notreEtudiant.getMle());
-	  	 System.out.println("==== Fin Methode Selecgtion call");
+	 // notreEtudiant = selectedObject.getEtudiants();
+		  nom_fichier ="ins_"+selectedObject.getEtudiants().getMle()+"_"+anneEncoure.getAnneesFin()+".pdf";
 	  }
 	 
 	
 	
 	public void enregistrerEtudiant(){
-		//enregistrer das la table Etudiants
-		  etudiants.setMle(genererMatricule());
+		
 		 // etudiants.setNomEtudiant(getEtudiants().getNomEtudiant().toUpperCase());
 		  etudiants.setMatrimoniales(choosedMatrimoniale);
 		  etudiants.setNationalites(choosedNationalites);
@@ -230,13 +226,9 @@ public String genererMatricule() {
 			}
 		  
 			//Effectuer l'enregistrement
+			etudiants.setMle(genererMatricule());
 		  getService().addObject(etudiants);
 		  
-		  //Recharger le Matricule pour un nouvel enregistrement
-		  genererMatricule();
-		
-		//FacesContext.getCurrentInstance().addMessage(null,
-			//	new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetu�!", null));
 	}
 	
 	public void annuler() {
@@ -299,17 +291,14 @@ public String genererMatricule() {
 	
 	public void genererFicheInscription() throws JRException, IOException {
 		
-		nom_fichier = "Ins_"+etudiants.getMle()+".pdf";
+		nom_fichier = "ins_"+etudiants.getMle()+"_"+anneEncoure.getAnneesFin()+".pdf";
 		
-		//Génération du rapport	
-		JasperDesign jasperDesign = JRXmlLoader.load("C:/GIVAC/etats/Fiche_incription.jrxml");
-		
-		//Compilation du fichier
-		JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+		//Charger le fichier .jasper déjà compilé
+        File reportFile = new File("C:/GIVAC/etats/Fiche_incription.jasper");
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(reportFile);
 		
 		//InputStream is = new FileInputStream("C:/GIVAC/"+nom_fichier);
 		Map<String,Object> parameters = new HashMap<String,Object>();		
-		//Map<String, Object> parametres= new HashMap<String, Object>();
 		parameters.put("ecole",choosedEcole.getAbrevEcole());
 		parameters.put("annee_academique",anneEncoure.getLibAnneeScolaire());
 		parameters.put("non_prenoms",etudiants.getNomEtudiant()+" "+etudiants.getPrenomEtudiant());
@@ -319,17 +308,48 @@ public String genererMatricule() {
 		
 		// Remplissage du rapport compilé
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameters, new JREmptyDataSource());
-
 		// Visualisation, exportation ou impression 
 	    JasperExportManager.exportReportToPdfFile(jasperPrint, "C:/GIVAC/etats/"+nom_fichier);
+	    
 	}
 	
 	
 	
 	public void ouvrirPDF() throws IOException {
-		
 	    try {
-	    	System.out.println("==== DEBUT DE LA METHODE OUVERTURE PDF ==============");
+			//String code = nom_fichier  ;
+	    	
+	        File source = new File("C:/GIVAC/etats/"+nom_fichier);
+
+	        //On copie vers un dossier du projet web accessible via HTTP
+	        String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+	        File destDir = new File(contextPath + "resources/pdf/");
+	        if (!destDir.exists()) destDir.mkdirs();
+
+	        File destFile = new File(destDir, nom_fichier);
+
+	        // Copie physique
+	        Files.copy(source.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+	     // Stocker l'URL pour l'ouvrir côté JSF
+	        String webPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+	        pdfUrl = webPath + "/resources/pdf/" + nom_fichier;
+	        
+	     
+	     // ✅ Utiliser RequestContext pour exécuter JavaScript dans PrimeFaces 6.x
+	       RequestContext.getCurrentInstance().execute("window.open('" + pdfUrl + "', '_blank');");
+	       
+	        
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Impossible d'ouvrir le fichier PDF."));
+	    }
+	}
+
+	
+	
+	public void ouvrirPDF1() throws IOException {
+	    try {
 			String code =  "Ins_"+selectedObject.getEtudiants().getMle();
 	    	
 	        File source = new File("C:/GIVAC/etats/" + code + ".pdf");
@@ -348,13 +368,18 @@ public String genererMatricule() {
 	        String webPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
 	        pdfUrl = webPath + "/resources/pdf/" + code + ".pdf";
 	        
+	     
+	     // ✅ Utiliser RequestContext pour exécuter JavaScript dans PrimeFaces 6.x
+            RequestContext.getCurrentInstance().execute("window.open('" + pdfUrl + "', '_blank');");
+	       
+	        
 	    } catch (IOException e) {
-	    	System.out.println("==== Je suis dans l'exeption ==============");
 	        e.printStackTrace();
 	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Impossible d'ouvrir le fichier PDF."));
-	    }
-	    
-	    System.out.println("==== FIN DE LA METHODE OUVERTURE PDF ==============");
+	    }catch (NullPointerException e) {
+	    	 e.printStackTrace();
+		        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Veuillez selectionner la ligne puis ouvrir le fichier."));
+		}
 	}
 	
 	//**************************ACCESSEURS*************************//*
@@ -668,12 +693,12 @@ public String genererMatricule() {
 		this.choosedPaysNaiss = choosedPaysNaiss;
 	}
 
-	public String getPdfUrl() {
-		return pdfUrl;
-	}
+	
 
 	public List getListInscription() {
-		return listInscription = service.getObjects("Inscriptions");
+		listInscription = service.getObjects("Inscriptions");
+		Collections.reverse(listInscription);
+		return listInscription;
 	}
 
 	/*
@@ -687,5 +712,13 @@ public String genererMatricule() {
 
 	public void setSelectedObject(Inscriptions selectedObject) {
 		this.selectedObject = selectedObject;
+	}
+
+	public String getPdfUrl() {
+		return pdfUrl;
+	}
+
+	public void setPdfUrl(String pdfUrl) {
+		this.pdfUrl = pdfUrl;
 	}
 }

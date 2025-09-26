@@ -32,6 +32,10 @@ panel{
 
 }
 
+.div_edition{
+	background-color: #f0f0f0;
+}
+
 
 .arrondie {
 -moz-border-radius:7px;

@@ -8,7 +8,7 @@
 	<ui:define name="body">
 		<h:form id="form">
 			<h1 class="page-title">VERSEMENT SCOLARITE</h1>
-			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<p:messages autoUpdate="true" closable="true" showDetail="true" />
 			<div class="widget-content">
 			<p:panel>
 	
@@ -53,13 +53,19 @@
 						<p:inputText id="reg" value="#{versementScolariteBean.inscriptions.regime.libRegime}" readonly="true"/>
 						
 						<p:outputLabel for="mt_scolarite" value="Montant scolarité:" />
-						<p:inputText id="mt_scolarite" value="#{versementScolariteBean.totalScolarite}" />
+						<p:inputText id="mt_scolarite" value="#{versementScolariteBean.totalScolarite}" readonly="true">
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+						</p:inputText>
                          
 			            <p:outputLabel for="p_vers" value="Versement antérieur"/>
-						<p:inputText id="p_vers" value="#{versementScolariteBean.totalVersement}"/>
+						<p:inputText id="p_vers" value="#{versementScolariteBean.totalVersement}">
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+						</p:inputText>
 					
 						<p:outputLabel for="mt_rest" value="Reste à verser"/>
-						<p:inputText id="mt_rest" value="#{versementScolariteBean.resteVersement}"/>
+						<p:inputText id="mt_rest" value="#{versementScolariteBean.resteVersement}">
+							<f:convertNumber pattern="##,###.###"></f:convertNumber>
+						</p:inputText>
 			</h:panelGrid>
 			 </td>
 			<td align="right">
@@ -68,15 +74,19 @@
 					  </tr>
 			</table>	
 	</fieldset>				
-			<fieldset>
-				<legend>Versement</legend>
-				
-					<h:panelGrid id="e_grid" columns="4" cellpadding="8">
+
+	<br/>		
+	
+	<div style="background-color: #f0f0f0;">
+		<legend>Versement</legend>
+					<h:panelGrid id="e_grid" columns="6" cellpadding="8">
 			
 			<p:outputLabel for="mt_vers" value="Montant"  />
-			<p:inputText id="mt_vers" value="#{versementScolariteBean.versementScolarite.montantVersementScolarite}" required="true"/>
+			<p:inputText id="mt_vers" value="#{versementScolariteBean.versementScolarite.montantVersementScolarite}" required="true">
+				<f:convertNumber pattern="##,###.###"></f:convertNumber>
+			</p:inputText>
 			
-			<h:outputLabel for="mod" value="Mode"/>
+			<h:outputLabel for="mod" value="Mode *"/>
 			 <p:selectOneMenu id="mod" value="#{versementScolariteBean.codeMode}" required="true">
 			 <p:ajax event="change" process="@this"/>
 				<f:selectItem itemLabel="Selectionnez" itemValue="" />
@@ -88,11 +98,17 @@
 			<p:inputText id="lib_vers" value=" " />
        
 			</h:panelGrid>
-			</fieldset>
+		
+		</div>	
+		
+			
+	<br/>
 					
 		<p:toolbar >
 		<f:facet name="right">
-			<p:commandButton value="Verser" action="#{versementScolariteBean.enregistrer}"   update="form"></p:commandButton>
+			<p:commandButton value="Verser" action="#{versementScolariteBean.enregistrer}"   update="form">
+				<p:confirm header="Confirmation" message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert"/>
+			</p:commandButton>
 			<p:commandButton value="Annuler" action="#{versementScolariteBean.annuler}" binding="#{versementScolariteBean.btnAnuler}" update="form" process="@this"> </p:commandButton>
 		</f:facet>
 		</p:toolbar>

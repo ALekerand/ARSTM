@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -82,6 +85,7 @@ public class VersementScolariteBean {
 	private List listMode = new ArrayList<>();
 	//private Mode choosedMode = new Mode();
 	private int codeMode;
+	private String pdfUrl;
 
 	
 	// Pour l'upload
@@ -91,6 +95,7 @@ public class VersementScolariteBean {
 	
 	//private List listEtudiant = new ArrayList<>();
 	private List listInscription = new ArrayList<>();
+	private String nom_fichier;
 	
 	// Contr�le de coposant
 	private CommandButton btnValider = new CommandButton();
@@ -153,7 +158,7 @@ public class VersementScolariteBean {
 		int mtPositif = versementScolarite.getMontantVersementScolarite().compareTo(BigDecimal.ZERO);
 		int mtpayeExact = versementScolarite.getMontantVersementScolarite().compareTo(resteVersement);
 		
-		//V�rifier si le montant n'est pas null ou superieur aureste � payer
+		//V�rifier si le montant n'est pas null ou supérieur au reste à payer
 		if ((mtPositif == 1) && (mtpayeExact != 1)){
 			
 			//Enregistrement du versement
@@ -162,10 +167,17 @@ public class VersementScolariteBean {
 			versementScolarite.setMode((Mode) service.getObjectById(codeMode, "Mode"));
 			versementScolarite.setOrigine(reqOrigine.recupOrigineById(1));
 			versementScolarite.setDateVersementSco(new Date());
+			//Actualisation de l'état de paiement (Soldé ou non)
+			if(versementScolarite.getMontantVersementScolarite().equals(versementScolarite.getMontantVersementScolarite())) {
+				//Pour dire qu'il est soldé
+				inscriptions.setEtatPayementScolarite(true);
+				service.updateObject(inscriptions);
+			}
+			
 			service.addObject(versementScolarite);
 			//
 			genererFicheInscription();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "R�glement effectu�!", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès!", "Enregistrement éffectué!"));
 
 			
 			
@@ -173,7 +185,7 @@ public class VersementScolariteBean {
 			annuler();
 			
 		}else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuillez v�rifier le montant du versement!", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erreur", "Veuillez vérifier le montant du versement!"));
 		}
 		
 	}
@@ -183,7 +195,7 @@ public void genererFicheInscription() throws JRException, IOException {
 	
 		System.out.println("====== DEBUT DE LA GENERATION DE ETATS ==============");
 		
-		String nom_fichier = "Vers_"+etudiants.getMle()+".pdf";
+		nom_fichier = "vers_"+etudiants.getMle()+".pdf";
 		
 		//Génération du rapport	
 		JasperDesign jasperDesign = JRXmlLoader.load("C:/GIVAC/etats/recu_versement.jrxml");
@@ -210,34 +222,45 @@ public void genererFicheInscription() throws JRException, IOException {
 		// Visualisation, exportation ou impression 
 	    JasperExportManager.exportReportToPdfFile(jasperPrint, "C:/GIVAC/etats/"+nom_fichier);
 	    
+	    // Ouvrir le reçu dans un nouvel onglet du navigateur.
+	    ouvrirPDF();
 	    
-	    
-	    //Ouverture du fichier
-	    try {
-			String pdfFilePath = "C:\\GIVAC\\etats\\"+nom_fichier;
-			File pdfFile = new File(pdfFilePath);
-			
-			// Configuration de la réponse
-			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-			response.setContentType("application/pdf");
-			response.setContentLength((int) pdfFile.length());
-			response.setHeader("Content-Disposition", "inline; filename=\"" + pdfFile.getName() + "\"");
-
-			// Lecture et envoi du fichier PDF
-			FileInputStream fis = new FileInputStream(pdfFile);
-			OutputStream os = response.getOutputStream(); 
-			byte[] buffer = new byte[1024];
-			int bytesRead;
-			while ((bytesRead = fis.read(buffer)) != -1) {
-			        os.write(buffer, 0, bytesRead);
-			    }
-			
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-		} 
-	    
-	    	System.out.println("====== FIN DE LA GENERATION DE ETATS ==============");
+	    //Vider les champs
+	    annuler();
+	   
 		 	}
+
+
+public void ouvrirPDF() throws IOException {
+    try {
+		//String code =  "vers_"+selectedObject.getEtudiants().getMle();
+    	
+        File source = new File("C:/GIVAC/etats/" + nom_fichier);
+
+        //On copie vers un dossier du projet web accessible via HTTP
+        String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+        File destDir = new File(contextPath + "resources/pdf/");
+        if (!destDir.exists()) destDir.mkdirs();
+
+        File destFile = new File(destDir, nom_fichier);
+
+        // Copie physique
+        Files.copy(source.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+     // Stocker l'URL pour l'ouvrir côté JSF
+        String webPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+        pdfUrl = webPath + "/resources/pdf/" + nom_fichier;
+        
+     
+     // ✅ Utiliser RequestContext pour exécuter JavaScript dans PrimeFaces 6.x
+        RequestContext.getCurrentInstance().execute("window.open('" + pdfUrl + "', '_blank');");
+       
+        
+    } catch (IOException e) {
+        e.printStackTrace();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur", "Impossible d'ouvrir le fichier PDF."));
+    }
+}
 	
 	
 	public void annuler() throws FileNotFoundException {
@@ -412,7 +435,7 @@ public StreamedContent viderPhoto() throws FileNotFoundException {
 
 	public List getListInscription() {
 		listInscription.clear();
-		listInscription = requeteInscription.recupListeInscriptionComplet(anneEncoure.getCodeAnnees());
+		listInscription = requeteInscription.recupListeInscriptionCompletNonSolde(anneEncoure.getCodeAnnees());
 
 		//System.out.println("Taille du fichier:"+listInscription.size());
 		return listInscription;

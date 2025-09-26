@@ -33,7 +33,7 @@ public class RequeteInscription {
 	
 	/**
 	 * @author A.Lekerand
-	 * Permet de recuperer l'inscription de l'année en cours du'un étudiant 
+	 * Permet de recuperer l'inscription de l'annï¿½e en cours du'un ï¿½tudiant 
 	 * dont le complement est fait
 	 * @param numeroEtudiant
 	 * @param codeAnneeScolaire
@@ -48,7 +48,7 @@ public class RequeteInscription {
 	
 	/**
 	 * @author A.Lekerand
-	 * Permet de recupérer l'inscription de l'étudiant dont la scolarité est établie
+	 * Permet de recupï¿½rer l'inscription de l'ï¿½tudiant dont la scolaritï¿½ est ï¿½tablie
 	 * @param numeroEtudiant
 	 * @param codeAnneeScolaire
 	 * @return
@@ -60,13 +60,19 @@ public class RequeteInscription {
 		}
 	
 	/**
-	 * Permet de donner la liste des inscription dont la scolarité est établie mais dont la scolarité est non soldée
+	 * Permet de donner la liste des inscription dont la scolaritï¿½ est ï¿½tablie mais dont la scolaritï¿½ est non soldï¿½e
 	 * @author A.Lekerand
 	 * @param codeAnneeScolaire
 	 * @return
 	 */
 	public List<Inscriptions> recupListeInscriptionComplet(int codeAnneeScolaire){
 		String query = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`ETAT_COMPLEMNT` = '1') AND (`inscriptions`.`CODE_ANNEES` = '"+codeAnneeScolaire+"'))";
+		List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
+		return list;
+		}
+	
+	public List<Inscriptions> recupListeInscriptionCompletNonSolde(int codeAnneeScolaire){
+		String query = "SELECT `inscriptions`.* FROM `inscriptions` WHERE ((`inscriptions`.`ETAT_COMPLEMNT` = '0')AND (`inscriptions`.`ETAT_PAYEMENT_SCOLARITE` = '1') AND (`inscriptions`.`CODE_ANNEES` = '"+codeAnneeScolaire+"'))";
 		List list = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Inscriptions.class).list();		
 		return list;
 		}

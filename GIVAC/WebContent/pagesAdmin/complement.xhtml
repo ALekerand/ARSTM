@@ -7,10 +7,10 @@
 <ui:composition template="/templates/templateAdministrateur.xhtml">
 	<ui:define name="body">
 		<h:form id="form">
-			<h1 class="page-title" >COMPLEMENT</h1>
+			<h1 class="page-title" >COMPLEMENT D'INSCRIPTION</h1>
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
-			<p:panel header="Enregistrement">
+			
 			
     <p:dataTable id="table" selectionMode="single" var="tata"
 	value="#{complementBean.listInscription}" selection="#{complementBean.selectedInscription}"
@@ -40,7 +40,6 @@
 	<h:outputText value="#{tata.etudiants.nationalites.libnationalite}"/>
 	</p:column>
 	</p:dataTable>
-    
     <br></br>
 
 	<fieldset>
@@ -80,7 +79,10 @@
 					  </tr>
 					</table>
 	</fieldset>				
-			<fieldset>
+	
+	<br />
+			
+		<div class="div_edition" >
 				<legend>Informations complémentaires</legend>
 				
 			<h:panelGrid id="complement_etud" columns="6" cellpadding="6">
@@ -121,18 +123,18 @@
 				<p:outputLabel/>
 				<p:outputLabel/>
 				
-				<p:outputLabel for="nom_med" value="Nom médecin:" />
-				<p:inputText id="nom_med" value="#{complementBean.etudiants.nomPrenomsDocteur}" required="true"/>
+				<p:outputLabel for="nom_med" value="Nom prénoms médecin:"/>
+				<p:inputText id="nom_med" value="#{complementBean.etudiants.nomPrenomsDocteur}"/>
 				
 				<p:outputLabel for="tel_med" value="Télephone:" styleClass="outputDecalage" />
-				<p:inputText id="tel_med" value="#{complementBean.etudiants.telDocteur}" required="true"/>
+				<p:inputText id="tel_med" value="#{complementBean.etudiants.telDocteur}"/>
 			</h:panelGrid>	
-			
-			</fieldset>		
+		</div>	
+			<br />		
 					<p:toolbar >
 			<f:facet name="right">
 				<p:commandButton value="Enregistrer"
-							actionListener="#{complementBean.enregistrer}" 
+							action="#{complementBean.enregistrer}" 
 							binding="#{complementBean.btnValider}" update="form">
 							<p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm>
 						</p:commandButton>
@@ -146,7 +148,7 @@
 			</f:facet>
 		</p:toolbar>
 					
-				</p:panel>
+				
 				<br />
 
 			</div>

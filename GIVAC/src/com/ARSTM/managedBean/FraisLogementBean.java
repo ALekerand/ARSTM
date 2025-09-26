@@ -35,11 +35,11 @@ public class FraisLogementBean {
 	private List listTypeLogement = new ArrayList<>();
 	private List listTypeLogementNationalite = new ArrayList<>();
 	
-	private TypeLogementNationalite selectedIns = new TypeLogementNationalite();
+	//private TypeLogementNationalite selectedIns = new TypeLogementNationalite();
 	
 	private TypeLogementNationalite typeLogementNation = new TypeLogementNationalite();
 	private TypeLogementNationalite typeLogementNonNation = new TypeLogementNationalite();
-	private TypeLogementNationalite SelectedTypeLogementNationalite = new TypeLogementNationalite();
+	private TypeLogementNationalite selectedTypeLogementNationalite = new TypeLogementNationalite();
 	private Typenationalite typenationalite = new Typenationalite();
 	
 	private AnneesScolaire anneEncoure = new AnneesScolaire();
@@ -52,8 +52,16 @@ public class FraisLogementBean {
 	
 	public String enregistrer(){		
 		enregistrerTypeLogement();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetu�!", null));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès!", "Enregistrement effcetué."));
 		return "frais_logement.xhtml";
+	}
+	
+	public void annuler() {
+	setChoosedTypeLogement(null);
+	typeLogementNation.setMontantTypeLogement(null);
+	typeLogementNation.setCautionTypeLogement(null);
+	typeLogementNonNation.setMontantTypeLogement(null);
+	typeLogementNonNation.setCautionTypeLogement(null);
 	}
 	
 	
@@ -78,9 +86,6 @@ public class FraisLogementBean {
 	}
 	
 	
-	 public String onFlowProcess(FlowEvent event) {
-	            return event.getNewStep();
-	    }
 	
 	
 	public void setService(Iservice service) {
@@ -138,6 +143,14 @@ public class FraisLogementBean {
 
 	public void setListTypeLogementNationalite(List listTypeLogementNationalite) {
 		this.listTypeLogementNationalite = listTypeLogementNationalite;
+	}
+
+	public TypeLogementNationalite getSelectedTypeLogementNationalite() {
+		return selectedTypeLogementNationalite;
+	}
+
+	public void setSelectedTypeLogementNationalite(TypeLogementNationalite selectedTypeLogementNationalite) {
+		this.selectedTypeLogementNationalite = selectedTypeLogementNationalite;
 	}
 
 
