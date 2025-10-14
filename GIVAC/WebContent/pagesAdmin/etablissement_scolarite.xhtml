@@ -8,7 +8,7 @@
 	<ui:define name="body">
 		<h:form id="form">
 			<h1 class="page-title">ETABLISSEMENT SCOLARITE</h1>
-			<p:messages autoUpdate="true" closable="true" showDetail="false" />
+			<p:messages autoUpdate="true" closable="true" showDetail="True" />
 			<div class="widget-content">
 			<p:panel>
 			
@@ -18,14 +18,16 @@
          currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records" rowsPerPageTemplate="5,10,15">
 		<p:ajax event="rowSelect" listener="#{etablisScolariteBean.selectionner}" update=":form" />
 		<f:facet name="header">LISTE DES ETUDIANTS</f:facet>
-		<p:column headerText="Mle" style="width:25%" sortBy="#{tata.etudiants.mle}" filterBy="#{tata.etudiants.mle}" filterMatchMode="contains" filterPlaceholder="Recherche">#{tata.etudiants.mle}</p:column>
+		<p:column headerText="Matricule" style="width:20%" sortBy="#{tata.etudiants.mle}" filterBy="#{tata.etudiants.mle}" filterMatchMode="contains" filterPlaceholder="Recherche">#{tata.etudiants.mle}</p:column>
 		<p:column headerText="Nom" style="width:20%">#{tata.etudiants.nomEtudiant}</p:column>
-		<p:column headerText="Prenoms" style="width:40%">#{tata.etudiants.prenomEtudiant}</p:column>
-		<p:column headerText="Date Naissance" style="width:25%">
-		<p:outputLabel id="dat_nais" value="#{tata.etudiants.datenais}" pattern="dd/MM/yyyy">
+		<p:column headerText="Prenoms" style="width:30%">#{tata.etudiants.prenomEtudiant}</p:column>
+		<p:column headerText="Date de naissance" style="width:25%">
+		<p:outputLabel id="dat_nais" value="#{tata.etudiants.datenais}">
 		<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
 		</p:outputLabel></p:column>
 		<p:column headerText="Nationalité" style="width:20%">#{tata.etudiants.nationalites.libnationalite}</p:column>
+		
+		<p:column headerText="Regime">#{tata.regime.libRegime}</p:column>
 		</p:dataTable>
     <br></br>
     
@@ -78,7 +80,7 @@
              <p:outputLabel/>
             <p:outputLabel/>
              
-            <p:outputLabel for="p_reduc" value="Taux réduction (en %):"  />
+            <p:outputLabel for="p_reduc" value="Taux réduction (en %):"/>
 			<p:inputText id="p_reduc" value="#{etablisScolariteBean.etablScolarite.tauxReduction}" binding="#{etablisScolariteBean.imputTaux}" >
 			<p:ajax event="keyup" listener="#{etablisScolariteBean.calculerMtreduction}" update="mt_reduct"></p:ajax>
 			<f:convertNumber pattern="##,###.###"></f:convertNumber>
@@ -233,7 +235,7 @@
 		</fieldset>
 			<p:toolbar >
 			<f:facet name="right">
-				<p:commandButton value="Enregistrer" action="#{etablisScolariteBean.enregistrer}"  binding="#{etablisScolariteBean.btnValider}" update="annee_grid, ecolage_grid, frais_grid" >
+				<p:commandButton value="Enregistrer" action="#{etablisScolariteBean.enregistrer}"  binding="#{etablisScolariteBean.btnValider}" update="table, annee_grid, ecolage_grid, frais_grid" >
 				<p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm>
 				</p:commandButton>
 				<p:commandButton value="Annuler" action="#{etablisScolariteBean.annuler}" binding="#{etablisScolariteBean.btnAnuler}" update="form" process="@this"> <p:confirm header="Confirmation" message="confirmez-vous l'annulation?"></p:confirm> </p:commandButton>

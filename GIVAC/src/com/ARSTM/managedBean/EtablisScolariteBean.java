@@ -137,7 +137,10 @@ public class EtablisScolariteBean {
 		chargerMontantLogement();
 				//Totaliser les frais
 		totalfrais = etablScolarite.getFraisInscriptionSco().add(etablScolarite.getFraisAssuranceSco().add(etablScolarite.getFraisElearningSco().add(etablScolarite.getFraisTenueCompletSco().add(etablScolarite.getFraisTenueSportSco().add(etablScolarite.getFraisVisiteMedicSco().add(etablScolarite.getFraisRestaurationSco().add(etablScolarite.getFraisOrdinateurSco().add(etablScolarite.getAutreFraisSco().add(etablScolarite.getMontantLogementSco())))))))));
-
+		
+		//Pour éviter le NullPointeur exeption lors de la génération de la facture dans le calcul du montant total
+		etablScolarite.setMontantEcolageSco(new BigDecimal(0));
+		
 		
 		if(inscriptions.getRegime().getCodeRegime() == 2) {
 			//Activer l'ecoage
@@ -172,15 +175,18 @@ public class EtablisScolariteBean {
 			
 			desactiverEcolage();
 			
+			
 			//Pour l'ecolage et echeance
 			etablScolarite.setMtEchance1Sco(totalfrais);
 			etablScolarite.setMtEchance2Eco(null);
 			etablScolarite.setMtEchance3Sco(null);
 			etablScolarite.setMtEchance4Eco(null);
+			
 			etablScolarite.setDateEchance1Sco(ecolage.getDateEchance1());
 			etablScolarite.setDateEchance2Eco(ecolage.getDateEchance2());
 			etablScolarite.setDateEchance3Sco(ecolage.getDateEchance3());
 			etablScolarite.setDateEchance4Eco(ecolage.getDateEchance4());
+			
 			etablScolarite.setDateEtablissementSco(new Date());
 		}
 		chargerMontantLogement();
@@ -215,16 +221,25 @@ public class EtablisScolariteBean {
 		
 		//Charger les frais
 		chargerfrais();
+		//Pour éviter le nulPointeurExeption au cas ou il n'y a pas de réduction
+		etablScolarite.setMtReductionSco(new BigDecimal(0));
 	}
 	
 	
 	public void calculerMtreduction(){
 	etablScolarite.setMtReductionSco((etablScolarite.getMontantEcolageSco().multiply(new BigDecimal(etablScolarite.getTauxReduction()))).divide(new BigDecimal(100)));
+	
+	//Actualiser le montant du premier versement
+	etablScolarite.setMtEchance1Sco( ecolage.getMtEchance1().subtract(etablScolarite.getMtReductionSco()));
 	}
 	
 	
 	public void calculerPourcentage() {
 		etablScolarite.setTauxReduction(etablScolarite.getMtReductionSco().multiply(new BigDecimal(100)).divide(etablScolarite.getMontantEcolageSco()).longValue());
+		
+		//Actualiser le montant du premier versement
+		etablScolarite.setMtEchance1Sco( ecolage.getMtEchance1().subtract(etablScolarite.getMtReductionSco()));
+	
 	}
 	
 	public void activerChamp() {
@@ -245,6 +260,10 @@ public class EtablisScolariteBean {
 	
 	public void exhonererFrais() {
 		if(checkBoxExho.isSelected()){
+			
+			etablScolarite.setMontantEcolageSco(new BigDecimal(0));
+			totalfrais = new BigDecimal(0);
+			
 			etablScolarite.setFraisInscriptionSco(new BigDecimal(0));    
 			etablScolarite.setFraisAssuranceSco(new BigDecimal(0));
 			etablScolarite.setFraisElearningSco(new BigDecimal(0));
@@ -272,8 +291,6 @@ public class EtablisScolariteBean {
 		}
 	}
 	
-	
-	
 	public void enregistrer() throws JRException, IOException {
 		etablScolarite.setEtudiants(etudiants);
 		etablScolarite.setAnneesScolaire(anneEncoure);
@@ -289,10 +306,9 @@ public class EtablisScolariteBean {
 		
 		//Generer Facture
 		genererFacture();
-		ouvrirPDF();
 		annuler();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès!", "Scolarité de l'étudiant établie."));
-		//viderPhoto();
+		ouvrirPDF();
 	}
 	
 	
@@ -302,26 +318,43 @@ public void genererFacture() throws JRException, IOException {
 		nom_fichier = numeroFacture+".pdf";
 		
 		// ✅ 1. Charger le fichier .jasper déjà compilé
-        File reportFile = new File("C:GIVAC/etats/facture_scolarite.jasper");
+        File reportFile = new File("C:/GIVAC/etats/facture_scolarite.jasper");
         JasperReport jasperReport = (JasperReport) JRLoader.loadObject(reportFile);
 		
 		Map<String,Object> parameters = new HashMap<String,Object>();		
+		  
+		//Informations de l'étudiant
 		  parameters.put("num_facture",numeroFacture);
-		  //parameters.put("annee_academique",anneEncoure.getLibAnneeScolaire());
-		  parameters.put("nom",etudiants.getNomEtudiant()+" "+etudiants.getPrenomEtudiant());
+		  parameters.put("annee_academique",anneEncoure.getLibAnneeScolaire());
+		  parameters.put("num_facture",numeroFacture);
+		  parameters.put("matricule",etudiants.getMle());
+		  parameters.put("regime",inscriptions.getRegime().getLibRegime());
+		  parameters.put("nom",etudiants.getNomEtudiant());
 		  parameters.put("prenoms",etudiants.getPrenomEtudiant());
-		  parameters.put("filiere","");
+		  parameters.put("filiere",selectedInscription.getSection().getMention().getFilieres().getAbrevFiliere());
 		  parameters.put("section",selectedInscription.getSection().getAbrevSection());
-		 
-		  parameters.put("versement_1",ecolage.getMtEchance1());
-		  parameters.put("versement_2",ecolage.getMtEchance1() );
-		  parameters.put("versement_3",ecolage.getMtEchance1());
-		  parameters.put("versement_4",ecolage.getMtEchance1());
 		
-		  parameters.put("date_1",ecolage.getDateEchance1());
-		  parameters.put("date_2",ecolage.getDateEchance2());
-		  parameters.put("date_3",ecolage.getDateEchance3());
-		  parameters.put("date_4",ecolage.getDateEchance4());
+		  
+		 //Scolarite et frais
+		  
+		  parameters.put("montant_ecolage",etablScolarite.getMontantEcolageSco());
+		  parameters.put("total_frais",totalfrais);
+		  parameters.put("tau_reduction",etablScolarite.getTauxReduction());
+		  parameters.put("montant_reduction",etablScolarite.getMtReductionSco());
+		  
+		  //Lorsque le montant de la scolarité est null
+		  parameters.put("total_a_regler",etablScolarite.getMontantEcolageSco().add(totalfrais).subtract(etablScolarite.getMtReductionSco()));
+		
+		  //chéances
+		  parameters.put("versement_1",etablScolarite.getMtEchance1Sco());
+		  parameters.put("versement_2",etablScolarite.getMtEchance2Eco());
+		  parameters.put("versement_3",etablScolarite.getMtEchance3Sco());
+		  parameters.put("versement_4",etablScolarite.getMtEchance4Eco());
+		
+		  parameters.put("date_1", etablScolarite.getDateEchance1Sco());
+		  parameters.put("date_2", etablScolarite.getDateEchance2Eco());
+		  parameters.put("date_3", etablScolarite.getDateEchance3Sco());
+		  parameters.put("date_4", etablScolarite.getDateEchance4Eco());
 		 
 		
 		// Remplissage du rapport compilé
@@ -413,11 +446,20 @@ public void ouvrirPDF() throws IOException {
 	}
 	
 	public void viderEcheance() {
+		
+	//Pour l'ecolage et echeance
+		etablScolarite.setMtEchance1Sco(new BigDecimal(0));
+		etablScolarite.setMtEchance2Eco(new BigDecimal(0));
+		etablScolarite.setMtEchance3Sco(new BigDecimal(0));
+		etablScolarite.setMtEchance4Eco(new BigDecimal(0));
+		
+		
 		//les �ch�ances
-		etablScolarite.setMtEchance1Sco(null);
-		etablScolarite.setMtEchance2Eco(null);
-		etablScolarite.setMtEchance3Sco(null);
-		etablScolarite.setMtEchance4Eco(null);
+		//etablScolarite.setMtEchance1Sco(null);
+		//etablScolarite.setMtEchance2Eco(null);
+		//etablScolarite.setMtEchance3Sco(null);
+		//etablScolarite.setMtEchance4Eco(null);
+		
 		etablScolarite.setDateEchance1Sco(null);
 		etablScolarite.setDateEchance2Eco(null);
 		etablScolarite.setDateEchance3Sco(null);
