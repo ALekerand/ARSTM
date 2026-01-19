@@ -54,6 +54,12 @@
 	page ECUE : la tabulation après le champs TP, le libellé et abreviation sont reinitialisé
 	
 	page disponibilite_cours: Ajouter les jours de la disponiblilité dans le tableau recap
+
+======================================= 14/10/2025 =========================================
+
+Tous les code(id)sont en séquentiel
+l'association emploitemp a été remplacer par une table EMPLOITEMPS
+
 		
 
 

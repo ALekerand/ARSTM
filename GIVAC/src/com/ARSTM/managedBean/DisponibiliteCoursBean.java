@@ -21,8 +21,7 @@ import com.ARSTM.hybride.PlannigHybryde;
 import com.ARSTM.model.AnneesScolaire;
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Ecue;
-import com.ARSTM.model.Emploitemps;
-import com.ARSTM.model.EmploitempsId;
+import com.ARSTM.model.Enploistemps;
 import com.ARSTM.model.Enseignant;
 import com.ARSTM.model.Enseigner;
 import com.ARSTM.model.Filieres;
@@ -124,11 +123,11 @@ public class DisponibiliteCoursBean {
 	
 	
 	private AnneesScolaire anneesScolaire = new AnneesScolaire();
-	private List<Emploitemps> listEmploitemps = new ArrayList<>();
+	private List<Enploistemps> listEmploitemps = new ArrayList<>();
 	private ArrayList<Seance> listSeance = new ArrayList<>();
 
 	
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 			private CommandButton btnValider = new CommandButton();
 			private CommandButton btnAnnuler = new CommandButton();
 			private Spinner spinnerDebLun  = new Spinner();
@@ -227,12 +226,12 @@ public class DisponibiliteCoursBean {
 		chargerPlanning();
 		
 		for (PlannigHybryde planHyb : listPlanningHyb) {
-			Emploitemps emploiT = new Emploitemps();
-			EmploitempsId emploitempsId = new EmploitempsId();
+			Enploistemps emploiT = new Enploistemps();
+			//EmploitempsId emploitempsId = new EmploitempsId();
 			
-			emploitempsId.setCodeEnseigner(choosedEnseigner.getCodeEnseigner());
-			emploitempsId.setCodeJour(planHyb.getJourSemaine()-1);//On ajoute pcq calendar commence par 0
-			emploiT.setId(emploitempsId);
+			//emploitempsId.setCodeEnseigner(choosedEnseigner.getCodeEnseigner());
+			//emploitempsId.setCodeJour(planHyb.getJourSemaine()-1);//On ajoute pcq calendar commence par 0
+			//emploiT.setId(emploitempsId);
 			
 			emploiT.setEnseigner(getChoosedEnseigner());
 			emploiT.setJourSemaine((JourSemaine) getService().getObjectById((planHyb.getJourSemaine()-1), "JourSemaine"));
@@ -245,18 +244,18 @@ public class DisponibiliteCoursBean {
 	
 	
 	public void enregistrerEmploiT(){
-		for (Emploitemps varEmploiT : listEmploitemps) {
+		for (Enploistemps varEmploiT : listEmploitemps) {
 			getService().addObject(varEmploiT);
 			choosedEnseigner.setEtatDispo(true);//Pour marquer que le planning hebdo de l'enseignant est ok
 			getService().updateObject(choosedEnseigner);
 		}
 		//Reinitialiser la page
-		initialiser();//désactiver les champs
+		initialiser();//dï¿½sactiver les champs
 		listeEnseigner.clear();
 		listEmploitemps.clear();
 		chargerEcue(); // actualiser la liste des ecues
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 	}
 
 	public void chargerPlanning(){
@@ -426,7 +425,7 @@ public class DisponibiliteCoursBean {
 		vhMardi=0;
 		vhMardi = getHfin2() - getHdebut2();
 		
-		System.out.println("Mtéhode mardi lancée VH MARDI = "+vhMardi);
+		System.out.println("Mtï¿½hode mardi lancï¿½e VH MARDI = "+vhMardi);
 		return vhMardi;
 	}
 	
@@ -540,11 +539,11 @@ public class DisponibiliteCoursBean {
 			this.choosedMention = choosedMention;
 		}
 
-		public List<Emploitemps> getListEmploitemps() {
+		public List<Enploistemps> getListEmploitemps() {
 			return listEmploitemps;
 		}
 
-		public void setListEmploitemps(List<Emploitemps> listEmploitemps) {
+		public void setListEmploitemps(List<Enploistemps> listEmploitemps) {
 			this.listEmploitemps = listEmploitemps;
 		}
 

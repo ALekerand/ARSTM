@@ -103,7 +103,7 @@ public class AttributionEcueBean {
 	private List listEcole = new ArrayList<>();
 	private List listFiliere = new ArrayList<>();
 	
-	// Contrôle de composant
+	// Contrï¿½le de composant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
@@ -122,7 +122,7 @@ public void initialiser(){
 	
 	public AnneesScolaire recupererAnne(){
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
-		System.out.println("Année:"+anneEncoure.getLibAnneeScolaire());
+		System.out.println("Annï¿½e:"+anneEncoure.getLibAnneeScolaire());
 		return anneEncoure;
 	}
 
@@ -141,7 +141,7 @@ public void initialiser(){
  }
  
  
- public List<Ecue> chargerListECUEActualisee() {
+ public List<Ecue> chargerListECUEActualisee(){
 	 List<Ecue> listTempo = new ArrayList<>();
 	 List<Ecue> maList = new ArrayList<>();
 	 
@@ -158,17 +158,11 @@ public void initialiser(){
 		}
 	}
 	 
-	 
 	 listeEcue.removeAll(listTempo); 
-	 
-	 
 	 System.out.println("====Taille de la liste Tempom :"+listTempo.size());
-	// listeEcue.remove(listTempo);
-	 
-	 
+	 	// listeEcue.remove(listTempo);
 	 System.out.println("====Taille de la liste des Ecue :"+listeEcue.size());
 	return listeEcue;
-
  }
 		
 	
@@ -186,6 +180,7 @@ public void chargerFiliere(){
 }
 
 }
+
 
 public void chargerMention(){
 	listMention.clear();
@@ -240,28 +235,24 @@ public void chargerEcueMention(){
 		enseigner.setEtatDispo(false);
 		enseigner.setDateEnseigner(new Date());
 		service.addObject(enseigner);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 		chargerListEcueAttibues();
 		chargerListECUEActualisee();
 		
 		viderEnseignant(selectedEnseignant);
 		viderSemetres(selectedSemestreLmd);
 	}
+	
 		
 	public void lierSemestre(){
 
 	}
 	
-	
-
 	public void annuler() {
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		viderEnseigner(enseigner);
-		
-
-		
 	}
 	
 	public void viderEnseigner(Enseigner objEnseig) {
@@ -319,13 +310,11 @@ public void chargerEcueMention(){
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuï¿½e!", null));
 	}
 	
 	
-	
-	
-	
+
 	
 	/**************************ACCESSEURS*************************/
 	
@@ -605,5 +594,4 @@ public void chargerEcueMention(){
 		this.listeEnseigner = listeEnseigner;
 	}
 
-	
 }

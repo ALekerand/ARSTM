@@ -2,7 +2,6 @@ package com.ARSTM.managedBean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,18 +18,15 @@ import org.springframework.stereotype.Component;
 import com.ARSTM.hybride.PlannigHybryde;
 import com.ARSTM.model.AnneesScolaire;
 import com.ARSTM.model.Ecole;
-import com.ARSTM.model.Emploitemps;
-import com.ARSTM.model.EmploitempsId;
+import com.ARSTM.model.Enploistemps;
 import com.ARSTM.model.Enseigner;
 import com.ARSTM.model.Filieres;
 import com.ARSTM.model.JourSemaine;
 import com.ARSTM.model.Seance;
 import com.ARSTM.model.Section;
-//import com.ARSTM.requetes.ReqEnseigner;
 import com.ARSTM.requetes.ReqProgression;
 import com.ARSTM.requetes.RequeteFiliere;
 import com.ARSTM.service.Iservice;
-import com.sun.faces.taglib.html_basic.OutputTextTag;
 
 @Component
 @Scope("session")
@@ -97,11 +93,11 @@ public class DisponibiliteCoursoldBean {
 	
 	
 	private AnneesScolaire anneesScolaire = new AnneesScolaire();
-	private List<Emploitemps> listEmploitemps = new ArrayList<>();
+	private List<Enploistemps> listEmploitemps = new ArrayList<>();
 	private ArrayList<Seance> listSeance = new ArrayList<>();
 
 	
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 			private CommandButton btnValider = new CommandButton();
 			private CommandButton btnAnnuler = new CommandButton();
 			private Spinner spinnerDebLun  = new Spinner();
@@ -147,17 +143,11 @@ public class DisponibiliteCoursoldBean {
 				//Vider les listes avant rechargement
 				listeFiliere.clear();
 				listeSection.clear();
-				//Charger la liste des filières concernées
-				//listeFiliere = requeteFiliere.recupFiliereByEcole(choosedEcole.getCodeEcole());
 			}
 			
 			
 			public void chargerSection(){	
-				//Vider la liste des sections
-				//listeSection.clear();
-				//for(Section varSection: choosedFiliere.getSections() ){
-					//listeSection.add(varSection);
-				//}
+				
 			}
 			
 	public List<Enseigner> chargerListeEnseignant(){
@@ -183,12 +173,12 @@ public class DisponibiliteCoursoldBean {
 		chargerPlanning();
 		
 		for (PlannigHybryde planHyb : listPlanningHyb) {
-			Emploitemps emploiT = new Emploitemps();
-			EmploitempsId emploitempsId = new EmploitempsId();
+			Enploistemps emploiT = new Enploistemps();
+			//EmploitempsId emploitempsId = new EmploitempsId();
 			
-			emploitempsId.setCodeEnseigner(choosedEnseigner.getCodeEnseigner());
-			emploitempsId.setCodeJour(planHyb.getJourSemaine()-1);//On ajoute pcq calendar commence par 0
-			emploiT.setId(emploitempsId);
+			//emploitempsId.setCodeEnseigner(choosedEnseigner.getCodeEnseigner());
+			//emploitempsId.setCodeJour(planHyb.getJourSemaine()-1);//On ajoute pcq calendar commence par 0
+			//emploiT.setId(emploitempsId);
 			
 			emploiT.setEnseigner(getChoosedEnseigner());
 			emploiT.setJourSemaine((JourSemaine) getService().getObjectById((planHyb.getJourSemaine()-1), "JourSemaine"));
@@ -200,17 +190,17 @@ public class DisponibiliteCoursoldBean {
 	
 	
 	public void enregistrerEmploiT(){
-		for (Emploitemps varEmploiT : listEmploitemps) {
+		for (Enploistemps varEmploiT : listEmploitemps) {
 			getService().addObject(varEmploiT);
 			choosedEnseigner.setEtatDispo(true);//Pour marquer que le planning hebdo de l'enseignant est ok
 			getService().updateObject(choosedEnseigner);
 		}
 		//Reinitialiser la page
-		initialiser();//désactiver les champs
+		initialiser();//dï¿½sactiver les champs
 		listeEnseigner.clear();
 		listEmploitemps.clear();
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 	}
 
 	public void chargerPlanning(){
@@ -363,7 +353,7 @@ public class DisponibiliteCoursoldBean {
 	
 	
 	public int calculerVHLundi(){
-		System.out.println(">>>>>>>>>>>>>>> Méthode de calcul de VH calculé");//Clean after
+		System.out.println(">>>>>>>>>>>>>>> Mï¿½thode de calcul de VH calculï¿½");//Clean after
 		vhLundi=0;
 		vhLundi = getHfin1() - gethDebut1();
 		System.out.println(">>>>> Debut: " +hDebut1 );//Clean after
@@ -452,11 +442,11 @@ public class DisponibiliteCoursoldBean {
 		}
 
 		
-		public List<Emploitemps> getListEmploitemps() {
+		public List<Enploistemps> getListEmploitemps() {
 			return listEmploitemps;
 		}
 
-		public void setListEmploitemps(List<Emploitemps> listEmploitemps) {
+		public void setListEmploitemps(List<Enploistemps> listEmploitemps) {
 			this.listEmploitemps = listEmploitemps;
 		}
 

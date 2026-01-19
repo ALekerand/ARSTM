@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ARSTM.model.Emploitemps;
+import com.ARSTM.model.Enploistemps;
 import com.ARSTM.model.Filieres;
 
 @Transactional
@@ -19,7 +19,7 @@ public class ReqEmploisTemps {
 	
 	public List<Filieres> recupEmploisTByEnsengner(int codeEnseigner){
 	String query = "SELECT `emploitemps`.* FROM `emploitemps` WHERE (`emploitemps`.`CODE_ENSEIGNER` ='codeEnseigner') ORDER BY `emploitemps`.`CODE_JOUR` DESC";
-	List liste = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Emploitemps.class).list();		
+	List liste = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Enploistemps.class).list();		
 	return liste;
 	}
 
