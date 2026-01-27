@@ -25,7 +25,7 @@ public class SemestreBean {
 	private List<Semestre> listSemestre = new ArrayList<>();
 	private boolean console;  
 	
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
 	
@@ -35,7 +35,7 @@ public class SemestreBean {
 		actualiserList();
 		vider(semestre);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©!", null));
 	}
 
 	public void annuler() {
@@ -72,7 +72,7 @@ public class SemestreBean {
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuï¿½e!", null));
 	}
 	
 	

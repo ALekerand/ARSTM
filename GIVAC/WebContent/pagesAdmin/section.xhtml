@@ -56,7 +56,11 @@
 									value="#{sectionBean.section.abrevSection}" required="true"
 									styleClass="upercase" />
 
-
+							<p:outputLabel for="antenne" value="Antenne"/>
+							<p:selectOneMenu id="antenne" value="#{sectionBean.idPole}" converter="#{entityConverter}" style="width:50px">
+							<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
+							<f:selectItems value="#{sectionBean.listAntenne}" var="tata" itemLabel="#{tata.listAntenne}" itemValue="#{tata.idPole}"></f:selectItems>
+						    </p:selectOneMenu>
 
 							</h:panelGrid>
 

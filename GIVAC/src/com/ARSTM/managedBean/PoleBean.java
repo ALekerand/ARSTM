@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.ARSTM.model.Pole;
-import com.ARSTM.model.Sexe;
+import com.ARSTM.model.Antenne;
 import com.ARSTM.service.Iservice;
 
 @Component
@@ -20,55 +19,51 @@ import com.ARSTM.service.Iservice;
 public class PoleBean {
 	@Autowired
 	Iservice service;
-	private Pole pole = new Pole();
-	private Pole selectedPole = new Pole();
-	private List listPole = new ArrayList<>();
+	private Antenne antenne = new Antenne();
+	private Antenne selectedAntenne = new Antenne();
+	private List listAntenne = new ArrayList<>();
 	
 	// Contr�le de coposant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
 	
 	
-	public void enregistrerSexe(){
-		getService().addObject(pole);
+	public void enregistrer(){
+		getService().addObject("Antenne");
 		actualiserList();
-		vider(pole);
+		vider(antenne);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetu�!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
 	}
 
 	public void annuler() {
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
-		vider(pole);
+		vider(antenne);
 		actualiserList();
 	}
 	
-	public void vider(Pole objpole) {
-		objpole.setCodePole(null);
-		objpole.setLibellePole(null);
-		objpole.setMailPole(null);
-		objpole.setTelephonePole(null);
-		objpole.setCodePole(null);
+	public void vider(Antenne objAntenne) {
+		objAntenne.setCodePole(null);
+		objAntenne.setLibellePole(null);
+		objAntenne.setMailPole(null);
+		objAntenne.setTelephonePole(null);
+		objAntenne.setCodePole(null);
 	}
 	
 	public void actualiserList(){
-			listPole.clear();
-			listPole = getService().getObjects("Pole");
+			listAntenne.clear();
+			listAntenne = getService().getObjects("Antenne");
 		}
 	
 	public void selectionner(){
-		setPole(selectedPole);
+		setAntenne(selectedAntenne);
 		btnSuprimer.setDisabled(false);
 		btnValider.setDisabled(true);
 	}
 	
 	public void supprimer() {
-		Pole poletemp = new Pole();
-		//poletemp.setCodeSexe(selectedSexe.getCodeSexe());
-		//poletemp.setLibSexe(selectedSexe.getLibSexe());
-		//getService().deleteObject(sexetemp);
-		//viderSexe(sexe);
+		Antenne antenneTemp = new Antenne();
 		actualiserList();
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
@@ -107,29 +102,27 @@ public class PoleBean {
 		this.btnSuprimer = btnSuprimer;
 	}
 
-
-	public Pole getPole() {
-		return pole;
+	public Antenne getAntenne() {
+		return antenne;
 	}
 
-	public void setPole(Pole pole) {
-		this.pole = pole;
+	public void setAntenne(Antenne antenne) {
+		this.antenne = antenne;
 	}
 
-	public Pole getSelectedPole() {
-		return selectedPole;
+	public Antenne getSelectedAntenne() {
+		return selectedAntenne;
 	}
 
-	public void setSelectedPole(Pole selectedPole) {
-		this.selectedPole = selectedPole;
+	public void setSelectedAntenne(Antenne selectedAntenne) {
+		this.selectedAntenne = selectedAntenne;
 	}
 
-	public List getListPole() {
-		return listPole;
+	public List getListAntenne() {
+		return listAntenne;
 	}
 
-	public void setListPole(List listPole) {
-		this.listPole = listPole;
+	public void setListAntenne(List listAntenne) {
+		this.listAntenne = listAntenne;
 	}
-
 }

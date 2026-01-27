@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import com.ARSTM.model.Domaine;
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Filieres;
-import com.ARSTM.model.Pole;
 import com.ARSTM.model.Tformation;
 import com.ARSTM.requetes.ReqEcole;
 import com.ARSTM.requetes.RequeteFiliere;
@@ -37,21 +36,15 @@ public class FiliereBean {
 	private List listFiliere = new ArrayList<>();
 	private List listeFiliereByEcole = new ArrayList<>();
 	private Ecole choosedEcole = new Ecole();
-	private Pole pole = new Pole();
+	private int codeEcole;
 	private List listEcole = new ArrayList<>();
 	private int codeDomaine;
-	private int idPole;
 	private Domaine choosedDoamine = new Domaine();
 	private List listeDomaine = new ArrayList<>();
-	private List<Pole> listPole = new ArrayList<Pole>();
-	
 	private Tformation choosedTformation = new Tformation();
 	private List listTformation = new ArrayList<>();
 	
-	
-	
-	
-	// Contr�le de composant
+	// Contrôle de composant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
@@ -67,19 +60,21 @@ public class FiliereBean {
 	}
 		
 
-		public List<Filieres> chargerListFilbyEcole(){
-			listeFiliereByEcole.clear();
-			for (Filieres filObject : requeteFiliere.recupFiliereByEcole(choosedEcole.getCodeEcole(), choosedTformation.getCodeTformation())){
-				listeFiliereByEcole.add(filObject);
-			}
-			return listeFiliereByEcole;
-		}
+	/*
+	 * public List<Filieres> chargerListFilbyEcole(){
+	 * System.out.println("====== la methode du chargement"); choosedEcole = (Ecole)
+	 * service.getObjectById(codeEcole, "Ecole"); listeFiliereByEcole.clear(); for
+	 * (Filieres filObject :
+	 * requeteFiliere.recupFiliereByEcole(choosedEcole.getCodeEcole(),
+	 * choosedTformation.getCodeTformation())){ listeFiliereByEcole.add(filObject);
+	 * } return listeFiliereByEcole; }
+	 */
 		
 		
-		public void chargerEcole(){
-			listEcole.clear();
-			listEcole = reqEcole.recupEcoleByPole(idPole);
-		}
+		/*
+		 * public void chargerEcole(){ listEcole.clear(); //listEcole =
+		 * reqEcole.recupEcoleByPole(idPole); listEcole = service.getObjects("Ecole"); }
+		 */
 		
 		public void chargerFiliere(){
 			listFiliere.clear();
@@ -96,7 +91,7 @@ public class FiliereBean {
 		actualiserList();
 		vider(filieres);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetu�!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
 	}
 
 	public void annuler() {
@@ -104,6 +99,12 @@ public class FiliereBean {
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		vider(filieres);
+		setCodeDomaine(0);
+		setCodeEcole(0);
+		choosedTformation.setCodeTformation(0);
+		choosedTformation.setAbrevTformation(null);
+		choosedTformation.setFiliereses(null);
+		choosedTformation.setLibTformation(null);
 		actualiserList();
 	}
 	
@@ -212,16 +213,15 @@ public class FiliereBean {
 		this.listFiliere = listFiliere;
 	}
 
-	public Ecole getChoosedEcole() {
-		return choosedEcole;
-	}
-
-	public void setChoosedEcole(Ecole choosedEcole) {
-		this.choosedEcole = choosedEcole;
-	}
+	/*
+	 * public Ecole getChoosedEcole() { return choosedEcole; }
+	 * 
+	 * public void setChoosedEcole(Ecole choosedEcole) { this.choosedEcole =
+	 * choosedEcole; }
+	 */
 
 	public List getListEcole() {
-		return listEcole;
+		return listEcole = service.getObjects("Ecole");
 	}
 
 	public void setListEcole(List listEcole) {
@@ -240,19 +240,9 @@ public class FiliereBean {
 		return inputFiliere2;
 	}
 
-
-
-
-
-
 	public void setInputFiliere2(InputText inputFiliere2) {
 		this.inputFiliere2 = inputFiliere2;
 	}
-
-
-
-
-
 
 	public InputText getInputAbrevFiliere() {
 		return inputAbrevFiliere;
@@ -271,7 +261,7 @@ public class FiliereBean {
 	}
 
 	public List getListeFiliereByEcole() {
-		return listeFiliereByEcole;
+		return listeFiliereByEcole = service.getObjects("Filieres");
 	}
 
 	public void setListeFiliereByEcole(List listeFiliereByEcole) {
@@ -294,29 +284,14 @@ public class FiliereBean {
 		this.btnModifier = btnModifier;
 	}
 
-
-
-
-
-
 	public Domaine getChoosedDoamine() {
 		
 		return choosedDoamine;
 	}
 
-
-
-
-
-
 	public void setChoosedDoamine(Domaine choosedDoamine) {
 		this.choosedDoamine = choosedDoamine;
 	}
-
-
-
-
-
 
 	public List getListeDomaine() {
 			listeDomaine = getService().getObjects("Domaine");
@@ -356,22 +331,28 @@ public class FiliereBean {
 		this.codeDomaine = codeDomaine;
 	}
 
-	public List<Pole> getListPole() {
-		return listPole = service.getObjects("Pole");
-	}
 
-	public void setListPole(List<Pole> listPole) {
-		this.listPole = listPole;
+	public int getCodeEcole() {
+		return codeEcole;
 	}
 
 
-	public int getIdPole() {
-		return idPole;
+	public void setCodeEcole(int codeEcole) {
+		this.codeEcole = codeEcole;
 	}
 
+	/*
+	 * public List<Pole> getListPole() { return listPole =
+	 * service.getObjects("Pole"); }
+	 * 
+	 * public void setListPole(List<Pole> listPole) { this.listPole = listPole; }
+	 */
 
-	public void setIdPole(int idPole) {
-		this.idPole = idPole;
-	}
 
+	/*
+	 * public int getIdPole() { return idPole; }
+	 * 
+	 * 
+	 * public void setIdPole(int idPole) { this.idPole = idPole; }
+	 */
 }

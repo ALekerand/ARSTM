@@ -16,11 +16,7 @@
 					<br />
 							<h:panelGrid id="ecole_grid" columns="4" cellpadding="8">
 							
-							<p:outputLabel for="pol" value="Pôle"/>
-							<p:selectOneMenu id="pol" value="#{ecoleBean.idPole}" converter="#{entityConverter}" style="width:50px">
-							<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
-							<f:selectItems value="#{ecoleBean.listPole}" var="tata" itemLabel="#{tata.libellePole}" itemValue="#{tata.idPole}"></f:selectItems>
-						    </p:selectOneMenu>
+							
 							
 							<p:outputLabel for="nom_ecole" value="Ecole"/>
 							<p:inputText id="nom_ecole" value="#{ecoleBean.ecole.nomEcole}"
@@ -67,7 +63,7 @@
 						<f:facet name="header">LISTE DES ECOLES</f:facet>
 						<p:column headerText="Libellé Ecole" style="width:40%">#{tata.nomEcole}</p:column>
 						<p:column headerText="Abréviation Ecole" style="width:30%">#{tata.abrevEcole}</p:column>
-						<p:column headerText="Pôle" style="width:30%">#{tata.pole.libellePole}</p:column>
+						<!-- <p:column headerText="Pôle" style="width:30%">#{tata.pole.libellePole}</p:column> -->
 					</p:dataTable>
 
 			</div>

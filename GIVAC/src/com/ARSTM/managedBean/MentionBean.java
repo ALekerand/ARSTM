@@ -17,7 +17,6 @@ import com.ARSTM.model.Cycle;
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Filieres;
 import com.ARSTM.model.Mention;
-import com.ARSTM.model.Pole;
 import com.ARSTM.requetes.ReqEcole;
 import com.ARSTM.requetes.RequeteFiliere;
 import com.ARSTM.requetes.RequeteFiliere2;
@@ -47,7 +46,7 @@ public class MentionBean {
 	private List listEcole = new ArrayList<>();
 	private List listFiliere = new ArrayList<>();
 	private List listCycle = new ArrayList<>();
-	private List<Pole> listPole = new ArrayList<Pole>();
+	//private List<Pole> listPole = new ArrayList<Pole>();
 	private int idPole;
 	private String cb_niveau ;
 	
@@ -373,11 +372,10 @@ public void chargerMention(){
 		this.idPole = idPole;
 	}
 
-	public List<Pole> getListPole() {
-		return listPole = service.getObjects("Pole");
-	}
-
-	public void setListPole(List<Pole> listPole) {
-		this.listPole = listPole;
-	}
+	/*
+	 * public List<Pole> getListPole() { return listPole =
+	 * service.getObjects("Pole"); }
+	 * 
+	 * public void setListPole(List<Pole> listPole) { this.listPole = listPole; }
+	 */
 }

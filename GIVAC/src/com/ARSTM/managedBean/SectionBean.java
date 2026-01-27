@@ -1,4 +1,4 @@
-/*package com.ARSTM.managedBean;
+package com.ARSTM.managedBean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,7 +47,7 @@ public class SectionBean {
 	private List<Ecole> listEcole = new ArrayList<>();
 	private List<Section> listSection = new ArrayList<>();
 	
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
 	
@@ -73,7 +73,7 @@ public class SectionBean {
 		selectedMatieres.clear();
 		chargerSection();
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 		return "pages/section?faces-redirect";
 	}
 
@@ -116,7 +116,7 @@ public class SectionBean {
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuï¿½e!", null));
 	}
 	
 	
@@ -149,12 +149,12 @@ public class SectionBean {
 		listeFiliere.clear();
 		listeFiliere = getService().getObjects("Filieres");
 		listSection.clear();
-		//Charger la liste des filières concernées
+		//Charger la liste des filiï¿½res concernï¿½es
 		try {
 			listeFiliere = requeteFiliere.recupFiliereByEcole(choosedEcole.getCodeEcole());
 		} catch (NullPointerException npe) {
 			// TODO Auto-generated catch block
-			 FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Le choix d'école est nécessaire", null);
+			 FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Le choix d'ï¿½cole est nï¿½cessaire", null);
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
@@ -332,4 +332,3 @@ public class SectionBean {
 	}
 
 }
-*/

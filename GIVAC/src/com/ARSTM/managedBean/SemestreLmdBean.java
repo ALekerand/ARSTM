@@ -27,7 +27,7 @@ public class SemestreLmdBean {
 	private SemestreLmd selectedSemestrelmd = new SemestreLmd();
 	private List listSemestrelmd = new ArrayList<>();
 	
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
@@ -45,7 +45,7 @@ public void initialiser(){
 		actualiserList();
 		vider(semestrelmd);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©!", null));
 	}
 	
 	public void modifier(){
@@ -53,7 +53,7 @@ public void initialiser(){
 		vider(semestrelmd);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuÃ©e!", null));
 	}
 
 	public void annuler() {
@@ -94,7 +94,7 @@ public void initialiser(){
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuï¿½e!", null));
 	}
 	
 	

@@ -11,30 +11,16 @@
 			<h1 class="page-title">PARAMRTRAGE DES FILIERES</h1>
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
-				<!-- <h:form id="form"> -->
 				<p:panel header="Enregistrement">
 					<br />
 			<h:panelGrid id="filiere_grid" columns="4" cellpadding="10">
 			
-			<p:outputLabel for="pol" value="Pôle"/>
-			<p:selectOneMenu id="pol" value="#{filiereBean.idPole}" converter="#{entityConverter}" style="width:50px">
-			<p:ajax listener="#{filiereBean.chargerEcole}" event="change" process="@this" update="ecol"/>
-			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
-			<f:selectItems value="#{filiereBean.listPole}" var="tata" itemLabel="#{tata.libellePole}" itemValue="#{tata.idPole}"></f:selectItems>
-		    </p:selectOneMenu>
-		    
-		    <p:outputLabel />
-		    <p:outputLabel />
-						
 			<p:outputLabel for="ecol" value="Ecole"/>
-			<p:selectOneMenu id="ecol" value="#{filiereBean.choosedEcole}" converter="#{entityConverter}" required="true">
-			<p:ajax event="change" process="@this"/>
+			<p:selectOneMenu id="ecol" value="#{filiereBean.codeEcole}" required="true">
+			<p:ajax event="change" process="@this" /> 
 			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
-			<f:selectItems value="#{filiereBean.listEcole}" var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+			<f:selectItems value="#{filiereBean.listEcole}" var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata.codeEcole}"></f:selectItems>
 		    </p:selectOneMenu>
-		    
-		    <p:outputLabel />
-		    <p:outputLabel />
 		    
 		    <p:outputLabel for="dom" value="Domaine"/>
 			<p:selectOneMenu id="dom" value="#{filiereBean.codeDomaine}" required="true">
@@ -42,12 +28,9 @@
 			<f:selectItems value="#{filiereBean.listeDomaine}" var="tata" itemLabel="#{tata.libDomaine}" itemValue="#{tata.codeDomaine}"></f:selectItems>
 		    </p:selectOneMenu>
 		    
-		    <p:outputLabel />
-		    <p:outputLabel />
-		    
 		    <p:outputLabel for="tform" value="Type formation"/>
 			<p:selectOneMenu id="tform" value="#{filiereBean.choosedTformation}" converter="#{entityConverter}" required="true">
-			<p:ajax event="change" process="@this"/>
+			<p:ajax event="change" process="@this" listener="#{filiereBean.chargerListFilbyEcole}"/>
 			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
 			<f:selectItems value="#{filiereBean.listTformation}" var="tata" itemLabel="#{tata.abrevTformation}" itemValue="#{tata}"></f:selectItems>
 		    </p:selectOneMenu>
@@ -83,7 +66,7 @@
 						</p:commandButton>
 
 						<p:commandButton value="Annuler" action="#{filiereBean.annuler}"
-							update="form">
+							update="form" process="@this">
 						</p:commandButton>
 						
 						<p:commandButton value="Modifier"
@@ -116,6 +99,7 @@
 					<f:facet name="header">LISTE DES FILIERES</f:facet>
 					<p:column headerText="Libellé filière" style="width:70%" sortBy="#{tata.nomFiliere}">#{tata.nomFiliere}</p:column>
 					<p:column headerText="Abréviation filière" style="width:30%">#{tata.abrevFiliere}</p:column>
+					<p:column headerText="Ecole" style="width:30%" sortBy="#{tata.ecole.abrevEcole}">#{tata.ecole.abrevEcole} </p:column>
 				</p:dataTable>
 				<!-- </h:form> -->
 
