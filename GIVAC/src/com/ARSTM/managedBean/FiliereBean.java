@@ -129,7 +129,7 @@ public class FiliereBean {
 	public void actualiserList(){
 			listFiliere.clear();
 			listFiliere = getService().getObjects("Filieres");
-			chargerListFilbyEcole();
+			//chargerListFilbyEcole();
 		}
 	
 	public void selectionner(){

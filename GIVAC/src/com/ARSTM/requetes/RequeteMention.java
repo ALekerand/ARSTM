@@ -17,8 +17,7 @@ public class RequeteMention {
 	SessionFactory sessionFactory;
 	
 	
-	public List<Mention> recupMentionByEcoleFiliere(int codeFiliere){
-	//String query =	"SELECT `filieres`.* FROM `filieres` WHERE (`filieres`.`CODE_ECOLE` = '"+codeEcole+"')";
+	public List<Mention> recupMentionByFiliere(int codeFiliere){
 	String query = "SELECT `mention`.* FROM `mention` WHERE ((`mention`.`CODE_FILIERE` ='"+codeFiliere+"'))";
 	List liste = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Mention.class).list();		
 	return liste;

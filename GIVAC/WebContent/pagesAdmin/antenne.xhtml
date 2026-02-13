@@ -15,13 +15,13 @@
 				
 				<h:panelGrid id="grid_pole" columns="4" cellpadding="10">
 					<h:outputLabel value="Antenne" for="lib_pole"/>
-					<h:inputText id="lib_pole"  value="#{poleBean.pole.libellePole}" required="true" />
+					<h:inputText id="lib_pole"  value="#{antenneBean.antenne.libellePole}" required="true" />
 				
 					<h:outputLabel value="Telephone" for="tel_pole"/>
-					<h:inputText id="tel_pole"  value="#{poleBean.pole.telephonePole}"/>
+					<h:inputText id="tel_pole"  value="#{antenneBean.antenne.telephonePole}"/>
 			
 					<h:outputLabel value="Mail" for="mail_pole"/>
-					<h:inputText id="mail_pole"  value="#{poleBean.pole.mailPole}"/>
+					<h:inputText id="mail_pole"  value="#{antenneBean.antenne.mailPole}"/>
 			
 				</h:panelGrid>
 				<br />
@@ -31,17 +31,17 @@
 				<p:toolbar>
 	    	<f:facet name="left">
 	    	<p:commandButton value="Valider"
-						action="#{poleBean.enregistrerAntenne}" update="form_gnl" binding="#{poleBean.btnValider}">
+						action="#{antenneBean.enregistrer}" update="form_gnl" binding="#{antenneBean.btnValider}">
 						<p:confirm header="Confirmation"
 							message="Confirmez-vous l'enregistrement" icon="ui-icon-alert" />
 					</p:commandButton>
 					
 					<p:commandButton value="Annuler"
 						update="form_gnl:grid_pole" process="@this"
-						action="#{poleBean.annuler}" />
+						action="#{antenneBean.annuler}" />
 						
-				<p:commandButton value="Supprimer" action="#{poleBean.supprimer}"
-						update="form_gnl" binding="#{poleBean.btnSuprimer}">
+				<p:commandButton value="Supprimer" action="#{antenneBean.supprimer}"
+						update="form_gnl" binding="#{antenneBean.btnSuprimer}">
 						<p:confirm header="Confirmation"
 							message="Confirmez-vous la supression?" icon="ui-icon-alert" />
 					</p:commandButton>
@@ -51,9 +51,9 @@
 				
 				<br />
 				<p:dataTable id="table" selectionMode="single" var="tata"
-					value="#{poleBean.listAntenne}" selection="#{poleBean.selectedAntenne}"
+					value="#{antenneBean.listAntenne}" selection="#{antenneBean.selectedAntenne}"
 					rowKey="#{tata.idPole}" emptyMessage="Aucun enregistrement">
-					<p:ajax event="rowSelect" listener="#{poleBean.selectionner}" update=":form_gnl"/>
+					<p:ajax event="rowSelect" listener="#{antenneBean.selectionner}" update=":form_gnl"/>
 					<f:facet name="header">LISTE DES POLES</f:facet>
 					<p:column headerText="Code" style="width:20%">#{tata.codePole}</p:column>
 					<p:column headerText="Antenne" style="width:40%">#{tata.libellePole}</p:column>

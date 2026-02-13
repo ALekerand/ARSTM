@@ -1,6 +1,7 @@
 *********************NOTES DE PARAMETRAGE*******************************************
 ENTITE "ETATDEMANT"
-	**En attente ===== codeEtatDemant : CED001
-	**Validee ===== codeEtatDemant : CED002
-	**Rejetee ===== codeEtatDemant : CED003
+	
+TFormation
+	1 LMD
+	2 FORMATION CLASSIC
 	

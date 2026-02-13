@@ -23,11 +23,14 @@ public class ReqEcole {
 	 * @param idPole
 	 * @return listEcole
 	 */
-	public List<Ecole> recupEcoleByPole(int idPole){
-		String query = "SELECT * FROM `ecole` WHERE ID_POLE = '"+idPole+"'";
-		List listEcole = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Ecole.class).list();
-		return listEcole;
-	}
+	
+	
+	/*
+	 * public List<Ecole> recupEcoleByPole(int idPole){ String query =
+	 * "SELECT * FROM `ecole` WHERE ID_POLE = '"+idPole+"'"; List listEcole =
+	 * getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Ecole
+	 * .class).list(); return listEcole; }
+	 */
 	
 	
 	public SessionFactory getSessionFactory() {

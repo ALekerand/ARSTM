@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.ARSTM.model.Antenne;
 import com.ARSTM.model.Cycle;
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Filieres;
@@ -51,7 +52,10 @@ public class ParcoursBean {
 	private List listEcole = new ArrayList<>();
 	private List listFiliere = new ArrayList<>();
 	
-	// Contrôle de composant
+	private List listAntenne = new ArrayList<>();
+	private int idPole;
+	
+	// Contrï¿½le de composant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
@@ -99,7 +103,7 @@ public void choisirExam(){
 public void activerChamps2(){
 		//Recuperer les section de la mention
 	
-	listeSection = requeteSection.recupSectionByMention(choosedMention.getCodeMention());
+	//listeSection = requeteSection.recupSectionByMention(choosedMention.getCodeMention());
 		/*if ((!(choosedEcole.getNomEcole().equals(null))) && (!(choosedFiliere.getNomFiliere().equals(null))))
 				{
 			inputOption.setDisabled(false);
@@ -118,21 +122,20 @@ public void chargerFiliere(){
 
 public void chargerMention(){
 	listMention.clear();
-	listMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
-	//System.out.println("------- Taille de la liste mention"+listMention.size());
+	listMention = requeteMention.recupMentionByFiliere(choosedFiliere.getCodeFiliere());
 }
 		
 	public void enregistrer(){
-		//System.out.println("-----DEBUT Enregistrement OK---");
 		section.setAbrevSection(getSection().getAbrevSection().toUpperCase());
 		section.setMention(choosedMention);
 		section.setSectionExam(cb_exam);
+		section.setAntenne((Antenne) service.getObjectById(idPole, "Antenne"));
 		getService().addObject(section);
 		cb_exam ="";
 		activerChamps2();
 		vider(section);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©!", null));
 	}
 	
 	/*public void enregistrer2(){
@@ -144,7 +147,7 @@ public void chargerMention(){
 		actualiserList();
 		vider(mention);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©!", null));
 	}*/
 	
 	public void modifier(){
@@ -152,7 +155,7 @@ public void chargerMention(){
 		vider(section);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuÃ©e!", null));
 	}
 	
 	
@@ -200,7 +203,7 @@ public void chargerMention(){
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuÃ©e!", null));
 	}
 	
 	
@@ -274,7 +277,7 @@ public void chargerMention(){
 	}
 
 	public List getListeSection() {
-		return listeSection;
+		return listeSection = service.getObjects("Section");
 	}
 
 	public void setListeSection(List listeSection) {
@@ -341,5 +344,21 @@ public void chargerMention(){
 
 	public void setInputAbrevOption(InputText inputAbrevOption) {
 		this.inputAbrevOption = inputAbrevOption;
+	}
+
+	public List getListAntenne() {
+		return listAntenne = service.getObjects("Antenne");
+	}
+
+	public void setListAntenne(List listAntenne) {
+		this.listAntenne = listAntenne;
+	}
+
+	public int getIdPole() {
+		return idPole;
+	}
+
+	public void setIdPole(int idPole) {
+		this.idPole = idPole;
 	}
 }

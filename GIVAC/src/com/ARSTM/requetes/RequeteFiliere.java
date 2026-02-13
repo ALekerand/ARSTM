@@ -16,8 +16,6 @@ public class RequeteFiliere {
 	SessionFactory sessionFactory;
 	
 	public List<Filieres> recupFiliereByEcole(int codeEcole,int codeTformation){
-	//String query =	"SELECT `filieres`.* FROM `filieres` WHERE (`filieres`.`CODE_ECOLE` = '"+codeEcole+"')";
-	//String query = "SELECT `filieres`.* FROM `filieres` WHERE ((`filieres`.`CODE_ECOLE` ='"+codeEcole+"') AND (`filieres`.`CODE_TFORMATION` ='1'))";
 	String query = "SELECT `filieres`.* FROM `filieres` WHERE ((`filieres`.`CODE_ECOLE` ='"+codeEcole+"') AND (`filieres`.`CODE_TFORMATION` ='"+codeTformation+"'))";
 	List liste = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Filieres.class).list();		
 	return liste;
@@ -27,7 +25,7 @@ public class RequeteFiliere {
 		String query = "SELECT `filieres`.* FROM `filieres` WHERE ((`filieres`.`CODE_ECOLE` ='"+codeEcole+"') AND (`filieres`.`CODE_TFORMATION` ='1'))";
 		List liste = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Filieres.class).list();		
 		return liste;
-		}
+	}
 	
 	public List<Filieres> recupFiliereByEcole3(int codeEcole){
 		String query = "SELECT `filieres`.* FROM `filieres` WHERE ((`filieres`.`CODE_ECOLE` ='"+codeEcole+"') AND (`filieres`.`CODE_TFORMATION` ='2'))";

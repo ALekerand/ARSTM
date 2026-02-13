@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.ARSTM.model.Antenne;
 import com.ARSTM.model.Cycle;
 import com.ARSTM.model.Ecole;
 import com.ARSTM.model.Filieres;
@@ -42,6 +43,8 @@ public class SectionBean {
 	private Ecole ecole = new Ecole();
 	private List listeFiliere = new ArrayList<>();
 	private List listCycle = new ArrayList<>();
+	private List listAntenne = new ArrayList<>();
+	private int idPole;
 	private Boolean sectionExam;
 	private Ecole choosedEcole = new Ecole();
 	private List<Ecole> listEcole = new ArrayList<>();
@@ -54,19 +57,19 @@ public class SectionBean {
 	
 	public String enregistrer(){
 		section.setAbrevSection(section.getAbrevSection().toUpperCase());
-		section.setSectionExam(getSectionExam());
+		section.setSectionExam("oui");
 		//section.setFilieres(choosedFiliere);
 		//section.setCycle(choosedCycle);
-		section.setDateCreaSection(Calendar.getInstance().getTime());
+		//section.setDateCreaSection(Calendar.getInstance().getTime());
 		getService().addObject(section);
 		//Ajouter dans la table rattacher
-		for(Rattacher VarRattacher: getListRattachers()){
+		/*for(Rattacher VarRattacher: getListRattachers()){
 			RattacherId rattacherId = new RattacherId(section.getCodeSection(), VarRattacher.getMatiere().getCodeMatiere());
 			VarRattacher.setId(rattacherId);
 			VarRattacher.setCodeMatLmd(VarRattacher.getCodeMatLmd().toUpperCase());
 			VarRattacher.setDateSectionMatiere(Calendar.getInstance().getTime());
 			getService().addObject(VarRattacher);
-		}
+		}*/
 		actualiserList();
 		vider(section);
 		listeMatieres.clear();
@@ -122,12 +125,12 @@ public class SectionBean {
 	
 	
 	public void chargerListeEditable(){
-		listRattachers.clear();
+		/*listRattachers.clear();
 		for(Matiere varMat: selectedMatieres){
 			RattacherId rattacherId = new RattacherId(section.getCodeSection(), varMat.getCodeMatiere());
 			Rattacher rattacher = new Rattacher(rattacherId, varMat, section);
 			listRattachers.add(rattacher);
-		}
+		}*/
 	}
 	
 	public void chargerSection(){
@@ -151,7 +154,7 @@ public class SectionBean {
 		listSection.clear();
 		//Charger la liste des fili�res concern�es
 		try {
-			listeFiliere = requeteFiliere.recupFiliereByEcole(choosedEcole.getCodeEcole());
+			listeFiliere = requeteFiliere.recupFiliereByEcole(choosedEcole.getCodeEcole(),1);
 		} catch (NullPointerException npe) {
 			// TODO Auto-generated catch block
 			 FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Le choix d'�cole est n�cessaire", null);
@@ -161,7 +164,7 @@ public class SectionBean {
 
 	
 	
-	*//**************************ACCESSEURS*************************//*
+	//**************************ACCESSEURS*************************
 	
 	public Iservice getService() {
 		return service;
@@ -279,13 +282,13 @@ public class SectionBean {
 	}
 
 	
-	public List<Rattacher> getListRattachers() {
+	/*public List<Rattacher> getListRattachers() {
 		return listRattachers;
 	}
 
 	public void setListRattachers(List<Rattacher> listRattachers) {
 		this.listRattachers = listRattachers;
-	}
+	}*/
 
 	public Ecole getChoosedEcole() {
 		return choosedEcole;
@@ -329,6 +332,22 @@ public class SectionBean {
 
 	public void setRequeteSection(RequeteSection requeteSection) {
 		this.requeteSection = requeteSection;
+	}
+
+	public List getListAntenne() {
+		return listAntenne = service.getObjects("Antenne");
+	}
+
+	public void setListAntenne(List listAntenne) {
+		this.listAntenne = listAntenne;
+	}
+
+	public int getIdPole() {
+		return idPole;
+	}
+
+	public void setIdPole(int idPole) {
+		this.idPole = idPole;
 	}
 
 }

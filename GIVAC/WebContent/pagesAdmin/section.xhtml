@@ -43,6 +43,7 @@
 										itemLabel="#{tata.abrevFiliere}" itemValue="#{tata}"></f:selectItems>
 								</p:selectOneMenu>
 								
+								
 								<p:outputLabel />
 								<p:outputLabel />
 
@@ -57,9 +58,9 @@
 									styleClass="upercase" />
 
 							<p:outputLabel for="antenne" value="Antenne"/>
-							<p:selectOneMenu id="antenne" value="#{sectionBean.idPole}" converter="#{entityConverter}" style="width:50px">
+							<p:selectOneMenu id="antenne" value="#{sectionBean.idPole}" style="width:50px">
 							<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
-							<f:selectItems value="#{sectionBean.listAntenne}" var="tata" itemLabel="#{tata.listAntenne}" itemValue="#{tata.idPole}"></f:selectItems>
+							<f:selectItems value="#{sectionBean.listAntenne}" var="tata" itemLabel="#{tata.libellePole}" itemValue="#{tata.idPole}"></f:selectItems>
 						    </p:selectOneMenu>
 
 							</h:panelGrid>

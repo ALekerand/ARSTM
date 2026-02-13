@@ -16,7 +16,7 @@ import com.ARSTM.service.Iservice;
 
 @Component
 @Scope("session")
-public class PoleBean {
+public class AntenneBean {
 	@Autowired
 	Iservice service;
 	private Antenne antenne = new Antenne();
@@ -119,7 +119,7 @@ public class PoleBean {
 	}
 
 	public List getListAntenne() {
-		return listAntenne;
+		return listAntenne = service.getObjects("Antenne");
 	}
 
 	public void setListAntenne(List listAntenne) {

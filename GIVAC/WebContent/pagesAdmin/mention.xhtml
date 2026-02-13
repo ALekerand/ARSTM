@@ -11,40 +11,26 @@
 			<h1 class="page-title">PARAMRTRAGE DES MENTIONS FORMATION LMD</h1>
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
-				<!-- <h:form id="form"> -->
 				<p:panel header="Enregistrement">
 					<br />
 			<h:panelGrid id="mention_grid" columns="4" cellpadding="10">
-					
-			<p:outputLabel for="pol" value="Pôle"/>
-			<p:selectOneMenu id="pol" value="#{mentionBean.idPole}" style="width:50px">
-			<p:ajax listener="#{mentionBean.chargerEcole}" event="change" process="@this" update="ecol"/>
-			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
-			<f:selectItems value="#{mentionBean.listPole}" var="tata" itemLabel="#{tata.libellePole}" itemValue="#{tata.idPole}"></f:selectItems>
-		    </p:selectOneMenu>
-		    
-		    <p:outputLabel />
-		    <p:outputLabel />
-						
+								
 			<p:outputLabel for="ecol" value="Ecole"/>
-			<p:selectOneMenu id="ecol" value="#{mentionBean.choosedEcole}" converter="#{entityConverter}">
+			<p:selectOneMenu id="ecol" value="#{mentionBean.codeEcole}">
 			<p:ajax listener="#{mentionBean.chargerFiliere}" event="change" update="fil" process="@this"></p:ajax>
 			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
-			<f:selectItems value="#{mentionBean.listEcole}" var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata}"></f:selectItems>
+			<f:selectItems value="#{mentionBean.listEcole}" var="tata" itemLabel="#{tata.abrevEcole}" itemValue="#{tata.codeEcole}"></f:selectItems>
 		    </p:selectOneMenu>
 		    
-		     <p:outputLabel />
-		     <p:outputLabel />
+		    <p:outputLabel/>
+		    <p:outputLabel/>
 		    
 		    <p:outputLabel for="fil" value="Filière"/>
 			<p:selectOneMenu id="fil" value="#{mentionBean.choosedFiliere}" converter="#{entityConverter}">
-			<p:ajax listener="#{mentionBean.activerChamps}" event="change" update="table" process="@this"></p:ajax>
+			<p:ajax event="change" update="table" process="@this" listener="#{mentionBean.chargerMention}"></p:ajax>
 			<f:selectItem  itemLabel="Selectionnez"  itemValue=""/>
 			<f:selectItems value="#{mentionBean.listFiliere}" var="tata" itemLabel="#{tata.nomFiliere}" itemValue="#{tata}"></f:selectItems>
 		    </p:selectOneMenu>		    
-		    
-		     <p:outputLabel />
-		     <p:outputLabel />
 		    
 			<p:outputLabel for="nom_ment" value="Mention" />
 			<p:inputText id="nom_ment"
@@ -112,9 +98,10 @@
 					<p:ajax event="rowSelect" listener="#{mentionBean.selectionner}"
 						update=":form" />
 					<f:facet name="header">LISTE DES MENTIONS</f:facet>
-					<p:column headerText="Libellé Mention" style="width:70%" sortBy="#{tata.libMention}">#{tata.libMention}</p:column>
+					<p:column headerText="Libellé Mention" style="width:50%" sortBy="#{tata.libMention}">#{tata.libMention}</p:column>
 					<p:column headerText="Abréviation Mention" style="width:25%">#{tata.abrevMention}</p:column>
-					<p:column headerText="Licence" style="width:25%">#{tata.niveauMention}</p:column>
+					<p:column headerText="Niveau" style="width:25%">#{tata.niveauMention}</p:column>
+					<p:column headerText="Filière" style="width:25%" sortBy="#{tata.filieres.abrevFiliere}">#{tata.filieres.abrevFiliere}</p:column>
 				</p:dataTable>
 				<!-- </h:form> -->
 

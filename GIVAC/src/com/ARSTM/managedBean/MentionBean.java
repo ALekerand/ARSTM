@@ -38,6 +38,7 @@ public class MentionBean {
 	ReqEcole reqEcole;
 	
 	private Mention mention = new Mention();
+	private int codeEcole;
 	private Mention selectedMention = new Mention();
 	private Ecole choosedEcole = new Ecole();
 	private Filieres choosedFiliere = new Filieres();
@@ -46,7 +47,6 @@ public class MentionBean {
 	private List listEcole = new ArrayList<>();
 	private List listFiliere = new ArrayList<>();
 	private List listCycle = new ArrayList<>();
-	//private List<Pole> listPole = new ArrayList<Pole>();
 	private int idPole;
 	private String cb_niveau ;
 	
@@ -55,8 +55,8 @@ public class MentionBean {
 		private CommandButton btnModifier = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
 		
-		private InputText inputOption = new InputText();
-		private InputText inputAbrevOption = new InputText();
+		//private InputText inputOption = new InputText();
+		//private InputText inputAbrevOption = new InputText();
 		
 	
 	@PostConstruct
@@ -65,25 +65,18 @@ public void initialiser(){
 	btnModifier.setDisabled(true);
 }
 	
-	public void activerChamps(){
-		
-		if ((!(choosedEcole.getNomEcole().equals(null))) && (!(choosedFiliere.getNomFiliere().equals(null))))
-		{
-			inputOption.setDisabled(false);
-			inputAbrevOption.setDisabled(false);
-			chargerMention();
-		}
-		
-	}
-	
-	public void chargerEcole(){
-		listEcole.clear();
-		listFiliere.clear();
-		listEcole = reqEcole.recupEcoleByPole(idPole);
-	}
+/*
+ * public void activerChamps(){
+ * 
+ * if ((!(choosedEcole.getNomEcole().equals(null))) &&
+ * (!(choosedFiliere.getNomFiliere().equals(null)))) {
+ * inputOption.setDisabled(false); inputAbrevOption.setDisabled(false);
+ * chargerMention(); } }
+ */
 	
 	
 public void chargerFiliere(){
+	choosedEcole = (Ecole) service.getObjectById(codeEcole, "Ecole");
 	listFiliere.clear();
 	listFiliere = requeteFiliere.recupFiliereByEcole2(choosedEcole.getCodeEcole());
 }
@@ -95,21 +88,20 @@ public void chargerFiliere2(){
 
 public void chargerMention(){
 	listMention.clear();
-	listMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
+	listMention = requeteMention.recupMentionByFiliere(choosedFiliere.getCodeFiliere());
 }
 		
 	public void enregistrer(){
-		//System.out.println("-----DEBUT Enregistrement OK---");
 		mention.setAbrevMention(getMention().getAbrevMention().toUpperCase());
 		mention.setNiveauMention(getCb_niveau());
 		mention.setCycle(choosedCycle);
 		mention.setFilieres(choosedFiliere);
 		choisirAnne();
 		getService().addObject(mention);
-		actualiserList();
+		chargerMention();
 		vider(mention);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetu�!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
 	}
 	
 	public void enregistrer2(){
@@ -119,50 +111,50 @@ public void chargerMention(){
 		mention.setFilieres(choosedFiliere);
 		choisirAnne();
 		getService().addObject(mention);
-		actualiserList();
+		chargerMention();
 		vider(mention);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetu�!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
 	}
 	
 		public void choisirAnne(){
 		switch (cb_niveau) {
 		case "Licence 1":
-			mention.setAnneeMention("1�re Ann�e");
+			mention.setAnneeMention("1ère Année");
 			
 			break;
 			
 		case "Licence 2":
-			mention.setAnneeMention("2�me Ann�e");
+			mention.setAnneeMention("2ème Année");
 			
 			break;
 			
 		case "Licence 3":
-			mention.setAnneeMention("3�me Ann�e");
+			mention.setAnneeMention("3ème Année");
 			
 			break;
 			
 		case "Master 1":
-			mention.setAnneeMention("4�me Ann�e");
+			mention.setAnneeMention("4ème Annèe");
 			
 			break;
 			
 		case "Master 2":
-			mention.setAnneeMention("5�me Ann�e");
+			mention.setAnneeMention("5ème Année");
 			
 			break;
 			
 		case "Doctorat 1":
-			mention.setAnneeMention("6�me Ann�e");
+			mention.setAnneeMention("6ème Année");
 			
 			break;
 			
 		case "Doctorat 2":
-			mention.setAnneeMention("7�me Ann�e");
+			mention.setAnneeMention("7ème Année");
 			
 			break;
 		case "Doctorat 3":
-			mention.setAnneeMention("8�me Ann�e");
+			mention.setAnneeMention("8ème Année");
 			
 			break;
 
@@ -173,31 +165,27 @@ public void chargerMention(){
 	public void modifier(){
 		getService().updateObject(mention);
 		vider(mention);
-		actualiserList();
+		chargerMention();
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetu�e!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
 	}
 	
 	
 
 	public void annuler() {
-		
-		
+	
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		vider(mention);
-		actualiserList();
+		choosedFiliere.setCodeFiliere(0);
+		chargerMention();
 	}
 	
 	public void vider(Mention objMention) {
 		objMention.setLibMention(null);;
 		objMention.setAbrevMention(null);
 	}
-	
-	public void actualiserList(){
-		chargerMention();
-		}
 	
 	public void selectionner(){
 		setMention(selectedMention);
@@ -216,12 +204,12 @@ public void chargerMention(){
 		getService().deleteObject(mentionTemp);
 		vider(mentionTemp);
 		vider(mention);
-		actualiserList();
+		chargerMention();
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetu�e!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
 	}
 	
 	
@@ -250,9 +238,6 @@ public void chargerMention(){
 	public void setBtnSuprimer(CommandButton btnSuprimer) {
 		this.btnSuprimer = btnSuprimer;
 	}
-
-	
-	
 
 	public CommandButton getBtnModifier() {
 		return btnModifier;
@@ -295,7 +280,7 @@ public void chargerMention(){
 	}
 
 	public List getListEcole() {
-		return listEcole;
+		return listEcole = service.getObjects("Ecole");
 	}
 
 	public void setListEcole(List listEcole) {
@@ -311,9 +296,6 @@ public void chargerMention(){
 	}
 
 	public List getListFiliere() {
-		/*if (listFiliere.isEmpty()) {
-			listFiliere = getService().getObjects("Filieres");
-		}*/
 		return listFiliere;
 	}
 
@@ -348,21 +330,17 @@ public void chargerMention(){
 		this.listCycle = listCycle;
 	}
 
-	public InputText getInputOption() {
-		return inputOption;
-	}
-
-	public void setInputOption(InputText inputOption) {
-		this.inputOption = inputOption;
-	}
-
-	public InputText getInputAbrevOption() {
-		return inputAbrevOption;
-	}
-
-	public void setInputAbrevOption(InputText inputAbrevOption) {
-		this.inputAbrevOption = inputAbrevOption;
-	}
+	/*
+	 * public InputText getInputOption() { return inputOption; }
+	 * 
+	 * public void setInputOption(InputText inputOption) { this.inputOption =
+	 * inputOption; }
+	 * 
+	 * public InputText getInputAbrevOption() { return inputAbrevOption; }
+	 * 
+	 * public void setInputAbrevOption(InputText inputAbrevOption) {
+	 * this.inputAbrevOption = inputAbrevOption; }
+	 */
 
 	public int getIdPole() {
 		return idPole;
@@ -372,10 +350,11 @@ public void chargerMention(){
 		this.idPole = idPole;
 	}
 
-	/*
-	 * public List<Pole> getListPole() { return listPole =
-	 * service.getObjects("Pole"); }
-	 * 
-	 * public void setListPole(List<Pole> listPole) { this.listPole = listPole; }
-	 */
+	public int getCodeEcole() {
+		return codeEcole;
+	}
+
+	public void setCodeEcole(int codeEcole) {
+		this.codeEcole = codeEcole;
+	}
 }
