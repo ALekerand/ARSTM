@@ -191,7 +191,7 @@ public void chargerMention(){
 	listeEnseigner.clear();
 	
 	 if (!(choosedFiliere == null)) {
-			listMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
+			listMention = requeteMention.recupMentionByFiliere(choosedFiliere.getCodeFiliere());
 }
 	
 }

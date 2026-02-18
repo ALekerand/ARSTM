@@ -52,7 +52,7 @@ public class OptionBean {
 	
 	private String cb_niveau ;
 	
-	// Contrôle de composant
+	// Contrï¿½le de composant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
@@ -99,7 +99,7 @@ public void chargerFiliere2(){
 
 public void chargerMention(){
 	listMention.clear();
-	listMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
+	listMention = requeteMention.recupMentionByFiliere(choosedFiliere.getCodeFiliere());
 }
 		
 	public void enregistrer(){
@@ -113,7 +113,7 @@ public void chargerMention(){
 		actualiserList();
 		vider(mention);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 	}
 	
 	public void enregistrer2(){
@@ -126,47 +126,47 @@ public void chargerMention(){
 		actualiserList();
 		vider(mention);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 	}
 	
 	public void choisirAnne2(){
 		switch (cb_niveau) {
-		case "1ère Année":
-			mention.setAnneeMention("1ère Année");
+		case "1ï¿½re Annï¿½e":
+			mention.setAnneeMention("1ï¿½re Annï¿½e");
 			
 			break;
 			
-		case "2ème Année":
-			mention.setAnneeMention("2ème Année");
+		case "2ï¿½me Annï¿½e":
+			mention.setAnneeMention("2ï¿½me Annï¿½e");
 			
 			break;
 			
-		case "3ème Année":
-			mention.setAnneeMention("3ème Année");
+		case "3ï¿½me Annï¿½e":
+			mention.setAnneeMention("3ï¿½me Annï¿½e");
 			
 			break;
 			
-		case "4ème Année":
-			mention.setAnneeMention("4ème Année");
+		case "4ï¿½me Annï¿½e":
+			mention.setAnneeMention("4ï¿½me Annï¿½e");
 			
 			break;
 			
-		case "5ème Année":
-			mention.setAnneeMention("5ème Année");
+		case "5ï¿½me Annï¿½e":
+			mention.setAnneeMention("5ï¿½me Annï¿½e");
 			
 			break;
 			
-		case "6ème Année":
-			mention.setAnneeMention("6ème Année");
+		case "6ï¿½me Annï¿½e":
+			mention.setAnneeMention("6ï¿½me Annï¿½e");
 			
 			break;
 			
-		case "7ème Année":
-			mention.setAnneeMention("7ème Année");
+		case "7ï¿½me Annï¿½e":
+			mention.setAnneeMention("7ï¿½me Annï¿½e");
 			
 			break;
-		case "8ème Année":
-			mention.setAnneeMention("8ème Année");
+		case "8ï¿½me Annï¿½e":
+			mention.setAnneeMention("8ï¿½me Annï¿½e");
 			
 			break;
 
@@ -178,41 +178,41 @@ public void chargerMention(){
 	public void choisirAnne(){
 		switch (cb_niveau) {
 		case "Licence 1":
-			mention.setAnneeMention("1ère Année");
+			mention.setAnneeMention("1ï¿½re Annï¿½e");
 			
 			break;
 			
 		case "Licence 2":
-			mention.setAnneeMention("2ème Année");
+			mention.setAnneeMention("2ï¿½me Annï¿½e");
 			
 			break;
 			
 		case "Licence 3":
-			mention.setAnneeMention("3ème Année");
+			mention.setAnneeMention("3ï¿½me Annï¿½e");
 			
 			break;
 			
 		case "Master 1":
-			mention.setAnneeMention("4ème Année");
+			mention.setAnneeMention("4ï¿½me Annï¿½e");
 			
 			break;
 			
 		case "Master 2":
-			mention.setAnneeMention("5ème Année");
+			mention.setAnneeMention("5ï¿½me Annï¿½e");
 			
 			break;
 			
 		case "Doctorat 1":
-			mention.setAnneeMention("6ème Année");
+			mention.setAnneeMention("6ï¿½me Annï¿½e");
 			
 			break;
 			
 		case "Doctorat 2":
-			mention.setAnneeMention("7ème Année");
+			mention.setAnneeMention("7ï¿½me Annï¿½e");
 			
 			break;
 		case "Doctorat 3":
-			mention.setAnneeMention("8ème Année");
+			mention.setAnneeMention("8ï¿½me Annï¿½e");
 			
 			break;
 
@@ -225,7 +225,7 @@ public void chargerMention(){
 		vider(mention);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuï¿½e!", null));
 	}
 	
 	public void modifier2(){
@@ -239,7 +239,7 @@ public void chargerMention(){
 		vider(mention);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuï¿½e!", null));
 	}
 
 	public void annuler() {
@@ -281,7 +281,7 @@ public void chargerMention(){
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuï¿½e!", null));
 	}
 	
 	

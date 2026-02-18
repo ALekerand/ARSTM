@@ -66,7 +66,7 @@ public class FicheNotationReportBean {
 
 	public void chargerMention(){
 		listMention.clear();
-		listMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
+		listMention = requeteMention.recupMentionByFiliere(choosedFiliere.getCodeFiliere());
 	}
 	
 	public void chargerSection() {
@@ -165,7 +165,7 @@ public List getListMention() {
 			
 			
 			System.out.println("======== Parametre sette=======");//Clean after
-				// Remplissage du rapport compilé
+				// Remplissage du rapport compilï¿½
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,parameters, new JREmptyDataSource());
 			System.out.println("======== Remplissage =======");//Clean after
 			
@@ -174,7 +174,7 @@ public List getListMention() {
 			System.out.println("L'instant ======="+instant);
 		    JasperExportManager.exportReportToPdfFile(jasperPrint, "E:\\mesRapports\\fichenotation"+instant+""+".pdf");
 			
-			System.out.println("======== Toust est exécuté");//Clean after
+			System.out.println("======== Toust est exï¿½cutï¿½");//Clean after
 		} catch (JRException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

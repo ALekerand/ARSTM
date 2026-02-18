@@ -25,7 +25,7 @@ public class StatutBean {
 	private List liststatut = new ArrayList<>();
 	
 	
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
@@ -36,7 +36,7 @@ public class StatutBean {
 		actualiserList();
 		vider(statut);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©!", null));
 	}
 
 	public void annuler() {
@@ -69,7 +69,7 @@ public class StatutBean {
 		vider(statut);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuÃ©e!", null));
 	}
 	
 	
@@ -86,7 +86,7 @@ public class StatutBean {
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuÃ©e!", null));
 	}
 	
 	

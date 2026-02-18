@@ -57,16 +57,15 @@ public class FraisEcolageBean {
 	@PostConstruct
 	public AnneesScolaire recupererAnne(){
 		anneEncoure = reqAnneeScolaire.recupererDerniereAnneeScolaire().get(0);
-		System.out.println("Année:"+anneEncoure.getLibAnneeScolaire());
 		return anneEncoure;
 		
 	}
 	
-	public String enregistrer(){
+	public void enregistrer(){
 		enregistrerEcolage();
 		//enregistrerMentionEcolage();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
-		return "frais_scolaire2.xhtml";
+		annuler();
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©!", null));
 	}
 	
 	public void enregistrerEcolage(){
@@ -80,7 +79,6 @@ public class FraisEcolageBean {
 		ecolageNonNation.setFraisExam(fraisExam);
 		ecolageNonNation.setAnneesScolaire(anneEncoure);
 		ecolageNonNation.setMention(choosedMention);
-		
 		
 		//Faire l'enregistrement
 		service.addObject(ecolageNation);
@@ -102,8 +100,47 @@ public class FraisEcolageBean {
 	}
 	
 	public void enregistrerMentionEcolage() {
-		System.out.println("VRIFICATION Année:"+anneEncoure.getLibAnneeScolaire());
+		System.out.println("VRIFICATION AnnÃ©e:"+anneEncoure.getLibAnneeScolaire());
+	}
+	
+	public void annuler() {
 		
+		listEcole.clear();
+		listFiliere.clear();
+		listeMention.clear();
+		
+		//Vider nation
+		ecolageNation.setMontantEcolage(null);
+		ecolageNation.setMtEchance1(null);
+		ecolageNation.setMtEchance2(null);
+		ecolageNation.setMtEchance3(null);
+		ecolageNation.setMtEchance4(null);
+		ecolageNation.setTypenationalite(null);
+		ecolageNation.setFraisExam(null);
+		ecolageNation.setAnneesScolaire(null);
+		ecolageNation.setMention(null);
+		ecolageNation.setDateEchance1(null);
+		ecolageNation.setDateEchance2(null);
+		ecolageNation.setDateEchance3(null);
+		ecolageNation.setDateEchance4(null);
+		
+		//Vider non nation
+		ecolageNonNation.setMontantEcolage(null);
+		ecolageNonNation.setMtEchance1(null);
+		ecolageNonNation.setMtEchance2(null);
+		ecolageNonNation.setMtEchance3(null);
+		ecolageNonNation.setMtEchance4(null);
+		ecolageNonNation.setTypenationalite(null);
+		ecolageNonNation.setFraisExam(null);
+		ecolageNonNation.setAnneesScolaire(null);
+		ecolageNonNation.setMention(null);
+		ecolageNonNation.setDateEchance1(null);
+		ecolageNonNation.setDateEchance2(null);
+		ecolageNonNation.setDateEchance3(null);
+		ecolageNonNation.setDateEchance4(null);
+		
+		setFraisExam(new BigDecimal(0));
+	
 	}
 	
 	public void selectionner() {
@@ -123,7 +160,7 @@ public class FraisEcolageBean {
 	}
 	public void chargerMention(){
 		listeMention.clear();
-		listeMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
+		listeMention = requeteMention.recupMentionByFiliere(choosedFiliere.getCodeFiliere());
 	}
 	
 	

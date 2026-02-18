@@ -178,8 +178,7 @@
 							</h:panelGrid>
 						</p:panel>
 
-                          <p:commandButton value="ENREGISTRER" action="#{fraisEcolageBean.enregistrer}" immediate="true" update="@parent, :form"
-								oncomplete="document.location.reload(false)">
+                          <p:commandButton value="ENREGISTRER" action="#{fraisEcolageBean.enregistrer}" immediate="true" update="@parent, :form" oncomplete="document.location.reload(false)">
 								<p:confirm header="Confirmation"
 								message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
 								</p:commandButton>

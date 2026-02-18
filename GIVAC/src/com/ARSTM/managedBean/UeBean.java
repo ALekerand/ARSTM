@@ -74,7 +74,7 @@ public class UeBean {
 	private List listEcole = new ArrayList<>();
 	private List listFiliere = new ArrayList<>();
 	
-	// Contrôle de composant
+	// Contrï¿½le de composant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
@@ -116,7 +116,7 @@ public void chargerFiliere(){
 
 public void chargerMention(){
 	listMention.clear();
-	listMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
+	listMention = requeteMention.recupMentionByFiliere(choosedFiliere.getCodeFiliere());
 	//System.out.println("------- Taille de la liste mention"+listMention.size());
 }
 
@@ -144,7 +144,7 @@ public void chargerUe(){
 		//vider(ues);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 	}
 	
 	public void modifier(){
@@ -159,7 +159,7 @@ public void chargerUe(){
 		vider(ues);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuï¿½e!", null));
 	}
 	
 	
@@ -212,7 +212,7 @@ public void chargerUe(){
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuï¿½e!", null));
 	}
 	
 	

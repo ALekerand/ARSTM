@@ -60,6 +60,9 @@
 Tous les code(id)sont en séquentiel
 l'association emploitemp a été remplacer par une table EMPLOITEMPS
 
+========================= 13 / 02 / 2026 =====================================================
+ La table ANTENNE a été modifiée, il faudrait l'intégrer dans la nouvelle version
+
 		
 
 

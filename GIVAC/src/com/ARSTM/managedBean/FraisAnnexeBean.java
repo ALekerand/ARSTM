@@ -1,5 +1,8 @@
 package com.ARSTM.managedBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -22,8 +25,6 @@ public class FraisAnnexeBean {
 	@Autowired
 	Iservice service;
 	
-	//RequeteFiliere requeteFiliere;
-	//RequeteMention requeteMention;
 	@Autowired
 	ReqAnneeScolaire reqAnneeScolaire;
 	@Autowired
@@ -31,6 +32,7 @@ public class FraisAnnexeBean {
 	
 	private FraisAnnexe fraisAnnexeNation = new FraisAnnexe();
 	private FraisAnnexe fraisAnnexeNonNation = new FraisAnnexe();
+	private List<FraisAnnexe> listeFraisAnnexe = new ArrayList<FraisAnnexe>();
 	
 	private AnneesScolaire anneEncoure = new AnneesScolaire();
 	
@@ -42,13 +44,14 @@ public class FraisAnnexeBean {
 		
 	}
 	
-	public String enregistrer(){
-		enregistrerFraisAnnexe();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetu�!", null));
-		return "fraisannexe.xhtml";
-	}
+	/*
+	 * public String enregistrer(){ enregistrerFraisAnnexe();
+	 * FacesContext.getCurrentInstance().addMessage(null, new
+	 * FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+	 * return "fraisannexe.xhtml"; }
+	 */
 	
-	public void enregistrerFraisAnnexe(){
+	public void enregistrer(){
 		//Setter les type de nationalite
 		fraisAnnexeNation.setTypenationalite(reqTypeNationalite.recupererTypeNationalite(1));
 		fraisAnnexeNation.setAnneesScolaire(anneEncoure);
@@ -59,6 +62,9 @@ public class FraisAnnexeBean {
 		service.addObject(fraisAnnexeNation);
 		service.addObject(fraisAnnexeNonNation);
 		vider();
+		
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+
 	}
 	
 	public void vider() {
@@ -117,5 +123,13 @@ public class FraisAnnexeBean {
 
 	public void setFraisAnnexeNonNation(FraisAnnexe fraisAnnexeNonNation) {
 		this.fraisAnnexeNonNation = fraisAnnexeNonNation;
+	}
+
+	public List<FraisAnnexe> getListeFraisAnnexe() {
+		return listeFraisAnnexe = service.getObjects("FraisAnnexe");
+	}
+
+	public void setListeFraisAnnexe(List<FraisAnnexe> listeFraisAnnexe) {
+		this.listeFraisAnnexe = listeFraisAnnexe;
 	}		
 }

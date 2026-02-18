@@ -28,7 +28,7 @@
 				
 				
 				
-				<p:toolbar>
+			<p:toolbar id="button">
 	    	<f:facet name="left">
 	    	<p:commandButton value="Valider"
 						action="#{antenneBean.enregistrer}" update="form_gnl" binding="#{antenneBean.btnValider}">
@@ -37,7 +37,7 @@
 					</p:commandButton>
 					
 					<p:commandButton value="Annuler"
-						update="form_gnl:grid_pole" process="@this"
+						update="form_gnl:grid_pole, button" process="@this"
 						action="#{antenneBean.annuler}" />
 						
 				<p:commandButton value="Supprimer" action="#{antenneBean.supprimer}"

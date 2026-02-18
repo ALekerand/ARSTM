@@ -83,7 +83,7 @@ public class EcueBean {
 	private List listEcole = new ArrayList<>();
 	private List listFiliere = new ArrayList<>();
 	
-	// Contrôle de composant
+	// Contrï¿½le de composant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
@@ -125,7 +125,7 @@ public void chargerFiliere(){
 
 public void chargerMention(){
 	listMention.clear();
-	listMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
+	listMention = requeteMention.recupMentionByFiliere(choosedFiliere.getCodeFiliere());
 	//System.out.println("------- Taille de la liste mention"+listMention.size());
 }
 
@@ -145,7 +145,7 @@ public void chargerEcue(){
 		}
 	//repartion des credits ecue
 public void calculer() {
-	System.out.println("Je suis dans la méthode");
+	System.out.println("Je suis dans la mï¿½thode");
 	ecue.setTpeEcue((long) (ecue.getCoursEcue()+ ecue.getTpEcue()));
 	//System.out.println("-------  la valeur TPE"+ecue.getTpeEcue());
 	ecue.setCttEcue((long) (ecue.getTpeEcue()+ ecue.getCoursEcue()));
@@ -164,7 +164,7 @@ public void calculer() {
 		chargerEcue();
 		vider(ecue);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuï¿½!", null));
 	}
 	
 	public void modifier(){
@@ -181,7 +181,7 @@ public void calculer() {
 		vider(ecue);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuï¿½e!", null));
 	}
 	
 	
@@ -240,7 +240,7 @@ public void calculer() {
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuï¿½e!", null));
 	}
 	
 	

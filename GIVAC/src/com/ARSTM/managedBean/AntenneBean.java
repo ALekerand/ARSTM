@@ -19,6 +19,9 @@ import com.ARSTM.service.Iservice;
 public class AntenneBean {
 	@Autowired
 	Iservice service;
+	@Autowired
+	GenerationCodeBean generationCodeBean;
+	
 	private Antenne antenne = new Antenne();
 	private Antenne selectedAntenne = new Antenne();
 	private List listAntenne = new ArrayList<>();
@@ -29,7 +32,8 @@ public class AntenneBean {
 	
 	
 	public void enregistrer(){
-		getService().addObject("Antenne");
+		antenne.setCodePole(generationCodeBean.genererCode("Antenne", "ANT"));
+		service.addObject(antenne);
 		actualiserList();
 		vider(antenne);
 		FacesContext.getCurrentInstance().addMessage(null,

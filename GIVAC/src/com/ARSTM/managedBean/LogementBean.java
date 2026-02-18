@@ -40,7 +40,7 @@ public class LogementBean {
 	private List listTypeLogement = new ArrayList<>();
 	
 
-		// Contrôle de composant
+		// ContrÃ´le de composant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
@@ -61,11 +61,6 @@ public class LogementBean {
 			btnModifier.setDisabled(true);
 	}
 		
-		
-			
-		
-			
-		
 		public void activerChamps(){
 			
 			if ((!(choosedTypeLogement.getLibtypeLogement().equals(null)))) {
@@ -74,7 +69,7 @@ public class LogementBean {
 				inputFiliere2.setDisabled(false);
 				inputAbrevFiliere2.setDisabled(false);
 				inputCapacite.setDisabled(false);
-				chargerListLogbyLogement();
+				//chargerListLogbyLogement();
 			}
 			
 		}
@@ -95,7 +90,7 @@ public class LogementBean {
 		actualiserList();
 		vider(logement);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©!", null));
 	}
 
 	public void annuler() {
@@ -112,7 +107,7 @@ public class LogementBean {
 		vider(logement);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuÃ©e!", null));
 	}
 	
 	public void vider(Logement objLogement) {
@@ -151,7 +146,7 @@ public class LogementBean {
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+		new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuÃ©e!", null));
 	}
 	
 	
@@ -259,7 +254,7 @@ public class LogementBean {
 
 
 	public List getListeLogByLogement() {
-		return listeLogByLogement;
+		return listeLogByLogement = service.getObjects("Logement");
 	}
 
 	public void setListeLogByLogement(List listeLogByLogement) {

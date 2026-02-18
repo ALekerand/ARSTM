@@ -72,7 +72,7 @@ public class SemestreBean {
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetu�e!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
 	}
 	
 	

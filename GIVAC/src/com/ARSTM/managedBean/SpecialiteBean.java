@@ -25,7 +25,7 @@ public class SpecialiteBean {
 	private Specialite selectedSpecialite = new Specialite();
 	private List listeSpecialite = new ArrayList<>();
 	
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
@@ -36,7 +36,7 @@ public class SpecialiteBean {
 		actualiserList();
 		vider(specialite);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©!", null));
 	}
 
 	public void annuler() {
@@ -53,12 +53,13 @@ public void modifier(){
 		vider(specialite);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuÃ©e!", null));
 	}
 	
 	public void vider(Specialite objSpecialite) {
 		objSpecialite.setLibelleSpecial(null);
 	}
+	
 	
 	public void actualiserList(){
 		listeSpecialite.clear();
@@ -84,7 +85,7 @@ public void modifier(){
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuÃ©e!", null));
 	}
 	
 	

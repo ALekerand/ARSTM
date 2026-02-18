@@ -279,9 +279,8 @@ public String genererMatricule() {
 
 	public void chargerMention(){
 		listeMention.clear();
-		listeMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
+		listeMention = requeteMention.recupMentionByFiliere(choosedFiliere.getCodeFiliere());
 	}
-	
 	
 	public void chargerSection(){
 		listeSection.clear();

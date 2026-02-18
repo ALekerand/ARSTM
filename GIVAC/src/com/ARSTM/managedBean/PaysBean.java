@@ -21,7 +21,7 @@ public class PaysBean {
 	private Pays selectedPays = new Pays();
 	private List listPays = new ArrayList<>();
 	
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
 	
@@ -30,8 +30,7 @@ public class PaysBean {
 		getService().addObject(pays);
 		actualiserList();
 		vider(pays);
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©!", null));
 	}
 
 	public void annuler() {
@@ -67,7 +66,7 @@ public class PaysBean {
 		btnValider.setDisabled(false);
 		btnSuprimer.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuÃ©e!", null));
 	}
 	
 	

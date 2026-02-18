@@ -186,7 +186,7 @@ public class DisponibiliteCoursBean {
 			
 			public void chargerMention(){
 				listMention.clear();
-				listMention = requeteMention.recupMentionByEcoleFiliere(choosedFiliere.getCodeFiliere());
+				listMention = requeteMention.recupMentionByFiliere(choosedFiliere.getCodeFiliere());
 			}
 			
 			public void chargerSection(){

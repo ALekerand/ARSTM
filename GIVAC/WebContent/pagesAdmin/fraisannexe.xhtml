@@ -136,11 +136,30 @@
 							</h:panelGrid>
 						</p:panel>
 
-                          <p:commandButton value="ENREGISTRER" action="#{fraisAnnexeBean.enregistrer}"  />
+                          <p:commandButton value="ENREGISTRER" action="#{fraisAnnexeBean.enregistrer}" immediate="true" update="@parent, :form" oncomplete="document.location.reload(false)" > 
+                          	<p:confirm header="Confirmation" message="Confirmez-vous l'enregistrement?" icon="ui-icon-alert" />
+                          </p:commandButton>
 
 					</p:tab>  
 					
 				</p:wizard>
+				
+				<p:dataTable id="table" var="tata"
+					value="#{fraisAnnexeBean.listeFraisAnnexe}" emptyMessage="Aucun enregistrement" scrollable="true" scrollHeight="160">
+					<f:facet name="header">LISTE DES FRAIS ANNEXES</f:facet>
+					<p:column headerText="Année Scolaire" sortBy="#{tata.anneesScolaire.libAnneeScolaire}">#{tata.anneesScolaire.libAnneeScolaire}</p:column>
+					<p:column headerText="Type nationalité" sortBy="#{tata.typenationalite.libTypenationalite}">#{tata.typenationalite.libTypenationalite}</p:column>
+					<p:column headerText="Inscription" >#{tata.fraisInscription}</p:column>
+					<p:column headerText="Assurance">#{tata.typenationalite.libTypenationalite}</p:column>
+					<p:column headerText="Tenue complet" >#{tata.fraisTenueComplet}</p:column>
+					<p:column headerText="Tenue Sport" >#{tata.fraisTenueSport}</p:column>
+					<p:column headerText="Restauration" >#{tata.fraisRestauration}</p:column>
+					<p:column headerText="E-Learning" >#{tata.fraisElearning}</p:column>
+					<p:column headerText="Visite médicale" >#{tata.fraisVisiteMedic}</p:column>
+					<p:column headerText="Ordinateur" >#{tata.fraisOrdinateur}</p:column>
+					<p:column headerText="Autre" >#{tata.autreFrais}</p:column>
+				</p:dataTable>
+				
 			</div>
 			
 			<!-- Boite de confirmation -->
