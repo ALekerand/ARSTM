@@ -42,6 +42,9 @@ public class EnseignantBean {
 	private Enseignant selectedEnseignant = new Enseignant();
 	private List<Object> listEnseignant = new ArrayList<>();
 	private Statut choosedStatut = new Statut();
+	private int codeSexe;
+	
+
 	private Sexe chooseedSexe = new Sexe();
 	private Specialite choosedSpecialite = new Specialite();
 	private List<Object> listStatut = new ArrayList<>();
@@ -53,12 +56,18 @@ public class EnseignantBean {
 	
 	private String destination="C:\\GIVAC\\PHOTO";
 
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 	private CommandButton btnValider = new CommandButton();
 	private InputText inputVhOblig = new InputText();
 	private OutputLabel outputVhOblig = new OutputLabel();
 
 	public void enregistrer(){
+	
+		//Recuperer le sexe
+		chooseedSexe = (Sexe) service.getObjectById(codeSexe, "Sexe");
+		System.out.println("Code sexe entrÃ©:"+chooseedSexe.getLibSexe());
+		System.out.println("Information sur le sexe:"+chooseedSexe.getLibSexe());
+		
 		//enregistrer dans la table UserAuthentication
 		userAuthentication.setUsername(enseignant.getUsername());
 		userAuthentication.setPassword(enseignant.getPassword());
@@ -94,31 +103,38 @@ public class EnseignantBean {
 		getService().addObject(userAuthorization);
 
 		actualiserList();
-		
-		vider(enseignant);
+		annuler();
 		maxMatricule = (long) 0;
 		
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©!", null));
+	
+	
+	
 	}
 
 	public void annuler() {
 		btnValider.setDisabled(false);
-		vider(enseignant);
+		//chooseedSexe.setCodeSexe(0);
+		chooseedSexe.setLibSexe("");
+		//choosedStatut.setCodeStatut(null);
+		choosedStatut.setLibelleStatut("");
+		viderEnseignant();
+		
 		actualiserList();
 	}
 
-	public void vider(Enseignant objEnseignant) {
-		objEnseignant.setDateNais(null);
-		objEnseignant.setLieuNais(null);
-		objEnseignant.setEmail(null);
-		objEnseignant.setNom(null);
-		objEnseignant.setPrenoms(null);
-		objEnseignant.setPhone1(null);
-		objEnseignant.setPhone2(null);
-		objEnseignant.setUsername(null);
-		objEnseignant.setPassword(null);
-		objEnseignant.setVhObligatoireSemaine(null);
+	public void viderEnseignant() {
+		enseignant.setDateNais(null);
+		enseignant.setLieuNais(null);
+		enseignant.setEmail(null);
+		enseignant.setNom(null);
+		enseignant.setPrenoms(null);
+		enseignant.setPhone1(null);
+		enseignant.setPhone2(null);
+		enseignant.setUsername(null);
+		enseignant.setPassword(null);
+		enseignant.setVhObligatoireSemaine(null);
 	}
 	
 
@@ -134,7 +150,7 @@ public void upload(FileUploadEvent event) {
 		try {
 		copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
 		
-		//Mis à jour dans la table enseignant
+		//Mis ï¿½ jour dans la table enseignant
 		enseignant.setPhoto(destination);
 		} catch (IOException e) {
 		e.printStackTrace();
@@ -302,5 +318,13 @@ public void upload(FileUploadEvent event) {
 
 	public void setMaxMatricule(Long maxMatricule) {
 		this.maxMatricule = maxMatricule;
+	}
+	
+	public int getCodeSexe() {
+		return codeSexe;
+	}
+
+	public void setCodeSexe(int codeSexe) {
+		this.codeSexe = codeSexe;
 	}
 }

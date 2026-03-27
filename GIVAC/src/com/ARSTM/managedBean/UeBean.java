@@ -131,9 +131,6 @@ public void chargerUe(){
 		}
 			
 			
-	
-
-		
 	public void enregistrer(){
 		ues.setCodeUeLmd(getUes().getCodeUeLmd().toUpperCase());
 		ues.setMention(choosedMention);
@@ -141,7 +138,7 @@ public void chargerUe(){
 		ues.setSemestreLmd(selectedSemestreLmd);
 		ues.setEtatUe(true);
 		service.addObject(ues);
-		//vider(ues);
+		vider(ues);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
 		new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetu�!", null));
@@ -175,12 +172,11 @@ public void chargerUe(){
 	public void vider(Ues objUes) {
 		objUes.setLibUes(null);
 		objUes.setCodeUeLmd(null);
-		objUes.getCreditUe();
+		objUes.setCreditUe(null);
 	}
 	
 	public void actualiserList(){
 		chargerUe();
-		
 		}
 	
 	

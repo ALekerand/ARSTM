@@ -52,7 +52,8 @@ public class FraisLogementBean {
 	
 	public String enregistrer(){		
 		enregistrerTypeLogement();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès!", "Enregistrement effcetué."));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès!", "Enregistrement effectué."));
+		annuler();
 		return "frais_logement.xhtml";
 	}
 	
@@ -60,6 +61,7 @@ public class FraisLogementBean {
 	setChoosedTypeLogement(null);
 	typeLogementNation.setMontantTypeLogement(null);
 	typeLogementNation.setCautionTypeLogement(null);
+	
 	typeLogementNonNation.setMontantTypeLogement(null);
 	typeLogementNonNation.setCautionTypeLogement(null);
 	}

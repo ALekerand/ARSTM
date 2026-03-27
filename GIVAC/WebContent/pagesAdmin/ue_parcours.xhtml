@@ -48,7 +48,7 @@
 			</h:panelGrid>
 						</td>
 						<td>
-					<p:dataTable id="table_semestre"  var="tata"
+				<p:dataTable id="table_semestre"  var="tata"
 					value="#{ueBean.listSemestreLmd}" selection="#{ueBean.selectedSemestreLmd}"
 					rowKey="#{tata.codeSemestreLmd}" emptyMessage="Aucun enregistrement" selectionMode="single">
 					<p:ajax event="rowSelect" listener="#{ueBean.actualiserList}" update=":form_gnl" process="@this, :form_gnl:ment"/>
@@ -112,7 +112,7 @@
 							message="Confirmez-vous modifier cet enregistrement" icon="ui-icon-alert" />
 					</p:commandButton>
 					<p:commandButton value="Annuler" process="@this"
-						action="#{ueBean.annuler}" />
+						action="#{ueBean.annuler}" update="form_gnl"/>
 					<p:commandButton value="Supprimer" action="#{ueBean.supprimer}"
 						update="form_gnl" binding="#{ueBean.btnSuprimer}">
 						<p:confirm header="Confirmation"

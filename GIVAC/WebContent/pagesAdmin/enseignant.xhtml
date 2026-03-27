@@ -8,18 +8,16 @@
 	<ui:define name="body">
 		<h:form id="form">
 
-			<h1 class="page-title">ENSEIGNANT</h1>
+			<h1 class="page-title">ENREGISTREMENT D'ENSEIGNANT</h1>
 			<p:messages autoUpdate="true" closable="true" showDetail="false" />
 			<div class="widget-content">
-				<p:wizard id="wiz">
-					<p:tab id="identite" title="Identification">
-						<p:panel header="Enseignant">
-							<h:panelGrid id="ensg_grid" columns="4" cellpadding="5" >
+				
+				<fieldset>
+				<legend>Identité</legend>
+						<h:panelGrid id="ensg_grid" columns="6" cellpadding="5" >
 								<h:outputLabel for="matric" value="Matricule" />
 								<p:inputText id="matric" 
-									value="#{enseignantBean.maxMatricule}" required="true" />
-								<h:outputLabel />
-								<h:outputLabel />
+									value="#{enseignantBean.maxMatricule}" readonly="true" required="true" />
 
 								<h:outputLabel for="nom_enseig" value="Nom" />
 								<p:inputText id="nom_enseig"
@@ -38,17 +36,13 @@
 									value="#{enseignantBean.enseignant.lieuNais}" required="true" />
 
 
-								<h:outputLabel for="sexe_ens" value="Genre" />
+								<h:outputLabel for="sexe_ens" value="Sexe" />
 								<p:selectOneMenu id="sexe_ens"
-									value="#{enseignantBean.chooseedSexe}"
-									converter="#{entityConverter}">
+									value="#{enseignantBean.codeSexe}">
 									<f:selectItem itemLabel="Selectionnez" itemValue="" />
 									<f:selectItems value="#{enseignantBean.listeSexe}" var="tata"
-										itemLabel="#{tata.libSexe}" itemValue="#{tata}"></f:selectItems>
+										itemLabel="#{tata.libSexe}" itemValue="#{tata.codeSexe}"></f:selectItems>
 								</p:selectOneMenu>
-
-
-
 
 								<h:outputLabel for="phone_enseig" value="Télephone1" />
 								<p:inputText id="phone_enseig"
@@ -62,15 +56,16 @@
 								<p:inputText id="mail_enseig"
 									value="#{enseignantBean.enseignant.email}"/>
 							</h:panelGrid>
-
-							<br></br>
-
-						</p:panel>
-					</p:tab>
-
-					<p:tab id="complements" title="Complements">
-						<p:panel header="Informations complémentaires">
-							<h:panelGrid id="cplt_grid" columns="4" cellpadding="10">
+				</fieldset>
+				
+				<fieldset>
+				<legend>Complement</legend>
+				
+				
+				<table>
+						<tr valign="top">
+						<td>
+							<h:panelGrid columns="4" id="compte_Grid" cellpadding="5">
 								<h:outputLabel for="specialite_ens" value="Spécialité" />
 								<p:selectOneMenu id="specialite_ens"
 									value="#{enseignantBean.choosedSpecialite}"
@@ -96,20 +91,8 @@
 								<p:inputText id="vh_oblig"
 									value="#{enseignantBean.enseignant.vhObligatoireSemaine}" style="width:60px"
 									binding="#{enseignantBean.inputVhOblig}" />
-							</h:panelGrid>
-
 							
-						</p:panel>
-					</p:tab>
-
-					<p:tab id="cpt" title="Compte">
-						<p:panel header="Compte utilisateur">
-						
-						<table>
-						<tr valign="top">
-						<td>
-							<h:panelGrid columns="2" id="compte_Grid" cellpadding="5">
-								<h:outputLabel for="user_login" value="Nom utilisateur:" />
+							<h:outputLabel for="user_login" value="Nom utilisateur:" />
 								<p:inputText id="user_login"
 									value="#{enseignantBean.enseignant.username}" required="true" />
 
@@ -140,22 +123,23 @@
 							</td>
 							</tr>
 					</table>
-
-							<hr />
-							<h:panelGrid columns="3" id="button_grid">
-								<p:commandButton value="Enregistrer"
+				</fieldset>
+						
+	<p:toolbar >
+			<f:facet name="right">
+			
+				<p:commandButton value="Enregistrer"
 									action="#{enseignantBean.enregistrer}" immediate="true" update="@parent, :form"
-									binding="#{enseignantBean.btnValider}"
-									oncomplete="document.location.reload(false)">
+									binding="#{enseignantBean.btnValider}" oncomplete="document.location.reload(false)">
 								</p:commandButton>
 
 								<p:commandButton value="Annuler"
 									action="#{enseignantBean.annuler}" update="form">
 								</p:commandButton>
-							</h:panelGrid>
-						</p:panel>
-					</p:tab>
-				</p:wizard>
+			</f:facet>
+		</p:toolbar>
+
+
 
 				<br />
 				<p:dataTable id="table" selectionMode="single" var="tata"

@@ -27,7 +27,7 @@ public class OrigineBean {
 	private List listorigine= new ArrayList<>();
 	
 	
-	// Contrôle de coposant
+	// Contrï¿½le de coposant
 		private CommandButton btnValider = new CommandButton();
 		private CommandButton btnModifier = new CommandButton();
 		private CommandButton btnSuprimer = new CommandButton();
@@ -38,7 +38,7 @@ public class OrigineBean {
 		actualiserList();
 		vider(origine);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetué!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement effcetuÃ©!", null));
 	}
 
 	public void annuler() {
@@ -70,13 +70,13 @@ public class OrigineBean {
 		vider(origine);
 		actualiserList();
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification effcetuï¿½e!", null));
 	}
 	
 	
 	public void supprimer() {
 		Origine origTemp = new Origine();
-		origTemp.setCodeOriginr(selectedorigine.getCodeOriginr());
+		origTemp.setCodeOrigine(selectedorigine.getCodeOrigine());
 		origTemp.setLibOrigine(selectedorigine.getLibOrigine());
 		getService().deleteObject(origTemp);
 		vider(origTemp);
@@ -86,7 +86,7 @@ public class OrigineBean {
 		btnSuprimer.setDisabled(true);
 		btnModifier.setDisabled(true);
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuée!", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression effcetuï¿½e!", null));
 	}
 	
 	

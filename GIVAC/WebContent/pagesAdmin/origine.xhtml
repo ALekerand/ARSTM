@@ -18,13 +18,14 @@
 				</h:panelGrid>
 				<br />
 				<h:panelGrid id="grid_button" columns="4">
-					<p:commandButton value="Enregistrer"
-						action="#{origineBean.enregistrer}" update="form_gnl" binding="#{origineBean.btnValider}">
+					<p:commandButton value="Enregistrer" action="#{origineBean.enregistrer}" update="form_gnl" binding="#{origineBean.btnValider}">
+						<p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?" icon="ui-icon-alert"/>
+					
 					</p:commandButton>
 					
-					<p:commandButton value="Annuler"
-						update="form_gnl:grid_orig, form_gnl:grid_button" process="@this"
-						action="#{origineBean.annuler}" />
+					<p:commandButton value="Annuler" update="form_gnl:grid_orig, form_gnl:grid_button" process="@this" action="#{origineBean.annuler}" >
+						<p:confirm header="Confirmation" message="Confirmez-vous la modification?" icon="ui-icon-alert" />
+					</p:commandButton>
 					
 					<p:commandButton value="Modifier" action="#{origineBean.modifier}"
 						update="form_gnl" binding="#{origineBean.btnModifier}">
@@ -42,10 +43,11 @@
 				<br />
 				<p:dataTable id="table_orig" selectionMode="single" var="tata"
 					value="#{origineBean.listorigine}" selection="#{origineBean.selectedorigine}"
-					rowKey="#{tata.codeOriginr}" emptyMessage="Aucun enregistrement">
+					rowKey="#{tata.codeOrigine}" emptyMessage="Aucun enregistrement">
 					<p:ajax event="rowSelect" listener="#{origineBean.selectionner}"
 						update=":form_gnl" />
 					<f:facet name="header">LISTE DES MODES</f:facet>
+					<p:column headerText="Code" style="width:5%">#{tata.codeOrigine}</p:column>
 					<p:column headerText="Libéllé Origine" style="width:30%">#{tata.libOrigine}</p:column>
 				</p:dataTable>
 			</div>

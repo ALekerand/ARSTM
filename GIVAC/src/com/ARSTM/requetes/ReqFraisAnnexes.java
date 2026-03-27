@@ -31,5 +31,4 @@ public class ReqFraisAnnexes {
 		this.sessionFactory = sessionFactory;
 	}
 
-
 }
